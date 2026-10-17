@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+dist/
+dist-ssr/
+
+# Tauri & Rust build artifacts
+src-tauri/target/
+src-tauri/target*/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment & local state
+.env
+.env.local
+.env.*.local
+*.local
+*.db
+*.db-wal
+*.db-shm
+
+# Editor directories
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

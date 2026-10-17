@@ -1,0 +1,6 @@
+[build]
+target-dir = "src-tauri/target-desktop"
+jobs = 2
+
+[env]
+RUST_MIN_STACK = "33554432"

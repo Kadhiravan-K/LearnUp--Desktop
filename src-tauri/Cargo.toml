@@ -1,0 +1,37 @@
+[package]
+name = "learnup-desktop"
+version = "0.1.0"
+description = "LearnUp Desktop — Clean Native Windows Learning Application"
+authors = ["LearnUp Team"]
+license = "MIT"
+repository = "https://github.com/Kadhiravan-K/LearnUp-Desktop"
+edition = "2021"
+
+[lib]
+name = "learnup_desktop_lib"
+crate-type = ["rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.7.3", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+log = "0.4"
+tauri = { version = "2.12.4", features = ["devtools", "tray-icon"] }
+tauri-plugin-shell = "2"
+tauri-plugin-log = "2"
+tauri-plugin-single-instance = "2"
+rusqlite = { version = "0.31", features = ["bundled"] }
+
+[profile.dev]
+debug = false
+incremental = false
+
+[profile.release]
+opt-level = 1
+debug = false
+lto = false
+codegen-units = 1
+incremental = false
+panic = "abort"
