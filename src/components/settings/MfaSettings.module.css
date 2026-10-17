@@ -1,0 +1,137 @@
+.container {
+  background: var(--sf-bg-surface, #ffffff);
+  border: 1px solid var(--sf-border-subtle, #e2e8f0);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.heading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: var(--sf-text-primary, #0f172a);
+}
+
+.description {
+  color: var(--sf-text-secondary, #64748b);
+  font-size: 0.875rem;
+  margin: 0 0 24px 0;
+  line-height: 1.5;
+}
+
+.alert {
+  margin-bottom: 20px;
+}
+
+.actionArea {
+  margin-top: 16px;
+}
+
+.enrollArea {
+  background: var(--sf-bg-subtle, #f8fafc);
+  border: 1px solid var(--sf-border-subtle, #e2e8f0);
+  border-radius: 8px;
+  padding: 24px;
+  margin-top: 16px;
+}
+
+.enrollArea h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+}
+
+.qrContainer {
+  margin: 20px 0;
+  background: white;
+  padding: 16px;
+  display: inline-block;
+  border-radius: 8px;
+}
+
+.qrContainer svg {
+  display: block;
+  max-width: 200px;
+  height: auto;
+}
+
+.secretText {
+  font-size: 0.875rem;
+  color: var(--sf-text-secondary, #64748b);
+  word-break: break-all;
+  background: var(--sf-bg-surface, #ffffff);
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px dashed var(--sf-border-subtle, #e2e8f0);
+  display: inline-block;
+  margin: 8px 0 16px 0;
+}
+
+.verifyForm {
+  display: flex;
+  gap: 12px;
+  max-width: 400px;
+  margin-top: 16px;
+}
+
+.factorsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.factorCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px solid var(--sf-border-subtle, #e2e8f0);
+  border-radius: 8px;
+  background: var(--sf-bg-subtle, #f8fafc);
+}
+
+.factorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.factorName {
+  font-weight: 500;
+  color: var(--sf-text-primary, #0f172a);
+}
+
+.factorStatus {
+  font-size: 0.75rem;
+  color: var(--sf-brand-teal, #0f766e);
+  font-weight: 500;
+}
+
+.guestNotice {
+  background: var(--sf-bg-subtle, #f8fafc);
+  border: 1px solid var(--sf-border-subtle, #e2e8f0);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.guestIcon {
+  font-size: 1.25rem;
+}
+
+.guestNoticeTitle {
+  font-weight: 600;
+  color: var(--sf-text-primary, #0f172a);
+  margin-bottom: 4px;
+}
+
+.guestNoticeDesc {
+  font-size: 0.875rem;
+  color: var(--sf-text-secondary, #64748b);
+  margin: 0;
+  line-height: 1.4;
+}

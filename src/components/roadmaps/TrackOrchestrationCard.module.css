@@ -1,0 +1,151 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-4, 1rem);
+  background: var(--sf-color-surface, #ffffff);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  border-radius: var(--sf-radius-lg, 12px);
+  padding: var(--sf-space-5, 1.25rem);
+  box-shadow: var(--sf-shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.04));
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--sf-color-text-secondary, #64748b);
+  margin: 0;
+}
+
+.editableBadge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--sf-color-text-tertiary, #64748b);
+  background: var(--sf-color-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.metricsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metricRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+}
+
+.metricIconDone {
+  color: #10b981;
+  font-weight: 700;
+}
+
+.metricIconActive {
+  color: #6366f1;
+}
+
+.metricIconUpcoming {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.metricLabel {
+  color: var(--sf-color-text-secondary, #64748b);
+  flex: 1;
+}
+
+.metricValue {
+  color: var(--sf-color-text-primary, #0f172a);
+}
+
+/* Forecast Box */
+.forecastBox {
+  background: var(--sf-color-bg);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.forecastHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forecastLabel {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary, #64748b);
+}
+
+.forecastDate {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.forecastDesc {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary, #64748b);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.pacingRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: #10b981;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.pacingIcon {
+  font-size: 12px;
+}
+
+.pacingText {
+  color: #10b981;
+}
+
+/* Footer Action Links */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--sf-color-border, #e2e8f0);
+  padding-top: 8px;
+  font-size: 11px;
+}
+
+.footerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: var(--sf-color-text-secondary, #64748b);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.footerBtn:hover {
+  color: var(--sf-color-text-primary, #0f172a);
+}

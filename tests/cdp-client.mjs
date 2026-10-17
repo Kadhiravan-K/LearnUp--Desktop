@@ -76,12 +76,19 @@ export class CDPClient {
   }
 }
 
-export async function getWebViewTarget() {
+export async function getWebViewTarget(maxRetries = 10) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      const res = await fetch('http://localhost:9222/json');
+      const targets = await res.json();
+      const pageTarget = targets.find((t) => t.type === 'page' && (t.url.includes('1420') || t.url.includes('tauri.localhost') || t.title.includes('LearnUp') || t.webSocketDebuggerUrl));
+      if (pageTarget) return pageTarget;
+    } catch {
+      // Retry
+    }
+    await new Promise((r) => setTimeout(r, 1000));
+  }
   const res = await fetch('http://localhost:9222/json');
   const targets = await res.json();
-  const pageTarget = targets.find((t) => t.type === 'page' && (t.url.includes('1420') || t.url.includes('tauri.localhost') || t.title.includes('LearnUp')));
-  if (!pageTarget) {
-    throw new Error('No WebView2 page target found at localhost:9222/json: ' + JSON.stringify(targets));
-  }
-  return pageTarget;
+  throw new Error('No WebView2 page target found at localhost:9222/json: ' + JSON.stringify(targets));
 }

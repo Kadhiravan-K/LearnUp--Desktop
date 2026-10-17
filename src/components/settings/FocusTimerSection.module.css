@@ -1,0 +1,255 @@
+.section {
+  background: var(--sf-color-surface);
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.titleArea {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  font-size: 1.125rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sf-color-text);
+}
+
+.timerHud {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--sf-color-primary);
+  font-family: monospace;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.groupLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #4B5563;
+}
+
+/* Pills */
+.pillsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pillBtn {
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-sm);
+  padding: 8px 14px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--sf-color-text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pillBtn:hover {
+  background: #F3F4F6;
+}
+
+.pillBtnActive {
+  background: var(--sf-color-primary);
+  border-color: var(--sf-color-primary);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.customPill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-sm);
+  padding: 4px 10px;
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-secondary);
+}
+
+.customInput {
+  width: 44px;
+  border: 1px solid #D1D5DB;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 0.8125rem;
+  text-align: center;
+  outline: none;
+  background: var(--sf-color-surface);
+}
+
+/* Steppers Grid */
+.steppersGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .steppersGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stepperCard {
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-md);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stepperLabel {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #6B7280;
+}
+
+.stepperControl {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stepperValue {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #059669;
+  font-family: monospace;
+}
+
+.stepperBtns {
+  display: flex;
+  gap: 4px;
+}
+
+.stepBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid #D1D5DB;
+  background: var(--sf-color-surface);
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepBtn:hover {
+  background: #F3F4F6;
+}
+
+/* Select */
+.select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: var(--sf-radius-md);
+  border: 1px solid #E5E7EB;
+  background: #F9FAFB;
+  font-size: 0.875rem;
+  color: var(--sf-color-text);
+  outline: none;
+  cursor: pointer;
+}
+
+.select:focus {
+  border-color: var(--sf-color-primary);
+  background: var(--sf-color-surface);
+}
+
+/* Toggles */
+.toggleList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 8px;
+  border-top: 1px solid #F3F4F6;
+}
+
+.toggleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.toggleText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toggleTitle {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--sf-color-text);
+}
+
+.toggleDesc {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary);
+}
+
+.toggleSwitch {
+  width: 40px;
+  height: 22px;
+  border-radius: 11px;
+  background: #D1D5DB;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toggleOn {
+  background: var(--sf-color-primary);
+}
+
+.toggleHandle {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--sf-color-surface);
+  transition: transform 0.2s ease;
+}
+
+.toggleOn .toggleHandle {
+  transform: translateX(18px);
+}

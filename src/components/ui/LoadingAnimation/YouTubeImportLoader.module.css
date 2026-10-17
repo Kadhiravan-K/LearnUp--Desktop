@@ -1,0 +1,157 @@
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 20px;
+  gap: 20px;
+  text-align: center;
+  background: var(--sf-color-bg);
+  border: 1px dashed var(--sf-color-border);
+  border-radius: 10px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.orbWrapper {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pulseRing {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--sf-color-primary);
+  opacity: 0.8;
+  animation: pulseWave 1.8s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+.pulseRingSecondary {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sf-color-primary-light);
+  opacity: 0.4;
+  animation: pulseWave 1.8s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  animation-delay: 0.6s;
+}
+
+.spinnerOrb {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--sf-color-primary) 0%, #0D9488 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sf-color-text-on-primary, #FFFFFF);
+  font-size: 1.25rem;
+  box-shadow: 0 4px 14px var(--sf-color-primary-light);
+  animation: rotateOrb 3s linear infinite;
+}
+
+.iconInside {
+  animation: counterRotate 3s linear infinite;
+}
+
+.textGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 380px;
+}
+
+.title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--sf-color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary);
+  line-height: 1.4;
+}
+
+.progressBarContainer {
+  width: 220px;
+  height: 4px;
+  background: var(--sf-color-border);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressBarIndeterminate {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: linear-gradient(90deg, var(--sf-color-primary), #2DD4BF);
+  border-radius: 9999px;
+  animation: indeterminateBar 1.6s ease-in-out infinite;
+}
+
+@keyframes pulseWave {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.9;
+  }
+  70% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes rotateOrb {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes counterRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes indeterminateBar {
+  0% {
+    left: -40%;
+  }
+  50% {
+    left: 40%;
+    width: 60%;
+  }
+  100% {
+    left: 100%;
+    width: 30%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

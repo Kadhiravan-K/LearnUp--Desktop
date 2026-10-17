@@ -1,0 +1,102 @@
+.filterBarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: var(--sf-space-2, 0.5rem);
+}
+
+.segmentedControl {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--sf-color-surface, #ffffff);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  border-radius: var(--sf-radius-lg, 0.5rem);
+  padding: 3px;
+  gap: 2px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.segmentedControl::-webkit-scrollbar {
+  display: none;
+}
+
+.filterButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sf-space-2, 0.5rem);
+  padding: var(--sf-space-2, 0.5rem) var(--sf-space-3, 0.75rem);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--sf-radius-md, 0.375rem);
+  font-family: var(--sf-font-sans);
+  font-size: var(--sf-text-sm, 0.875rem);
+  font-weight: 500;
+  color: var(--sf-color-text-secondary, #475569);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease-in-out;
+  outline: none;
+}
+
+.filterButton:hover:not(.active) {
+  color: var(--sf-color-text-primary, #0f172a);
+  background-color: var(--sf-color-surface-hover, #f1f5f9);
+}
+
+.filterButton:focus-visible {
+  outline: 2px solid var(--sf-color-primary, #0F766E);
+  outline-offset: 1px;
+}
+
+.filterButton.active {
+  background-color: var(--sf-color-primary, #0F766E);
+  color: var(--sf-color-text-on-primary, #ffffff);
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.filterLabel {
+  line-height: 1.2;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--sf-text-xs, 0.75rem);
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: var(--sf-radius-full, 9999px);
+  background-color: var(--sf-color-surface-hover, #f1f5f9);
+  color: var(--sf-color-text-secondary, #475569);
+  min-width: 1.25rem;
+  height: 1.25rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.badgeActive {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: var(--sf-color-text-on-primary, #ffffff);
+}
+
+@media (max-width: 640px) {
+  .filterBarContainer {
+    width: 100%;
+  }
+
+  .segmentedControl {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .filterButton {
+    flex: 1;
+    justify-content: center;
+    padding: var(--sf-space-2, 0.5rem) var(--sf-space-2, 0.5rem);
+    font-size: var(--sf-text-xs, 0.75rem);
+  }
+}

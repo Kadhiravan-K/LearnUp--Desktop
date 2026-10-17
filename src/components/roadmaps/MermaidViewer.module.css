@@ -1,0 +1,206 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background: #081a1c;
+  border: 1px solid rgba(20, 184, 166, 0.25);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 16px;
+  font-family: inherit;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  background: rgba(15, 39, 42, 0.9);
+  border-bottom: 1px solid rgba(20, 184, 166, 0.2);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.diagramTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.diagramSubtitle {
+  font-size: 0.76rem;
+  color: #94a3b8;
+}
+
+.controlsGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tabButtons {
+  display: flex;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+  padding: 2px;
+  border: 1px solid rgba(20, 184, 166, 0.2);
+}
+
+.tabBtn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tabBtn:hover {
+  color: #e2e8f0;
+}
+
+.tabBtnActive {
+  background: #14b8a6;
+  color: #041012;
+}
+
+.actionBtn {
+  background: rgba(20, 184, 166, 0.12);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+  color: #2dd4bf;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.actionBtn:hover {
+  background: rgba(20, 184, 166, 0.22);
+  border-color: #14b8a6;
+  color: #ffffff;
+}
+
+.zoomBtn {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  color: #cbd5e1;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.zoomBtn:hover {
+  background: rgba(20, 184, 166, 0.2);
+  color: #2dd4bf;
+  border-color: #14b8a6;
+}
+
+.viewportArea {
+  position: relative;
+  width: 100%;
+  min-height: 440px;
+  max-height: 600px;
+  overflow: auto;
+  background: radial-gradient(circle at center, rgba(20, 184, 166, 0.05) 0%, rgba(8, 26, 28, 0.95) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px;
+}
+
+.svgWrapper {
+  transform-origin: top center;
+  transition: transform 0.15s ease-out;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svgWrapper {
+    transition: none;
+  }
+}
+
+.sourceArea {
+  padding: 16px;
+  background: #041012;
+  overflow-x: auto;
+}
+
+.codeBlock {
+  margin: 0;
+  font-family: 'JetBrains Mono', 'Fira Code', Menlo, monospace;
+  font-size: 0.82rem;
+  color: #2dd4bf;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.outlineArea {
+  padding: 20px 24px;
+  background: #081a1c;
+  color: #e2e8f0;
+}
+
+.outlineList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.outlinePhaseItem {
+  background: rgba(15, 39, 42, 0.6);
+  border: 1px solid rgba(20, 184, 166, 0.2);
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+
+.outlinePhaseHeader {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2dd4bf;
+  margin-bottom: 8px;
+}
+
+.outlineMilestoneList {
+  list-style: decimal inside;
+  padding-left: 8px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+}
+
+.a11yNote {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-top: 12px;
+  font-style: italic;
+}

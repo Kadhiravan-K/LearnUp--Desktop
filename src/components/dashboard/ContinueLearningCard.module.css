@@ -1,0 +1,235 @@
+.card {
+  display: flex;
+  background-color: var(--sf-color-surface);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--sf-shadow-sm);
+  transition: transform var(--sf-duration-fast), box-shadow var(--sf-duration-fast), border-color var(--sf-duration-fast);
+  width: 100%;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sf-shadow-md);
+  border-color: var(--sf-color-border-hover, #CBD5E1);
+}
+
+@media (max-width: 640px) {
+  .card {
+    flex-direction: column;
+  }
+}
+
+.thumbnailContainer {
+  position: relative;
+  width: 220px;
+  min-height: 150px;
+  background-color: var(--sf-color-surface);
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .thumbnailContainer {
+    width: 100%;
+    height: 180px;
+  }
+}
+
+.thumbnail {
+  object-fit: cover;
+}
+
+.fallbackThumbnail {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+  color: #94A3B8;
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-medium);
+}
+
+.dueBadge {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background-color: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  color: #FBBF24;
+  font-size: 10px;
+  font-weight: var(--sf-font-semibold);
+  padding: 3px 8px;
+  border-radius: var(--sf-radius-sm);
+  border: var(--sf-border-width) solid rgba(245, 158, 11, 0.4);
+}
+
+.completedBadge {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background-color: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  color: #34D399;
+  font-size: 10px;
+  font-weight: var(--sf-font-semibold);
+  padding: 3px 8px;
+  border-radius: var(--sf-radius-sm);
+  border: var(--sf-border-width) solid rgba(16, 185, 129, 0.4);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--sf-space-4) var(--sf-space-5);
+  flex: 1;
+  gap: var(--sf-space-3);
+  min-width: 0;
+}
+
+.metaRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: var(--sf-font-mono);
+  color: var(--sf-color-text-tertiary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.timeAgo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-transform: none;
+  font-family: var(--sf-font-sans);
+}
+
+.titleLink {
+  text-decoration: none;
+  color: var(--sf-color-text-primary);
+}
+
+.title {
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+  margin: 0;
+  line-height: var(--sf-leading-tight);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color var(--sf-duration-fast);
+}
+
+.title:hover {
+  color: var(--sf-color-primary);
+}
+
+.tagsRow {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 11px;
+  font-weight: var(--sf-font-medium);
+  background-color: var(--sf-color-bg);
+  color: var(--sf-color-text-secondary);
+  padding: 2px 8px;
+  border-radius: var(--sf-radius-md);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+}
+
+.progressSection {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-medium);
+  color: var(--sf-color-text-secondary);
+}
+
+.progressPercent {
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+}
+
+.progressBarContainer {
+  width: 100%;
+  height: 6px;
+  background-color: var(--sf-color-bg);
+  border-radius: var(--sf-radius-full);
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sf-color-primary, #0F766E), #2DD4BF);
+  border-radius: var(--sf-radius-full);
+  transition: width 0.3s ease;
+}
+
+.progressBarFillCompleted {
+  background: linear-gradient(90deg, #10B981, #34D399);
+}
+
+.actionsRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-3);
+  margin-top: 2px;
+  flex-wrap: wrap;
+}
+
+.resumeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--sf-color-primary);
+  color: var(--sf-color-text-on-primary, #ffffff);
+  padding: 6px 14px;
+  border-radius: var(--sf-radius-lg);
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-semibold);
+  text-decoration: none;
+  transition: background-color var(--sf-duration-fast), transform var(--sf-duration-fast);
+}
+
+.resumeButton:hover {
+  background-color: var(--sf-color-primary-hover);
+  transform: translateY(-1px);
+}
+
+.bookmarkPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--sf-color-bg);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  color: var(--sf-color-text-secondary);
+  padding: 6px 12px;
+  border-radius: var(--sf-radius-lg);
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-medium);
+  text-decoration: none;
+  transition: all var(--sf-duration-fast);
+}
+
+.bookmarkPill:hover {
+  background-color: var(--sf-color-surface-hover);
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
+}

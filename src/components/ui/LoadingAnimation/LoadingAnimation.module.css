@@ -1,0 +1,86 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sf-spacing-sm, 8px);
+}
+
+.spinnerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinnerRing {
+  width: 100%;
+  height: 100%;
+  border: 3px solid var(--sf-color-surface-hover);
+  border-top-color: var(--sf-color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.cogWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sf-color-primary);
+}
+
+.cogWheel {
+  width: 100%;
+  height: 100%;
+  animation: spin 2s linear infinite;
+}
+
+.cubeWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+}
+
+.cubeItem {
+  background-color: var(--sf-color-primary);
+  animation: cube-fold 2.4s infinite linear both;
+  transform-origin: 100% 100%;
+}
+
+.cube2 { transform: scaleX(-1); animation-delay: 0.3s; }
+.cube3 { transform: scaleY(-1); animation-delay: 0.9s; }
+.cube4 { transform: scale(-1); animation-delay: 0.6s; }
+
+.canvasWrapper {
+  position: relative;
+}
+
+.canvasEl {
+  width: 100%;
+  height: 100%;
+}
+
+.label {
+  font-size: var(--sf-font-size-sm, 14px);
+  color: var(--sf-color-text-secondary);
+}
+
+.size-sm { width: 16px; height: 16px; }
+.size-md { width: 32px; height: 32px; }
+.size-lg { width: 48px; height: 48px; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cube-fold {
+  0%, 10% { transform: perspective(140px) rotateX(-180deg); opacity: 0; }
+  25%, 75% { transform: perspective(140px) rotateX(0deg); opacity: 1; }
+  90%, 100% { transform: perspective(140px) rotateY(180deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinnerRing, .cogWheel, .cubeItem {
+    animation-play-state: paused;
+  }
+}

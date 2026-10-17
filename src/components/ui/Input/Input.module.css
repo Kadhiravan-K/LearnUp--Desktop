@@ -1,0 +1,87 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-1);
+}
+
+.label {
+  font-size: var(--sf-text-sm);
+  font-weight: var(--sf-font-medium);
+  color: var(--sf-color-text-primary);
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: var(--sf-space-2) var(--sf-space-3);
+  font-size: var(--sf-text-base);
+  font-family: var(--sf-font-sans);
+  color: var(--sf-color-text-primary);
+  background-color: var(--sf-color-surface);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  transition: border-color var(--sf-transition-fast), box-shadow var(--sf-transition-fast);
+}
+
+.hasIcon {
+  padding-right: 2.5rem; /* Make room for the toggle button */
+}
+
+.toggleButton {
+  position: absolute;
+  right: var(--sf-space-3);
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sf-color-text-tertiary);
+  cursor: pointer;
+  transition: color var(--sf-transition-fast);
+}
+
+.toggleButton:hover,
+.toggleButton:focus-visible {
+  color: var(--sf-color-text-secondary);
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--sf-color-text-tertiary);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--sf-color-primary);
+  box-shadow: 0 0 0 1px var(--sf-color-primary);
+}
+
+.input:disabled {
+  background-color: var(--sf-color-bg);
+  color: var(--sf-color-text-secondary);
+  cursor: not-allowed;
+}
+
+.hasError {
+  border-color: var(--sf-color-error);
+}
+.hasError:focus {
+  border-color: var(--sf-color-error);
+  box-shadow: 0 0 0 1px var(--sf-color-error);
+}
+
+.errorText {
+  font-size: var(--sf-text-sm);
+  color: var(--sf-color-error);
+}
+
+.helperText {
+  font-size: var(--sf-text-sm);
+  color: var(--sf-color-text-secondary);
+}

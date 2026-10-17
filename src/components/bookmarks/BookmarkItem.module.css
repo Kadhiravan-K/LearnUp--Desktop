@@ -1,0 +1,109 @@
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sf-space-3);
+  padding: var(--sf-space-3);
+  background-color: var(--sf-color-bg);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  transition: border-color var(--sf-duration-fast) var(--sf-ease-default),
+              background-color var(--sf-duration-fast) var(--sf-ease-default);
+}
+
+.item:hover {
+  border-color: var(--sf-color-border-hover);
+  background-color: var(--sf-color-surface-hover);
+}
+
+.contentGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-3);
+  flex: 1;
+  min-width: 0;
+}
+
+.timestampButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--sf-color-primary-subtle);
+  color: var(--sf-color-primary);
+  border: var(--sf-border-width) solid transparent;
+  padding: 4px 10px;
+  border-radius: var(--sf-radius-md);
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-semibold);
+  font-family: var(--sf-font-mono, monospace);
+  cursor: pointer;
+  transition: background-color var(--sf-duration-fast), color var(--sf-duration-fast), transform var(--sf-duration-fast);
+  flex-shrink: 0;
+}
+
+.timestampButton:hover {
+  background-color: var(--sf-color-primary);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.timestampButton:focus-visible {
+  outline: 2px solid var(--sf-color-primary);
+  outline-offset: 2px;
+}
+
+.playIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.labelWrapper {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.label {
+  font-size: var(--sf-text-sm);
+  font-weight: var(--sf-font-medium);
+  color: var(--sf-color-text-primary);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-2);
+  flex-shrink: 0;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  color: var(--sf-color-text-tertiary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--sf-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--sf-duration-fast), background-color var(--sf-duration-fast);
+}
+
+.deleteButton:hover {
+  color: var(--sf-color-danger);
+  background-color: var(--sf-color-danger-subtle);
+}
+
+.deleteButton:focus-visible {
+  outline: 2px solid var(--sf-color-danger);
+  outline-offset: 2px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}

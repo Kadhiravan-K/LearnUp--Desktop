@@ -1,0 +1,468 @@
+/* ==========================================================================
+   LearnUp Design System — Global Tokens & Reset
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ── Brand & Primary (Deep Teal) ── */
+  --sf-color-primary: #0F766E;
+  --sf-color-primary-hover: #115E59;
+  --sf-color-primary-active: #0D4E4A;
+  --sf-color-primary-light: #F0FDFA;
+  --sf-color-primary-subtle: #F0FDFA;
+  --sf-color-primary-border: #99F6E4;
+
+  /* ── Page Backgrounds & Neutral Surfaces ── */
+  --sf-color-bg: #F7FAF9;
+  --sf-color-bg-elevated: #FFFFFF;
+  --sf-color-surface: #FFFFFF;
+  --sf-color-surface-hover: #F0F4F3;
+  --sf-color-surface-active: #E5ECEB;
+  --sf-color-surface-muted: #F0F4F3;
+  --sf-color-surface-elevated: #FFFFFF;
+
+  /* ── Borders & Dividers ── */
+  --sf-color-border: #E0E7E6;
+  --sf-color-border-hover: #CBD6D4;
+  --sf-color-border-focus: #0F766E;
+  --sf-color-divider: #E0E7E6;
+
+  /* ── Typography & Text ── */
+  --sf-color-text-primary: #132B29;
+  --sf-color-text-secondary: #57706C;
+  --sf-color-text-tertiary: #7B9490;
+  --sf-color-text-muted: #6B8580;
+  --sf-color-text-inverse: #FFFFFF;
+  --sf-color-text-on-primary: #FFFFFF;
+
+  /* ── Interaction States ── */
+  --sf-color-selected-bg: #F0FDFA;
+  --sf-color-selected-border: #0F766E;
+  --sf-color-selected-text: #0F766E;
+  --sf-color-hover-bg: #F0F4F3;
+  --sf-color-overlay-bg: rgba(19, 43, 41, 0.45);
+  --sf-color-disabled-bg: #E5ECEB;
+  --sf-color-disabled-text: #99AFAA;
+  --sf-color-disabled-border: #CBD6D4;
+
+  /* ── Status Colors ── */
+  --sf-color-error: #DC2626;
+  --sf-color-error-bg: #FEF2F2;
+  --sf-color-error-border: #FCA5A5;
+  --sf-color-error-text: #B91C1C;
+  --sf-color-destructive: #DC2626;
+
+  --sf-color-success: #059669;
+  --sf-color-success-bg: #ECFDF5;
+  --sf-color-success-border: #6EE7B7;
+  --sf-color-success-text: #047857;
+
+  --sf-color-warning: #D97706;
+  --sf-color-warning-bg: #FFFBEB;
+  --sf-color-warning-border: #FDE68A;
+  --sf-color-warning-text: #B45309;
+
+  --sf-color-info: #0284C7;
+  --sf-color-info-bg: #F0F9FF;
+  --sf-color-info-border: #BAE6FD;
+  --sf-color-info-text: #0369A1;
+
+  /* ── Cards & Inputs ── */
+  --sf-color-card-bg: #FFFFFF;
+  --sf-color-card-border: #E0E7E6;
+  --sf-color-input-bg: #FFFFFF;
+  --sf-color-input-border: #CBD6D4;
+
+  /* ── Legacy / Component Semantic Aliases ── */
+  --sf-color-bg-primary: #FFFFFF;
+  --sf-color-bg-secondary: #F7FAF9;
+  --sf-color-bg-hover: #F0F4F3;
+  --sf-color-danger: #DC2626;
+  --sf-color-danger-subtle: #FEF2F2;
+  --sf-color-text: #132B29;
+  --sf-text-primary: #132B29;
+  --sf-text-secondary: #57706C;
+  --sf-text-muted: #99AFAA;
+  --sf-bg-canvas: #F7FAF9;
+  --sf-bg-surface: #FFFFFF;
+  --sf-bg-surface-hover: #F0F4F3;
+  --sf-border-default: #E0E7E6;
+  --sf-border-subtle: #E0E7E6;
+  --sf-border-strong: #CBD6D4;
+  --sf-accent-primary: #0F766E;
+  --sf-accent-hover: #0D9488;
+  --sf-accent-subtle: #F0FDFA;
+  --sf-shadow-xs: 0 1px 2px rgba(19, 43, 41, 0.05);
+
+  /* ── Typography ── */
+  --sf-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --sf-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Font Sizes */
+  --sf-text-xs: 0.75rem;      /* 12px */
+  --sf-text-sm: 0.875rem;     /* 14px */
+  --sf-text-base: 1rem;       /* 16px */
+  --sf-text-lg: 1.125rem;     /* 18px */
+  --sf-text-xl: 1.25rem;      /* 20px */
+  --sf-text-2xl: 1.5rem;      /* 24px */
+  --sf-text-3xl: 1.875rem;    /* 30px */
+
+  /* Font Weights */
+  --sf-font-normal: 400;
+  --sf-font-medium: 500;
+  --sf-font-semibold: 600;
+  --sf-font-bold: 700;
+
+  /* Line Heights */
+  --sf-leading-tight: 1.25;
+  --sf-leading-normal: 1.5;
+  --sf-leading-relaxed: 1.625;
+
+  /* ── Spacing Scale (4px base) ── */
+  --sf-space-1: 0.25rem;   /* 4px */
+  --sf-space-2: 0.5rem;    /* 8px */
+  --sf-space-3: 0.75rem;   /* 12px */
+  --sf-space-4: 1rem;      /* 16px */
+  --sf-space-5: 1.25rem;   /* 20px */
+  --sf-space-6: 1.5rem;    /* 24px */
+  --sf-space-8: 2rem;      /* 32px */
+  --sf-space-10: 2.5rem;   /* 40px */
+  --sf-space-12: 3rem;     /* 48px */
+  --sf-space-16: 4rem;     /* 64px */
+
+  /* ── Borders & Radius ── */
+  --sf-radius-sm: 4px;
+  --sf-radius-md: 6px;
+  --sf-radius-lg: 8px;
+  --sf-radius-xl: 12px;
+  --sf-radius-2xl: 16px;
+  --sf-radius-full: 9999px;
+  --sf-border-width: 1px;
+
+  /* ── Shadows ── */
+  --sf-shadow-sm: 0 1px 2px rgba(19, 43, 41, 0.05);
+  --sf-shadow-md: 0 4px 6px -1px rgba(19, 43, 41, 0.08), 0 2px 4px -1px rgba(19, 43, 41, 0.04);
+  --sf-shadow-lg: 0 10px 15px -3px rgba(19, 43, 41, 0.08), 0 4px 6px -2px rgba(19, 43, 41, 0.03);
+  --sf-shadow-xl: 0 20px 25px -5px rgba(19, 43, 41, 0.08), 0 10px 10px -5px rgba(19, 43, 41, 0.02);
+
+  /* ── Focus ── */
+  --sf-focus-ring-color: rgba(15, 118, 110, 0.45);
+  --sf-focus-ring: 0 0 0 2px var(--sf-color-bg), 0 0 0 4px var(--sf-color-primary);
+
+  /* ── Motion & Transitions ── */
+  --sf-duration-fast: 150ms;
+  --sf-duration-normal: 250ms;
+  --sf-duration-slow: 400ms;
+  --sf-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --sf-transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --sf-transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --sf-glow: none;
+
+  /* ── Z-Index Scale ── */
+  --sf-z-dropdown: 10;
+  --sf-z-sticky: 20;
+  --sf-z-modal-backdrop: 40;
+  --sf-z-modal: 50;
+  --sf-z-toast: 60;
+}
+
+/* ==========================================================================
+   Light Theme Explicit Override (matches :root)
+   ========================================================================== */
+
+[data-theme="light"], html[data-theme="light"] {
+  color-scheme: light;
+  --sf-color-bg: #F7FAF9;
+  --sf-color-bg-elevated: #FFFFFF;
+  --sf-color-surface: #FFFFFF;
+  --sf-color-surface-hover: #F0F4F3;
+  --sf-color-surface-active: #E5ECEB;
+  --sf-color-surface-muted: #F0F4F3;
+  --sf-color-surface-elevated: #FFFFFF;
+  --sf-color-border: #E0E7E6;
+  --sf-color-border-hover: #CBD6D4;
+  --sf-color-border-focus: #0F766E;
+  --sf-color-divider: #E0E7E6;
+  --sf-color-text-primary: #132B29;
+  --sf-color-text-secondary: #57706C;
+  --sf-color-text-tertiary: #7B9490;
+  --sf-color-text-muted: #6B8580;
+  --sf-color-text-inverse: #FFFFFF;
+  --sf-color-text-on-primary: #FFFFFF;
+  --sf-color-card-bg: #FFFFFF;
+  --sf-color-card-border: #E0E7E6;
+  --sf-color-input-bg: #FFFFFF;
+  --sf-color-input-border: #CBD6D4;
+  --sf-color-primary: #0F766E;
+  --sf-color-primary-hover: #115E59;
+  --sf-color-primary-active: #0D4E4A;
+  --sf-color-primary-light: #F0FDFA;
+  --sf-color-primary-subtle: #F0FDFA;
+  --sf-color-primary-border: #99F6E4;
+  --sf-color-selected-bg: #F0FDFA;
+  --sf-color-selected-border: #0F766E;
+  --sf-color-selected-text: #0F766E;
+  --sf-color-hover-bg: #F0F4F3;
+  --sf-color-overlay-bg: rgba(19, 43, 41, 0.45);
+  --sf-color-disabled-bg: #E5ECEB;
+  --sf-color-disabled-text: #99AFAA;
+  --sf-color-disabled-border: #CBD6D4;
+
+  /* Legacy aliases */
+  --sf-color-bg-primary: #FFFFFF;
+  --sf-color-bg-secondary: #F7FAF9;
+  --sf-color-bg-hover: #F0F4F3;
+  --sf-color-danger: #DC2626;
+  --sf-color-danger-subtle: #FEF2F2;
+  --sf-color-text: #132B29;
+  --sf-text-primary: #132B29;
+  --sf-text-secondary: #57706C;
+  --sf-text-muted: #99AFAA;
+  --sf-bg-canvas: #F7FAF9;
+  --sf-bg-surface: #FFFFFF;
+  --sf-bg-surface-hover: #F0F4F3;
+  --sf-border-default: #E0E7E6;
+  --sf-border-subtle: #E0E7E6;
+  --sf-border-strong: #CBD6D4;
+  --sf-accent-primary: #0F766E;
+  --sf-accent-hover: #0D9488;
+  --sf-accent-subtle: #F0FDFA;
+  --sf-shadow-xs: 0 1px 2px rgba(19, 43, 41, 0.05);
+  --sf-focus-ring-color: rgba(15, 118, 110, 0.45);
+}
+
+/* ==========================================================================
+   Dark Theme Overrides (Teal Accent & Neutral Dark Surfaces)
+   ========================================================================== */
+
+[data-theme="dark"], html[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* ── Brand & Accent ── */
+  --sf-color-primary: #5EEAD4;
+  --sf-color-primary-hover: #2DD4BF;
+  --sf-color-primary-active: #14B8A6;
+  --sf-color-primary-light: rgba(94, 234, 212, 0.12);
+  --sf-color-primary-subtle: rgba(94, 234, 212, 0.12);
+  --sf-color-primary-border: #134E4A;
+
+  /* ── Backgrounds & Elevated Surfaces ── */
+  --sf-color-bg: #111B1B;
+  --sf-color-bg-elevated: #1D2B2A;
+  --sf-color-surface: #1D2B2A;
+  --sf-color-surface-hover: #263836;
+  --sf-color-surface-active: #2F4543;
+  --sf-color-surface-muted: #182424;
+  --sf-color-surface-elevated: #243533;
+
+  /* ── Borders & Dividers ── */
+  --sf-color-border: #344743;
+  --sf-color-border-hover: #455F5A;
+  --sf-color-border-focus: #5EEAD4;
+  --sf-color-divider: #344743;
+
+  /* ── Typography & Text ── */
+  --sf-color-text-primary: #EDF7F4;
+  --sf-color-text-secondary: #A4B9B4;
+  --sf-color-text-tertiary: #768E89;
+  --sf-color-text-muted: #708A85;
+  --sf-color-text-inverse: #111B1B;
+  --sf-color-text-on-primary: #111B1B;
+
+  /* ── Interaction States ── */
+  --sf-color-selected-bg: rgba(94, 234, 212, 0.14);
+  --sf-color-selected-border: #5EEAD4;
+  --sf-color-selected-text: #5EEAD4;
+  --sf-color-hover-bg: #263836;
+  --sf-color-overlay-bg: rgba(0, 0, 0, 0.7);
+  --sf-color-disabled-bg: #182424;
+  --sf-color-disabled-text: #5B726D;
+  --sf-color-disabled-border: #293B38;
+
+  /* ── Status Colors ── */
+  --sf-color-error: #F87171;
+  --sf-color-error-bg: #371717;
+  --sf-color-error-border: #7F1D1D;
+  --sf-color-error-text: #FCA5A5;
+  --sf-color-destructive: #F87171;
+
+  --sf-color-success: #34D399;
+  --sf-color-success-bg: #063124;
+  --sf-color-success-border: #065F46;
+  --sf-color-success-text: #A7F3D0;
+
+  --sf-color-warning: #FBBF24;
+  --sf-color-warning-bg: #3D2205;
+  --sf-color-warning-border: #78350F;
+  --sf-color-warning-text: #FDE68A;
+
+  --sf-color-info: #38BDF8;
+  --sf-color-info-bg: #082F49;
+  --sf-color-info-border: #075985;
+  --sf-color-info-text: #BAE6FD;
+
+  /* ── Cards & Inputs ── */
+  --sf-color-card-bg: #1D2B2A;
+  --sf-color-card-border: #344743;
+  --sf-color-input-bg: #152221;
+  --sf-color-input-border: #344743;
+
+  /* ── Legacy / Component Semantic Aliases ── */
+  --sf-color-bg-primary: #1D2B2A;
+  --sf-color-bg-secondary: #111B1B;
+  --sf-color-bg-hover: #263836;
+  --sf-color-danger: #F87171;
+  --sf-color-danger-subtle: #371717;
+  --sf-color-text: #EDF7F4;
+  --sf-text-primary: #EDF7F4;
+  --sf-text-secondary: #A4B9B4;
+  --sf-text-muted: #5B726D;
+  --sf-bg-canvas: #111B1B;
+  --sf-bg-surface: #1D2B2A;
+  --sf-bg-surface-hover: #263836;
+  --sf-border-default: #344743;
+  --sf-border-subtle: #344743;
+  --sf-border-strong: #455F5A;
+  --sf-accent-primary: #5EEAD4;
+  --sf-accent-hover: #2DD4BF;
+  --sf-accent-subtle: rgba(94, 234, 212, 0.12);
+  --sf-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --sf-focus-ring-color: rgba(94, 234, 212, 0.45);
+
+  /* ── Shadows ── */
+  --sf-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --sf-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --sf-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+  --sf-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================================================
+   Modern CSS Reset
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-inter), var(--sf-font-sans);
+  background-color: var(--sf-color-bg);
+  color: var(--sf-color-text-primary);
+  line-height: var(--sf-leading-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color var(--sf-transition-normal), color var(--sf-transition-normal);
+}
+
+/* Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Remove default list styles */
+ol, ul {
+  list-style: none;
+}
+
+/* Inherit fonts and apply semantic colors for form controls */
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+input, textarea, select {
+  background-color: var(--sf-color-input-bg);
+  color: var(--sf-color-text-primary);
+  border: 1px solid var(--sf-color-input-border);
+  border-radius: var(--sf-radius-md);
+  transition: border-color var(--sf-duration-fast) ease, box-shadow var(--sf-duration-fast) ease, background-color var(--sf-duration-fast) ease;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--sf-color-text-muted);
+  opacity: 1;
+}
+
+/* Explicit native select and option dark mode remediation */
+select {
+  cursor: pointer;
+}
+
+select option {
+  background-color: var(--sf-color-surface);
+  color: var(--sf-color-text-primary);
+}
+
+/* Consistent anchor styling */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Better table defaults */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ==========================================================================
+   Accessibility & Focus Defaults (WCAG 2.2 AA)
+   ========================================================================== */
+
+/* Universal focus-visible styling with high-contrast dual ring */
+*:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-focus-ring);
+  border-radius: inherit;
+}
+
+/* Hide focus ring on mouse click, but preserve for keyboard */
+*:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Reduced motion preference support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Custom Scrollbar
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sf-color-border);
+  border-radius: var(--sf-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sf-color-text-tertiary);
+}
+

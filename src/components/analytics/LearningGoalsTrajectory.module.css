@@ -1,0 +1,164 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-4);
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sf-space-3);
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: var(--sf-text-lg);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-2);
+}
+
+.subtitle {
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-tertiary);
+  margin: 0;
+}
+
+.goalsGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--sf-space-3);
+}
+
+@media (max-width: 1280px) {
+  .goalsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .goalsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.goalCard {
+  background-color: var(--sf-color-surface);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-xl);
+  padding: var(--sf-space-4);
+  box-shadow: var(--sf-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--sf-space-3);
+  transition: transform var(--sf-duration-fast);
+}
+
+.goalCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sf-shadow-md);
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.categoryTag {
+  font-size: 10px;
+  font-weight: var(--sf-font-bold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--sf-color-primary);
+  background-color: #EEF2FF;
+  padding: 2px 6px;
+  border-radius: var(--sf-radius-sm);
+}
+
+.categoryTagSkill { color: #047857; background-color: #D1FAE5; }
+.categoryTagFocus { color: #D97706; background-color: #FEF3C7; }
+.categoryTagTime { color: #0891B2; background-color: #CFFAFE; }
+.categoryTagVideo { color: #7C3AED; background-color: #EDE9FE; }
+
+.goalIcon {
+  color: var(--sf-color-text-tertiary);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.goalTitle {
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+  margin: 0;
+  line-height: var(--sf-leading-tight);
+}
+
+.goalDesc {
+  font-size: 11px;
+  color: var(--sf-color-text-tertiary);
+  margin: 0;
+}
+
+.progressNumbers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: var(--sf-font-semibold);
+  color: var(--sf-color-text-primary);
+}
+
+.percentSpan {
+  color: #16A34A;
+}
+
+.progressBarContainer {
+  height: 5px;
+  width: 100%;
+  background-color: var(--sf-color-bg);
+  border-radius: var(--sf-radius-full);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366F1, #818CF8);
+  border-radius: var(--sf-radius-full);
+}
+
+.progressFillGreen {
+  background: linear-gradient(90deg, #10B981, #34D399);
+}
+
+.cardFooter {
+  font-size: 10px;
+  color: var(--sf-color-text-tertiary);
+  border-top: var(--sf-border-width) solid var(--sf-color-border);
+  padding-top: var(--sf-space-2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footerHighlight {
+  color: #16A34A;
+  font-weight: var(--sf-font-medium);
+}

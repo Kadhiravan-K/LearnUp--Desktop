@@ -9,7 +9,8 @@ import {
   DurableNote,
   DurableProgress,
   UserProfile,
-  MutationJournalEntry
+  MutationJournalEntry,
+  transformPayloadForSupabase
 } from '../src/core';
 
 describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', () => {
@@ -18,9 +19,11 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
   let engine: SyncEngine;
   let accountManager: AccountLinkingManager;
 
-  const userA = 'guest_user_a';
-  const userB = 'guest_user_b';
+  const userA = 'profile_user_a';
+  const userB = 'profile_user_b';
+  const guestUser = 'guest_user_unlinked';
   const cloudUidA = 'cloud_uuid_aaaa_1111';
+  const cloudUidB = 'cloud_uuid_bbbb_2222';
 
   beforeEach(async () => {
     localStorage.clear();
@@ -38,23 +41,38 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     await storage.saveProfile({
       id: userA,
       name: 'User Alpha',
-      email: null,
+      email: 'alpha@example.com',
       color: '#6366F1',
       initials: 'UA',
       lockType: 'none',
       updatedAt: new Date().toISOString(),
-      isGuest: true,
-      cloudUserId: null,
-      cloudUserEmail: null,
-      cloudSyncEnabled: false
+      isGuest: false,
+      cloudUserId: cloudUidA,
+      cloudUserEmail: 'alpha@example.com',
+      cloudSyncEnabled: true
     });
+    await storage.setActiveProfile(userA);
 
     await storage.saveProfile({
       id: userB,
       name: 'User Beta',
-      email: null,
+      email: 'beta@example.com',
       color: '#10B981',
       initials: 'UB',
+      lockType: 'none',
+      updatedAt: new Date().toISOString(),
+      isGuest: false,
+      cloudUserId: cloudUidB,
+      cloudUserEmail: 'beta@example.com',
+      cloudSyncEnabled: true
+    });
+
+    await storage.saveProfile({
+      id: guestUser,
+      name: 'Guest User',
+      email: null,
+      color: '#64748B',
+      initials: 'GU',
       lockType: 'none',
       updatedAt: new Date().toISOString(),
       isGuest: true,
@@ -72,7 +90,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
 
     const note: DurableNote = {
       id: 'note_guest_1',
-      userId: userA,
+      userId: guestUser,
       learningItemId: 'course_offline',
       youtubeVideoId: 'vid_offline',
       content: 'Offline lecture note taken while disconnected from internet',
@@ -85,16 +103,16 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     };
 
     await storage.saveNote(note);
-    const retrieved = await storage.getNote(userA, 'note_guest_1');
+    const retrieved = await storage.getNote(guestUser, 'note_guest_1');
 
     expect(retrieved).not.toBeNull();
     expect(retrieved?.content).toBe(note.content);
     expect(retrieved?.syncStatus).toBe('saved_locally');
 
     // Sync attempt when offline reports offline cleanly without modifying local data
-    const syncResult = await engine.syncProfile(userA);
+    const syncResult = await engine.syncProfile(guestUser);
     expect(syncResult.processed).toBe(0);
-    const diag = await engine.getDiagnostics(userA);
+    const diag = await engine.getDiagnostics(guestUser);
     expect(diag.isOnline).toBe(false);
   });
 
@@ -120,7 +138,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
 
     const mutation = createMutationJournalEntry({
       userId: userA,
-      cloudUserId: null,
+      cloudUserId: cloudUidA,
       entityType: 'note',
       entityId: note.id,
       operation: 'CREATE',
@@ -191,7 +209,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     });
     await storage.appendMutation(mut);
 
-    const result = await engine.syncProfile(userA);
+    const result = await engine.syncProfile(userA, 'valid_token', cloudUidA);
     expect(result.failures).toBe(1);
     expect(result.processed).toBe(0);
 
@@ -257,6 +275,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     await storage.appendMutation(
       createMutationJournalEntry({
         userId: userA,
+        cloudUserId: cloudUidA,
         entityType: 'note',
         entityId: noteA.id,
         operation: 'CREATE',
@@ -284,6 +303,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     await storage.appendMutation(
       createMutationJournalEntry({
         userId: userB,
+        cloudUserId: cloudUidB,
         entityType: 'note',
         entityId: noteB.id,
         operation: 'CREATE',
@@ -294,7 +314,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     );
 
     // Sync only User A
-    await engine.syncProfile(userA);
+    await engine.syncProfile(userA, 'valid_token_a', cloudUidA);
 
     // Verify User A mutation cleared, User B mutation remains untouched in queue
     const pendingA = await storage.getPendingMutations(userA);
@@ -350,7 +370,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     await storage.appendMutation(deleteMut);
 
     // Run sync
-    const res = await engine.syncProfile(userA, 'valid_token');
+    const res = await engine.syncProfile(userA, 'valid_token', cloudUidA);
     expect(res.processed).toBe(1);
 
     // Verify server record is deleted
@@ -366,7 +386,6 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
   // ==========================================================================
   it('Scenario 8: Conflicting note edit preserves server note and forks local version to dated conflict note', async () => {
     const noteId = 'note_conflict_subject';
-    const originalContent = 'Base note content';
     const localContent = 'Local offline edit made on airplane';
     const remoteContent = 'Remote edit made on web portal';
 
@@ -409,7 +428,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     // Trigger sync with conflict enabled on transport
     transport.setSimulateConflict(true);
 
-    const syncResult = await engine.syncProfile(userA, 'valid_token');
+    const syncResult = await engine.syncProfile(userA, 'valid_token', cloudUidA);
     expect(syncResult.conflicts).toBe(1);
     expect(syncResult.processed).toBe(1);
 
@@ -433,6 +452,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
   it('Scenario 9: Pause halts sync processing and resume finishes pending mutations', async () => {
     const mut1 = createMutationJournalEntry({
       userId: userA,
+      cloudUserId: cloudUidA,
       entityType: 'note',
       entityId: 'note_pause_1',
       operation: 'CREATE',
@@ -442,6 +462,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     });
     const mut2 = createMutationJournalEntry({
       userId: userA,
+      cloudUserId: cloudUidA,
       entityType: 'note',
       entityId: 'note_pause_2',
       operation: 'CREATE',
@@ -457,7 +478,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     expect(engine.getIsPaused()).toBe(true);
 
     // Sync while paused does not process
-    const pausedResult = await engine.syncProfile(userA);
+    const pausedResult = await engine.syncProfile(userA, 'valid_token', cloudUidA);
     expect(pausedResult.processed).toBe(0);
 
     const pending = await storage.getPendingMutations(userA);
@@ -468,7 +489,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     expect(engine.getIsPaused()).toBe(false);
 
     // Sync after resume processes all pending items
-    const resumedResult = await engine.syncProfile(userA);
+    const resumedResult = await engine.syncProfile(userA, 'valid_token', cloudUidA);
     expect(resumedResult.processed).toBe(2);
 
     const pendingAfter = await storage.getPendingMutations(userA);
@@ -498,7 +519,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
 
     const mut = createMutationJournalEntry({
       userId: userA,
-      cloudUserId: 'bad_token_user',
+      cloudUserId: cloudUidA,
       entityType: 'note',
       entityId: note.id,
       operation: 'CREATE',
@@ -508,12 +529,11 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     });
     await storage.appendMutation(mut);
 
-    const result = await engine.syncProfile(userA);
+    const result = await engine.syncProfile(userA, 'bad_token', cloudUidA);
     expect(result.failures).toBe(1);
 
-    // Mutation is marked permanent_failure
-    const pending = await storage.getPendingMutations(userA);
-    expect(pending.length).toBe(0); // permanent_failure is removed from active pending retry queue
+    // Engine pauses automatically on auth error
+    expect(engine.getIsPaused()).toBe(true);
 
     // Local data is 100% intact
     const fetched = await storage.getNote(userA, 'note_auth_test');
@@ -529,6 +549,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
 
     const mut = createMutationJournalEntry({
       userId: userA,
+      cloudUserId: cloudUidA,
       entityType: 'note',
       entityId: 'note_latency_test',
       operation: 'CREATE',
@@ -539,7 +560,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     await storage.appendMutation(mut);
 
     // Start sync without blocking
-    const syncPromise = engine.syncProfile(userA);
+    const syncPromise = engine.syncProfile(userA, 'valid_token', cloudUidA);
 
     // Concurrently write new notes to storage during in-flight sync
     const concurrentNote: DurableNote = {
@@ -583,7 +604,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     await storage.appendMutation(mut);
 
     // Pass a fake Bearer token
-    await engine.syncProfile(userA, 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.secret_token');
+    await engine.syncProfile(userA, 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.secret_token', cloudUidA);
 
     const diag = await engine.getDiagnostics(userA);
     expect(diag.recentErrors.length).toBeGreaterThan(0);
@@ -629,7 +650,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     it('links profile with cloud user ID and tags pending mutations', async () => {
       await storage.appendMutation(
         createMutationJournalEntry({
-          userId: userA,
+          userId: guestUser,
           cloudUserId: null,
           entityType: 'note',
           entityId: 'n1',
@@ -641,16 +662,16 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
       );
 
       const updated = await accountManager.linkProfile(
-        userA,
+        guestUser,
         cloudUidA,
-        'user@example.com'
+        'guest@example.com'
       );
 
       expect(updated.cloudUserId).toBe(cloudUidA);
-      expect(updated.cloudUserEmail).toBe('user@example.com');
+      expect(updated.cloudUserEmail).toBe('guest@example.com');
       expect(updated.cloudSyncEnabled).toBe(true);
 
-      const pending = await storage.getPendingMutations(userA);
+      const pending = await storage.getPendingMutations(guestUser);
       expect(pending[0].cloudUserId).toBe(cloudUidA);
     });
 
@@ -712,7 +733,7 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     });
     await storage.appendMutation(mut);
 
-    const res = await engine.syncProfile(userA, 'valid_token');
+    const res = await engine.syncProfile(userA, 'valid_token', cloudUidA);
     expect(res.conflicts).toBe(1);
 
     const resolved = await storage.getProgress(userA, 'video_chem_101');
@@ -732,5 +753,580 @@ describe('SF-122 — Safe Offline-to-Cloud Synchronization Foundation Tests', ()
     expect(b1).toBeGreaterThanOrEqual(2000);
     expect(b5).toBeGreaterThanOrEqual(30000);
     expect(b10).toBeLessThanOrEqual(36000); // capped at 30s + 20% jitter
+  });
+});
+
+// ==========================================================================
+// SF-128 — Cloud Sync Integration Readiness & Security Contract Verification
+// ==========================================================================
+describe('SF-128 — Cloud Sync Integration Readiness & Security Contract Verification', () => {
+  let storage: WebFallbackAdapter;
+  let transport: MockSyncTransport;
+  let engine: SyncEngine;
+  let accountManager: AccountLinkingManager;
+
+  const testUser = 'profile_test_sf128';
+  const testCloudUid = 'cloud_uuid_sf128_verified';
+  const otherCloudUid = 'cloud_uuid_attacker_or_other';
+
+  beforeEach(async () => {
+    localStorage.clear();
+    storage = new WebFallbackAdapter();
+    await storage.init();
+    transport = new MockSyncTransport();
+    engine = new SyncEngine(storage, transport, {
+      maxRetries: 3,
+      baseBackoffMs: 50,
+      maxBackoffMs: 1000
+    });
+    accountManager = new AccountLinkingManager(storage);
+
+    // Initial state: Pure guest mode
+    await storage.saveProfile({
+      id: testUser,
+      name: 'SF128 Test User',
+      email: null,
+      color: '#4F46E5',
+      initials: 'TU',
+      lockType: 'none',
+      updatedAt: new Date().toISOString(),
+      isGuest: true,
+      cloudUserId: null,
+      cloudUserEmail: null,
+      cloudSyncEnabled: false
+    });
+    await storage.setActiveProfile(testUser);
+  });
+
+  // 1. Guest profile never uploads to cloud
+  it('Requirement 1: Guest profile never uploads to cloud', async () => {
+    const note: DurableNote = {
+      id: 'note_guest_private',
+      userId: testUser,
+      learningItemId: 'course_local',
+      youtubeVideoId: 'vid_local',
+      content: 'Private local notes taken in guest mode',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      version: 1,
+      syncStatus: 'saved_locally',
+      isDeleted: false,
+      tombstoneAt: null
+    };
+    await storage.saveNote(note);
+
+    const mut = createMutationJournalEntry({
+      userId: testUser,
+      cloudUserId: null,
+      entityType: 'note',
+      entityId: note.id,
+      operation: 'CREATE',
+      baseVersion: 0,
+      localVersion: 1,
+      payload: note as unknown as Record<string, unknown>
+    });
+    await storage.appendMutation(mut);
+
+    // Sync attempted on guest profile
+    const result = await engine.syncProfile(testUser);
+    expect(result.processed).toBe(0);
+    expect(result.failures).toBe(0);
+
+    // Remote server received nothing
+    expect(transport.getServerRecord('note', note.id)).toBeUndefined();
+
+    // Local data completely untouched
+    const localNote = await storage.getNote(testUser, note.id);
+    expect(localNote?.content).toBe(note.content);
+  });
+
+  // 2. Account link requires explicit user consent before uploading guest records
+  it('Requirement 2: Account link requires explicit user consent before uploading guest records', async () => {
+    const note: DurableNote = {
+      id: 'note_consent_test',
+      userId: testUser,
+      learningItemId: 'course_consent',
+      youtubeVideoId: 'vid_consent',
+      content: 'Pending user consent to sync to Supabase',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      version: 1,
+      syncStatus: 'saved_locally',
+      isDeleted: false,
+      tombstoneAt: null
+    };
+    await storage.saveNote(note);
+    await storage.appendMutation(
+      createMutationJournalEntry({
+        userId: testUser,
+        cloudUserId: null,
+        entityType: 'note',
+        entityId: note.id,
+        operation: 'CREATE',
+        baseVersion: 0,
+        localVersion: 1,
+        payload: note as unknown as Record<string, unknown>
+      })
+    );
+
+    // 1. Without consent, sync does nothing
+    const preConsentSync = await engine.syncProfile(testUser);
+    expect(preConsentSync.processed).toBe(0);
+
+    // 2. Preview data to user
+    const preview = await accountManager.generateLinkPreview(testUser, testCloudUid, 'student@learnup.io');
+    expect(preview.notesCount).toBe(1);
+    expect(preview.pendingMutationsCount).toBe(1);
+
+    // 3. Explicit consent: User links profile
+    await accountManager.linkProfile(testUser, testCloudUid, 'student@learnup.io');
+
+    // 4. Now sync succeeds and uploads
+    const postConsentSync = await engine.syncProfile(testUser, 'valid_jwt_token', testCloudUid);
+    expect(postConsentSync.processed).toBe(1);
+    expect(transport.getServerRecord('note', note.id)).toBeDefined();
+  });
+
+  // 3. Sync engine rejects mutations belonging to a different user or account
+  it('Requirement 3: Sync engine rejects mutations belonging to a different user or account', async () => {
+    await accountManager.linkProfile(testUser, testCloudUid, 'student@learnup.io');
+
+    // Mismatched cloud user ID mutation
+    const forgedMutation = createMutationJournalEntry({
+      userId: testUser,
+      cloudUserId: otherCloudUid, // Different cloud account!
+      entityType: 'note',
+      entityId: 'note_forged',
+      operation: 'CREATE',
+      baseVersion: 0,
+      localVersion: 1,
+      payload: { content: 'Should be rejected due to account mismatch' }
+    });
+    await storage.appendMutation(forgedMutation);
+
+    const result = await engine.syncProfile(testUser, 'valid_jwt_token', testCloudUid);
+    expect(result.failures).toBe(1);
+    expect(result.processed).toBe(0);
+
+    // Server never received the forged mutation
+    expect(transport.getServerRecord('note', 'note_forged')).toBeUndefined();
+
+    // Diagnostics record account mismatch
+    const diag = await engine.getDiagnostics(testUser);
+    expect(diag.recentErrors.some((e) => e.error.includes('Account mismatch'))).toBe(true);
+  });
+
+  // 4. Interrupted sync resumes from last acknowledged mutation
+  it('Requirement 4: Interrupted sync resumes from last acknowledged mutation', async () => {
+    await accountManager.linkProfile(testUser, testCloudUid, 'student@learnup.io');
+
+    const mut1 = createMutationJournalEntry({
+      userId: testUser,
+      cloudUserId: testCloudUid,
+      entityType: 'note',
+      entityId: 'note_step_1',
+      operation: 'CREATE',
+      baseVersion: 0,
+      localVersion: 1,
+      payload: { content: 'Step 1' }
+    });
+    const mut2 = createMutationJournalEntry({
+      userId: testUser,
+      cloudUserId: testCloudUid,
+      entityType: 'note',
+      entityId: 'note_step_2',
+      operation: 'CREATE',
+      baseVersion: 0,
+      localVersion: 1,
+      payload: { content: 'Step 2' }
+    });
+    await storage.appendMutation(mut1);
+    await storage.appendMutation(mut2);
+
+    // Make mut2 fail with 503 while mut1 succeeds
+    transport.setFailForEntityId('note_step_2');
+
+    const firstRun = await engine.syncProfile(testUser, 'valid_jwt_token', testCloudUid);
+    expect(firstRun.processed).toBe(1); // mut1 acknowledged
+    expect(firstRun.failures).toBe(1);  // mut2 failed
+
+    // mut1 is deleted from queue; mut2 remains in retryable state
+    const pendingMid = await storage.getPendingMutations(testUser);
+    expect(pendingMid.length).toBe(1);
+    expect(pendingMid[0].entityId).toBe('note_step_2');
+
+    // Remove simulated error: second run resumes directly from mut2 and completes
+    transport.setFailForEntityId(null);
+    const secondRun = await engine.syncProfile(testUser, 'valid_jwt_token', testCloudUid);
+    expect(secondRun.processed).toBe(1);
+    expect(secondRun.failures).toBe(0);
+
+    // Queue completely empty
+    const pendingFinal = await storage.getPendingMutations(testUser);
+    expect(pendingFinal.length).toBe(0);
+  });
+
+  // 5. Idempotent duplicate mutations do not corrupt local or remote state
+  it('Requirement 5: Idempotent duplicate mutations do not corrupt local or remote state', async () => {
+    await accountManager.linkProfile(testUser, testCloudUid, 'student@learnup.io');
+
+    const mut = createMutationJournalEntry({
+      userId: testUser,
+      cloudUserId: testCloudUid,
+      entityType: 'note',
+      entityId: 'note_idempotent',
+      operation: 'CREATE',
+      baseVersion: 0,
+      localVersion: 1,
+      payload: { content: 'Idempotent payload' }
+    });
+    await storage.appendMutation(mut);
+
+    // Run 1: Succeeds
+    const run1 = await engine.syncProfile(testUser, 'valid_jwt_token', testCloudUid);
+    expect(run1.processed).toBe(1);
+
+    // Manually replay duplicate mutation
+    await storage.appendMutation(mut);
+    const run2 = await engine.syncProfile(testUser, 'valid_jwt_token', testCloudUid);
+    expect(run2.processed).toBe(1);
+
+    // Server has exactly 1 record with identical content
+    const serverRec = transport.getServerRecord('note', 'note_idempotent');
+    expect(serverRec).toBeDefined();
+    expect((serverRec?.payload as Record<string, unknown>).content).toBe('Idempotent payload');
+  });
+
+  // 6. Note conflict forks local changes into a distinct, dated conflict note while preserving server version
+  it('Requirement 6: Note conflict forks local changes into a distinct, dated conflict note while preserving server version', async () => {
+    await accountManager.linkProfile(testUser, testCloudUid, 'student@learnup.io');
+
+    const noteId = 'note_conflict_fork';
+    const serverText = 'Version updated from web browser';
+    const localText = 'Version updated offline on laptop';
+
+    // Seed server state with version 2
+    transport.seedServerRecord('note', noteId, 2, {
+      id: noteId,
+      content: serverText,
+      version: 2,
+      updatedAt: new Date().toISOString()
+    });
+    transport.setSimulateConflict(true);
+
+    const localNote: DurableNote = {
+      id: noteId,
+      userId: testUser,
+      learningItemId: 'course_101',
+      youtubeVideoId: 'vid_101',
+      content: localText,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      version: 1,
+      syncStatus: 'saved_locally',
+      isDeleted: false,
+      tombstoneAt: null
+    };
+    await storage.saveNote(localNote);
+
+    const mut = createMutationJournalEntry({
+      userId: testUser,
+      cloudUserId: testCloudUid,
+      entityType: 'note',
+      entityId: noteId,
+      operation: 'UPDATE',
+      baseVersion: 1,
+      localVersion: 2,
+      payload: localNote as unknown as Record<string, unknown>
+    });
+    await storage.appendMutation(mut);
+
+    const res = await engine.syncProfile(testUser, 'valid_jwt_token', testCloudUid);
+    expect(res.conflicts).toBe(1);
+    expect(res.processed).toBe(1);
+
+    const allNotes = await storage.listNotes(testUser);
+    expect(allNotes.length).toBe(2);
+
+    // Primary note has server version
+    const primary = allNotes.find((n) => n.id === noteId);
+    expect(primary?.content).toBe(serverText);
+
+    // Forked note has local version preserved
+    const forked = allNotes.find((n) => n.id.startsWith(`${noteId}_conflict_`));
+    expect(forked?.content).toContain(localText);
+    expect(forked?.content).toContain('Local Conflict Fork');
+  });
+
+  // 7. Deleted records sync as tombstones and do not reappear
+  it('Requirement 7: Deleted records sync as tombstones and do not reappear', async () => {
+    await accountManager.linkProfile(testUser, testCloudUid, 'student@learnup.io');
+
+    const noteId = 'note_tombstone_test';
+    const note: DurableNote = {
+      id: noteId,
+      userId: testUser,
+      learningItemId: 'course_del',
+      youtubeVideoId: 'vid_del',
+      content: 'Destined for tombstone',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      version: 1,
+      syncStatus: 'synced',
+      isDeleted: false,
+      tombstoneAt: null
+    };
+    await storage.saveNote(note);
+    transport.seedServerRecord('note', noteId, 1, { ...note });
+
+    // Mark deleted locally
+    await storage.markNoteDeleted(testUser, noteId);
+    expect(await storage.listNotes(testUser)).toHaveLength(0);
+
+    // Queue DELETE mutation
+    await storage.appendMutation(
+      createMutationJournalEntry({
+        userId: testUser,
+        cloudUserId: testCloudUid,
+        entityType: 'note',
+        entityId: noteId,
+        operation: 'DELETE',
+        baseVersion: 1,
+        localVersion: 2,
+        payload: { id: noteId, isDeleted: true }
+      })
+    );
+
+    const syncResult = await engine.syncProfile(testUser, 'valid_jwt_token', testCloudUid);
+    expect(syncResult.processed).toBe(1);
+
+    // Server record removed
+    expect(transport.getServerRecord('note', noteId)).toBeUndefined();
+
+    // Local list still 0
+    expect(await storage.listNotes(testUser)).toHaveLength(0);
+  });
+
+  // 8. Expired auth token safely pauses sync and alerts the user without deleting local data
+  it('Requirement 8: Expired auth token safely pauses sync and alerts the user without deleting local data', async () => {
+    await accountManager.linkProfile(testUser, testCloudUid, 'student@learnup.io');
+    transport.setSimulateAuthFailure(true);
+
+    const note: DurableNote = {
+      id: 'note_auth_safety',
+      userId: testUser,
+      learningItemId: 'course_sec',
+      youtubeVideoId: 'vid_sec',
+      content: 'Local data that must NEVER be erased on token expiration',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      version: 1,
+      syncStatus: 'saved_locally',
+      isDeleted: false,
+      tombstoneAt: null
+    };
+    await storage.saveNote(note);
+
+    await storage.appendMutation(
+      createMutationJournalEntry({
+        userId: testUser,
+        cloudUserId: testCloudUid,
+        entityType: 'note',
+        entityId: note.id,
+        operation: 'CREATE',
+        baseVersion: 0,
+        localVersion: 1,
+        payload: note as unknown as Record<string, unknown>
+      })
+    );
+
+    const res = await engine.syncProfile(testUser, 'expired_jwt_token', testCloudUid);
+    expect(res.failures).toBe(1);
+
+    // Sync engine safely paused
+    expect(engine.getIsPaused()).toBe(true);
+
+    // Local data completely safe
+    const retrieved = await storage.getNote(testUser, note.id);
+    expect(retrieved).not.toBeNull();
+    expect(retrieved?.content).toBe(note.content);
+
+    // User alert diagnostic recorded
+    const diag = await engine.getDiagnostics(testUser);
+    expect(diag.isPaused).toBe(true);
+    expect(diag.recentErrors.some((e) => e.category === 'auth')).toBe(true);
+  });
+
+  // 9. Offline app startup with pending mutations remains responsive and does not block UI
+  it('Requirement 9: Offline app startup with pending mutations remains responsive and does not block UI', async () => {
+    await accountManager.linkProfile(testUser, testCloudUid, 'student@learnup.io');
+    transport.setOnline(false); // Offline environment
+
+    await storage.appendMutation(
+      createMutationJournalEntry({
+        userId: testUser,
+        cloudUserId: testCloudUid,
+        entityType: 'note',
+        entityId: 'note_startup_offline',
+        operation: 'CREATE',
+        baseVersion: 0,
+        localVersion: 1,
+        payload: { content: 'Offline pending' }
+      })
+    );
+
+    const startTime = Date.now();
+    const result = await engine.syncProfile(testUser, 'valid_jwt_token', testCloudUid);
+    const durationMs = Date.now() - startTime;
+
+    // Fast and non-blocking
+    expect(durationMs).toBeLessThan(100);
+    expect(result.processed).toBe(0);
+
+    const diag = await engine.getDiagnostics(testUser);
+    expect(diag.isOnline).toBe(false);
+    expect(diag.pendingCount).toBe(1);
+  });
+
+  // 10. Logout or unlinking stops cloud uploads immediately and preserves local records
+  it('Requirement 10: Logout or unlinking stops cloud uploads immediately and preserves local records', async () => {
+    // 1. Link profile and save notes
+    await accountManager.linkProfile(testUser, testCloudUid, 'student@learnup.io');
+    const note: DurableNote = {
+      id: 'note_keep_local',
+      userId: testUser,
+      learningItemId: 'course_stay',
+      youtubeVideoId: 'vid_stay',
+      content: 'Preserved locally after unlinking',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      version: 1,
+      syncStatus: 'saved_locally',
+      isDeleted: false,
+      tombstoneAt: null
+    };
+    await storage.saveNote(note);
+
+    await storage.appendMutation(
+      createMutationJournalEntry({
+        userId: testUser,
+        cloudUserId: testCloudUid,
+        entityType: 'note',
+        entityId: note.id,
+        operation: 'CREATE',
+        baseVersion: 0,
+        localVersion: 1,
+        payload: note as unknown as Record<string, unknown>
+      })
+    );
+
+    // 2. Unlink profile (simulating logout or user choice)
+    const unlinkedProfile = await accountManager.unlinkProfile(testUser);
+    expect(unlinkedProfile.cloudSyncEnabled).toBe(false);
+    expect(unlinkedProfile.cloudUserId).toBeNull();
+
+    // 3. Sync stops immediately
+    const res = await engine.syncProfile(testUser);
+    expect(res.processed).toBe(0);
+
+    // 4. Local note is 100% preserved in SQLite storage
+    const localNote = await storage.getNote(testUser, note.id);
+    expect(localNote).not.toBeNull();
+    expect(localNote?.content).toBe(note.content);
+  });
+
+  // Schema Compatibility: Transformation to Supabase PostgreSQL Schema
+  describe('Supabase Schema Transformation Compatibility', () => {
+    it('transforms note payload to exact Supabase notes table schema', () => {
+      const desktopNote = {
+        id: 'note-uuid-1234',
+        learningItemId: 'course-uuid-5678',
+        youtubeVideoId: 'video_abc',
+        content: 'Notes markdown content',
+        createdAt: '2026-10-17T10:00:00.000Z',
+        version: 2,
+        syncStatus: 'saved_locally'
+      };
+
+      const transformed = transformPayloadForSupabase('note', desktopNote, testCloudUid);
+      expect(transformed.id).toBe('note-uuid-1234');
+      expect(transformed.user_id).toBe(testCloudUid);
+      expect(transformed.learning_item_id).toBe('course-uuid-5678');
+      expect(transformed.youtube_video_id).toBe('video_abc');
+      expect(transformed.content).toBe('Notes markdown content');
+      expect(transformed).not.toHaveProperty('learningItemId');
+      expect(transformed).not.toHaveProperty('youtubeVideoId');
+      expect(transformed).not.toHaveProperty('syncStatus');
+      expect(transformed).not.toHaveProperty('version');
+    });
+
+    it('transforms progress payload to exact Supabase video_progress schema without id column', () => {
+      const desktopProgress = {
+        id: 'prog-local-id',
+        youtubeVideoId: 'video_xyz',
+        positionSeconds: 154.67,
+        durationSeconds: 300.2,
+        isCompleted: true,
+        version: 3,
+        syncStatus: 'saved_locally'
+      };
+
+      const transformed = transformPayloadForSupabase('progress', desktopProgress, testCloudUid);
+      expect(transformed.user_id).toBe(testCloudUid);
+      expect(transformed.youtube_video_id).toBe('video_xyz');
+      expect(transformed.position_seconds).toBe(155); // Rounded integer
+      expect(transformed.duration_seconds).toBe(300); // Rounded integer
+      expect(transformed.is_completed).toBe(true);
+      expect(transformed).not.toHaveProperty('id'); // Table has composite PK (user_id, youtube_video_id)
+      expect(transformed).not.toHaveProperty('positionSeconds');
+      expect(transformed).not.toHaveProperty('durationSeconds');
+      expect(transformed).not.toHaveProperty('syncStatus');
+    });
+
+    it('transforms bookmark payload to exact Supabase bookmarks table schema', () => {
+      const desktopBookmark = {
+        id: 'bm-uuid-123',
+        learningItemId: 'course-uuid-456',
+        youtubeVideoId: 'video_xyz',
+        positionSeconds: 42.1,
+        label: 'Important formula derivation',
+        createdAt: '2026-10-17T11:00:00.000Z'
+      };
+
+      const transformed = transformPayloadForSupabase('bookmark', desktopBookmark, testCloudUid);
+      expect(transformed.id).toBe('bm-uuid-123');
+      expect(transformed.user_id).toBe(testCloudUid);
+      expect(transformed.learning_item_id).toBe('course-uuid-456');
+      expect(transformed.youtube_video_id).toBe('video_xyz');
+      expect(transformed.position_seconds).toBe(42); // Rounded integer
+      expect(transformed.label).toBe('Important formula derivation');
+      expect(transformed).not.toHaveProperty('learningItemId');
+      expect(transformed).not.toHaveProperty('positionSeconds');
+    });
+
+    it('transforms learning item payload to exact Supabase learning_items schema', () => {
+      const desktopCourse = {
+        id: 'course-uuid-789',
+        sourceType: 'video',
+        sourceId: 'video_abc',
+        title: 'Deep Learning Specialization',
+        thumbnailUrl: 'https://img.youtube.com/vi/video_abc/hqdefault.jpg'
+      };
+
+      const transformed = transformPayloadForSupabase('learning_item', desktopCourse, testCloudUid);
+      expect(transformed.id).toBe('course-uuid-789');
+      expect(transformed.user_id).toBe(testCloudUid);
+      expect(transformed.type).toBe('video');
+      expect(transformed.youtube_video_id).toBe('video_abc');
+      expect(transformed.youtube_playlist_id).toBeNull();
+      expect(transformed.source_url).toBe('https://www.youtube.com/watch?v=video_abc');
+      expect(transformed.normalized_source_key).toBe('youtube:video_abc');
+      expect(transformed.title).toBe('Deep Learning Specialization');
+      expect(transformed.thumbnail_url).toBe('https://img.youtube.com/vi/video_abc/hqdefault.jpg');
+      expect(transformed.status).toBe('ready');
+      expect(transformed).not.toHaveProperty('sourceType');
+      expect(transformed).not.toHaveProperty('sourceId');
+      expect(transformed).not.toHaveProperty('thumbnailUrl');
+    });
   });
 });

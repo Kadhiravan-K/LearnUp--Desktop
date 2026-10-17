@@ -8,6 +8,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      'next/link': path.resolve(__dirname, './src/compat/next-link.tsx'),
+      'next/navigation': path.resolve(__dirname, './src/compat/next-navigation.ts'),
+      'next/image': path.resolve(__dirname, './src/compat/next-image.tsx'),
+      'react-youtube': path.resolve(__dirname, './src/compat/react-youtube.tsx'),
     },
   },
   // Prevent vite from obscuring rust errors

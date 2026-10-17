@@ -1,0 +1,85 @@
+.container {
+  width: 100%;
+  background: var(--sf-color-bg);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  border-radius: var(--sf-radius-lg, 12px);
+  padding: 6px;
+  overflow-x: auto;
+}
+
+.tabsRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: max-content;
+}
+
+.tabBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: var(--sf-color-text-secondary, #64748b);
+  font-size: 0.8125rem;
+}
+
+.tabBtn:hover {
+  background: var(--sf-color-surface, #ffffff);
+  color: var(--sf-color-text-primary, #0f172a);
+}
+
+.tabBtnActive {
+  background: var(--sf-color-surface, #ffffff);
+  border-color: var(--sf-color-border, #cbd5e1);
+  color: var(--sf-color-text-primary, #0f172a);
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tabTitle {
+  font-weight: 600;
+}
+
+.tabMeta {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-tertiary, #94a3b8);
+  margin-left: 2px;
+}
+
+.lockIcon {
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+.addTrackBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px dashed var(--sf-color-border, #cbd5e1);
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--sf-color-text-secondary, #64748b);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.addTrackBtn:hover {
+  background: var(--sf-color-surface, #ffffff);
+  border-color: #6366f1;
+  color: #6366f1;
+}

@@ -82,7 +82,8 @@ export class SyncEngine {
 
   public async syncProfile(
     userId: string,
-    authToken?: string
+    authToken?: string,
+    cloudUserId?: string
   ): Promise<{
     processed: number;
     conflicts: number;
@@ -98,6 +99,26 @@ export class SyncEngine {
       return { processed: 0, conflicts: 0, failures: 0 };
     }
 
+    // Determine cloud account scope
+    let resolvedCloudUserId = cloudUserId;
+    if (resolvedCloudUserId === undefined) {
+      const profile = await this.storage.getActiveProfile().catch(() => null);
+      if (profile && profile.id === userId && profile.cloudSyncEnabled && profile.cloudUserId) {
+        resolvedCloudUserId = profile.cloudUserId;
+      }
+    }
+
+    // GUEST GUARD: Unlinked guest profiles must never upload mutations to the cloud
+    if (!resolvedCloudUserId) {
+      this.recordError(
+        'guest_mode',
+        'note',
+        'Profile is in local guest mode; cloud sync is disabled. Link an account with explicit consent to upload.',
+        'validation'
+      );
+      return { processed: 0, conflicts: 0, failures: 0 };
+    }
+
     this.isRunning = true;
     this.notifyDiagnostics();
 
@@ -110,6 +131,45 @@ export class SyncEngine {
 
       for (const mutation of pending) {
         if (this.isPaused) break;
+
+        // Profile ownership guard: reject mutations belonging to a different user
+        if (mutation.userId !== userId) {
+          failures++;
+          this.recordError(
+            mutation.id,
+            mutation.entityType,
+            `Ownership mismatch: Mutation userId "${mutation.userId}" does not match active profile "${userId}".`,
+            'auth'
+          );
+          await this.storage.updateMutationStatus(mutation.id, 'permanent_failure', 'Ownership mismatch');
+          continue;
+        }
+
+        // Cloud account mismatch guard: reject mutations tagged for a different cloud user
+        if (mutation.cloudUserId && mutation.cloudUserId !== resolvedCloudUserId) {
+          failures++;
+          this.recordError(
+            mutation.id,
+            mutation.entityType,
+            `Account mismatch: Mutation cloudUserId "${mutation.cloudUserId}" does not match active cloud user "${resolvedCloudUserId}".`,
+            'auth'
+          );
+          await this.storage.updateMutationStatus(mutation.id, 'permanent_failure', 'Account mismatch');
+          continue;
+        }
+
+        // Consent guard: reject mutations missing cloudUserId tag
+        if (!mutation.cloudUserId) {
+          failures++;
+          this.recordError(
+            mutation.id,
+            mutation.entityType,
+            'Guest record cannot be uploaded without user consent and account linking.',
+            'validation'
+          );
+          await this.storage.updateMutationStatus(mutation.id, 'permanent_failure', 'Unconsented guest record');
+          continue;
+        }
 
         // Check retry limits
         if (mutation.retryCount >= this.maxRetries) {
@@ -157,7 +217,16 @@ export class SyncEngine {
 
             this.recordError(mutation.id, mutation.entityType, err.message, err.category);
 
-            if (err.isRetryable) {
+            // Auth failure: safely pause the sync engine to protect credentials and stop retry spam
+            if (err.category === 'auth') {
+              this.pause();
+              await this.storage.updateMutationStatus(
+                mutation.id,
+                'retryable_failure',
+                `Authentication paused: ${err.message}`
+              );
+              break;
+            } else if (err.isRetryable) {
               const backoffMs = calculateBackoffDelayMs(mutation.retryCount, this.baseBackoffMs, this.maxBackoffMs);
               await this.storage.updateMutationStatus(
                 mutation.id,
@@ -261,10 +330,14 @@ export class SyncEngine {
     error: string,
     category: string
   ): void {
+    const sanitized = error
+      .replace(/Bearer\s+[A-Za-z0-9._-]+/gi, 'Bearer [REDACTED]')
+      .replace(/eyJ[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+/g, '[REDACTED_JWT]');
+
     this.recentErrors.unshift({
       mutationId,
       entityType,
-      error,
+      error: sanitized,
       category,
       timestamp: new Date().toISOString()
     });

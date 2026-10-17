@@ -1,0 +1,438 @@
+.section {
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--sf-color-border);
+}
+
+.titleArea {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.icon {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--sf-color-text-primary);
+}
+
+.subtext {
+  margin: 4px 0 0 0;
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-secondary);
+  line-height: 1.4;
+}
+
+.engineBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--sf-color-bg-elevated);
+  color: var(--sf-color-text-secondary);
+  letter-spacing: 0.05em;
+  border: 1px solid var(--sf-color-border);
+  white-space: nowrap;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.groupLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--sf-color-text-secondary);
+  text-transform: uppercase;
+}
+
+/* Theme Cards Grid (3 Columns) */
+.themeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .themeGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.themeCard {
+  background: var(--sf-color-surface);
+  border: 1.5px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  padding: 14px;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.15s ease-in-out;
+}
+
+.themeCard:hover {
+  border-color: var(--sf-color-border-hover);
+  background: var(--sf-color-surface-hover);
+}
+
+.themeCardActive {
+  border-color: var(--sf-color-primary);
+  box-shadow: 0 0 0 1.5px var(--sf-color-primary);
+  background: var(--sf-color-surface-hover);
+}
+
+.themeCardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.themeTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.themeName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--sf-color-text-primary);
+}
+
+.checkActive {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--sf-color-primary);
+  color: var(--sf-color-text-on-primary, #FFFFFF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.radioInactive {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sf-color-border);
+}
+
+/* Theme Visual Previews */
+.themePreviewLight {
+  background: #F7FAF9;
+  border: 1px solid #D2DFDC;
+  border-radius: 6px;
+  height: 48px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.previewBarLight {
+  width: 65%;
+  height: 6px;
+  background: #D2DFDC;
+  border-radius: 3px;
+}
+
+.previewBlockLight {
+  width: 35%;
+  height: 12px;
+  background: #0F766E;
+  border-radius: 3px;
+}
+
+.themePreviewDark {
+  background: #111B1B;
+  border: 1px solid #344743;
+  border-radius: 6px;
+  height: 48px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.previewBarDark {
+  width: 65%;
+  height: 6px;
+  background: #344743;
+  border-radius: 3px;
+}
+
+.previewBlockDark {
+  width: 35%;
+  height: 12px;
+  background: #5EEAD4;
+  border-radius: 3px;
+}
+
+.themePreviewSystem {
+  display: flex;
+  border-radius: 6px;
+  height: 48px;
+  overflow: hidden;
+  border: 1px solid var(--sf-color-border);
+}
+
+.previewSplitLight {
+  flex: 1;
+  background: #F7FAF9;
+  border-right: 1px solid #D2DFDC;
+}
+
+.previewSplitDark {
+  flex: 1;
+  background: #111B1B;
+}
+
+/* Accent Spectrum Header & Color Pills */
+.accentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  background: var(--sf-color-bg-elevated);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+}
+
+.accentText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.colorPills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.colorDot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+}
+
+.colorDot:hover {
+  transform: scale(1.12);
+}
+
+.dotActive {
+  border-color: #FFFFFF;
+  box-shadow: 0 0 0 2px var(--sf-color-primary);
+  transform: scale(1.15);
+}
+
+.checkMark {
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Two-Column Grid for Font Scale & Density */
+.twoColumnGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .twoColumnGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Segmented Control Buttons */
+.segmentedControl {
+  display: flex;
+  background: var(--sf-color-bg-elevated);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  padding: 4px;
+  gap: 4px;
+}
+
+.segmentBtn {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--sf-color-text-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  text-align: center;
+}
+
+.segmentBtn:hover {
+  color: var(--sf-color-text-primary);
+  background: var(--sf-color-surface-hover);
+}
+
+.segmentActive {
+  background: var(--sf-color-surface);
+  color: var(--sf-color-text-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  font-weight: 700;
+}
+
+/* Live Theme Preview Card */
+.previewWidget {
+  background: var(--sf-color-bg-elevated);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.previewWidgetHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.previewModeBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--sf-color-text-secondary);
+}
+
+.previewSampleBox {
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.previewSampleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sampleBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+
+.sampleTag {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary);
+  font-weight: 500;
+}
+
+.sampleStatus {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: #10B981;
+  font-weight: 600;
+}
+
+.sampleProgressBarBg {
+  width: 100%;
+  height: 6px;
+  background: var(--sf-color-bg-elevated);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.sampleProgressBarFill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease, background-color 0.2s ease;
+}
+
+.sampleText {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-secondary);
+  line-height: 1.4;
+}
+
+/* Typography Card Footer */
+.typographyCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: var(--sf-color-bg-elevated);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+}
+
+.typographyLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.typographyTitle {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--sf-color-text-primary);
+}
+
+.typographyDesc {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary);
+}
+
+.hardwareBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  color: var(--sf-color-text-secondary);
+  letter-spacing: 0.05em;
+}

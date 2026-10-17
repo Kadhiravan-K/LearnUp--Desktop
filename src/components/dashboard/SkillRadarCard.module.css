@@ -1,0 +1,119 @@
+.card {
+  background-color: var(--sf-color-surface);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-xl);
+  padding: var(--sf-space-5);
+  box-shadow: var(--sf-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-3);
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-semibold);
+  color: var(--sf-color-text-primary);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-tertiary);
+  margin: 0;
+}
+
+.scoreBadge {
+  background-color: var(--sf-color-primary-light);
+  color: var(--sf-color-primary);
+  border: var(--sf-border-width) solid var(--sf-color-primary-border);
+  padding: 4px 8px;
+  border-radius: var(--sf-radius-md);
+  font-size: 11px;
+  font-weight: var(--sf-font-semibold);
+  text-align: right;
+}
+
+.radarWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+}
+
+.radarSvg {
+  width: 100%;
+  height: 100%;
+  max-width: 260px;
+}
+
+.webRing {
+  fill: none;
+  stroke: var(--sf-color-border);
+  stroke-width: 1;
+}
+
+.webAxis {
+  stroke: var(--sf-color-border);
+  stroke-width: 1;
+}
+
+.skillPolygon {
+  fill: color-mix(in srgb, var(--sf-color-primary) 20%, transparent);
+  stroke: var(--sf-color-primary);
+  stroke-width: 2;
+}
+
+.skillPoint {
+  fill: var(--sf-color-primary);
+}
+
+.axisLabel {
+  font-size: 9px;
+  font-weight: var(--sf-font-semibold);
+  fill: var(--sf-color-text-secondary);
+  text-anchor: middle;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-secondary);
+  border-top: var(--sf-border-width) solid var(--sf-color-border);
+  padding-top: var(--sf-space-3);
+}
+
+.deepLink {
+  color: var(--sf-color-primary);
+  font-weight: var(--sf-font-semibold);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.deepLink:hover {
+  text-decoration: underline;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sf-space-2);
+  color: var(--sf-color-text-secondary);
+  font-size: var(--sf-text-xs);
+  text-align: center;
+}

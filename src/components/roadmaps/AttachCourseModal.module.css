@@ -1,0 +1,58 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--sf-color-text-primary, #0f172a);
+}
+
+.input {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--sf-color-border, #cbd5e1);
+  background: var(--sf-color-surface, #ffffff);
+  color: var(--sf-color-text-primary, #0f172a);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.input:focus {
+  border-color: #6366f1;
+}
+
+.rowTwo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--sf-color-border, #e2e8f0);
+}
+
+.emptyLibrary {
+  color: var(--sf-color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.emptyLibrary a {
+  color: var(--sf-color-primary);
+  font-weight: 600;
+}

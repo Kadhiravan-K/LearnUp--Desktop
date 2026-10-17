@@ -1,0 +1,216 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-3);
+  width: 100%;
+}
+
+.alertWrapper {
+  margin-bottom: var(--sf-space-1);
+}
+
+.pluginToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background-color: var(--sf-color-surface-hover, #F1F5F9);
+  border: 1px solid var(--sf-color-border, #CBD5E1);
+  border-radius: var(--sf-radius-md, 6px);
+  padding: 6px 10px;
+}
+
+.toolbarLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modeTabs {
+  display: flex;
+  gap: 4px;
+}
+
+.modeTab {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: var(--sf-radius-sm, 4px);
+  border: none;
+  background: transparent;
+  color: var(--sf-color-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.modeTab:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  color: var(--sf-color-text-primary);
+}
+
+.modeTabActive {
+  background-color: var(--sf-color-primary, #0F766E);
+  color: var(--sf-color-text-on-primary, #FFFFFF) !important;
+}
+
+.formattingButtons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.formatBtn {
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: var(--sf-radius-sm, 4px);
+  border: 1px solid var(--sf-color-border);
+  background: var(--sf-color-surface);
+  color: var(--sf-color-text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.formatBtn:hover {
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
+}
+
+.textareaWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 96px;
+  padding: var(--sf-space-3);
+  background-color: var(--sf-color-surface);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  font-family: var(--sf-font-sans);
+  font-size: var(--sf-text-sm);
+  color: var(--sf-color-text-primary);
+  line-height: var(--sf-leading-normal);
+  resize: vertical;
+  transition: border-color var(--sf-transition-fast), box-shadow var(--sf-transition-fast);
+}
+
+.textareaMono {
+  font-family: var(--sf-font-mono, monospace);
+  font-size: 0.8125rem;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--sf-color-primary);
+  box-shadow: 0 0 0 1px var(--sf-color-primary);
+}
+
+.textarea::placeholder {
+  color: var(--sf-color-text-tertiary);
+}
+
+.previewBox {
+  min-height: 96px;
+  padding: 12px 16px;
+  background-color: var(--sf-color-surface);
+  border: 1px dashed var(--sf-color-primary-border, #C7D2FE);
+  border-radius: var(--sf-radius-md);
+}
+
+.emptyPreviewText {
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-tertiary);
+  margin: 0;
+}
+
+.texGuideBox {
+  padding: 12px;
+  background-color: var(--sf-color-surface-hover);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.guideTitle {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--sf-color-text-primary);
+}
+
+.guideGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.guideItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--sf-color-surface);
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--sf-color-border);
+}
+
+.guideItem code {
+  font-family: var(--sf-font-mono, monospace);
+  font-size: 0.75rem;
+  color: var(--sf-color-primary, #0F766E);
+}
+
+.guideItem span {
+  font-size: 0.6875rem;
+  color: var(--sf-color-text-secondary);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sf-space-2);
+}
+
+.footerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hint {
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-tertiary);
+}
+
+.exportPills {
+  display: flex;
+  gap: 6px;
+}
+
+.exportBtn {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--sf-color-border);
+  background: var(--sf-color-surface);
+  color: var(--sf-color-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.exportBtn:hover {
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-2);
+  margin-left: auto;
+}

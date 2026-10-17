@@ -1,0 +1,404 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-6, 24px);
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--sf-space-6, 24px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--sf-space-4, 16px);
+  flex-wrap: wrap;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: var(--sf-text-muted, #94a3b8);
+  margin-bottom: 6px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--sf-text-primary, #0f172a);
+  margin: 0;
+}
+
+.syncedBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  background: var(--sf-bg-surface, #ffffff);
+  color: var(--sf-text-primary, #0f172a);
+  border: 1px solid var(--sf-border-subtle, #e2e8f0);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnSecondary:hover {
+  background: var(--sf-bg-surface-hover, #f8fafc);
+  border-color: var(--sf-border-default, #cbd5e1);
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  background: var(--sf-accent-primary, #6366f1);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(99, 102, 241, 0.2);
+  transition: all 0.15s ease;
+}
+
+.btnPrimary:hover {
+  background: var(--sf-accent-hover, #4f46e5);
+}
+
+/* Search bar */
+.searchWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 16px 12px 42px;
+  font-size: 0.9375rem;
+  border-radius: 10px;
+  background: var(--sf-bg-surface, #ffffff);
+  border: 1px solid var(--sf-border-subtle, #e2e8f0);
+  color: var(--sf-text-primary, #0f172a);
+  outline: none;
+}
+
+.searchInput:focus {
+  border-color: var(--sf-accent-primary, #6366f1);
+  box-shadow: 0 0 0 3px var(--sf-accent-subtle, rgba(99, 102, 241, 0.15));
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--sf-text-muted, #94a3b8);
+}
+
+/* Category Tabs */
+.categoryTabs {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid var(--sf-border-subtle, #e2e8f0);
+  padding-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.catBtn {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  background: var(--sf-bg-surface, #ffffff);
+  border: 1px solid var(--sf-border-subtle, #e2e8f0);
+  color: var(--sf-text-secondary, #64748b);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+.catBtnActive {
+  background: var(--sf-accent-primary, #6366f1);
+  color: #ffffff;
+  border-color: var(--sf-accent-primary, #6366f1);
+  font-weight: 600;
+}
+
+.catBadge {
+  font-size: 0.75rem;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.catBtnActive .catBadge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Main 2-Column Layout */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--sf-space-6, 24px);
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.notesList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.noteCard {
+  background: var(--sf-bg-surface, #ffffff);
+  border: 1px solid var(--sf-border-subtle, #e2e8f0);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+.noteCard:hover {
+  border-color: var(--sf-border-default, #cbd5e1);
+  box-shadow: var(--sf-shadow-sm, 0 2px 4px rgba(0,0,0,0.04));
+}
+
+.noteHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.courseTag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--sf-accent-primary, #6366f1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.timestampJumpBtn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.noteTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--sf-text-primary, #0f172a);
+  margin: 0;
+}
+
+.noteBody {
+  font-size: 0.875rem;
+  color: var(--sf-text-secondary, #64748b);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.codeBlock {
+  background: var(--sf-color-surface);
+  color: #f8fafc;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8125rem;
+  overflow-x: auto;
+  line-height: 1.4;
+}
+
+.lemmaBox {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #92400e;
+  font-size: 0.8125rem;
+  font-family: monospace;
+}
+
+.noteFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px solid var(--sf-border-subtle, #e2e8f0);
+}
+
+.tagList {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 0.6875rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--sf-bg-canvas, #f1f5f9);
+  color: var(--sf-text-secondary, #64748b);
+}
+
+.actionsGroup {
+  display: flex;
+  gap: 8px;
+}
+
+.iconBtn {
+  background: transparent;
+  border: none;
+  color: var(--sf-text-muted, #94a3b8);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.iconBtn:hover {
+  color: var(--sf-text-primary, #0f172a);
+  background: var(--sf-bg-canvas, #f1f5f9);
+}
+
+/* Right Column: Bookmarks Ledger & Quick Note */
+.rightPane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-5, 20px);
+  position: sticky;
+  top: 24px;
+}
+
+.bookmarksLedger {
+  background: var(--sf-bg-surface, #ffffff);
+  border: 1px solid var(--sf-border-subtle, #e2e8f0);
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ledgerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ledgerTitle {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--sf-text-primary, #0f172a);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ledgerItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--sf-border-subtle, #f1f5f9);
+  font-size: 0.8125rem;
+}
+
+.ledgerItem:last-child {
+  border-bottom: none;
+}
+
+.ledgerItemLabel {
+  color: var(--sf-text-primary, #0f172a);
+  font-weight: 500;
+}
+
+.jumpSmallBtn {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: none;
+  cursor: pointer;
+}
+
+/* Quick Note Form */
+.quickNoteCard {
+  background: var(--sf-bg-surface, #ffffff);
+  border: 1px solid var(--sf-border-subtle, #e2e8f0);
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quickNoteInput {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--sf-border-subtle, #e2e8f0);
+  background: var(--sf-bg-surface, #ffffff);
+  color: var(--sf-text-primary, #0f172a);
+  font-size: 0.875rem;
+}
+
+.quickNoteTextarea {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--sf-border-subtle, #e2e8f0);
+  background: var(--sf-bg-surface, #ffffff);
+  color: var(--sf-text-primary, #0f172a);
+  font-size: 0.8125rem;
+  min-height: 90px;
+  resize: vertical;
+  font-family: inherit;
+}

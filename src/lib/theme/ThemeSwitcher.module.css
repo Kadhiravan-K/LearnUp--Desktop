@@ -1,0 +1,184 @@
+/* ==========================================================================
+   ThemeSwitcher Component Styles
+   ========================================================================== */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-4);
+  width: 100%;
+}
+
+.themeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--sf-space-4);
+}
+
+.themeCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--sf-color-surface);
+  border: 1.5px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-xl);
+  padding: var(--sf-space-4);
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: all var(--sf-transition-normal);
+  color: var(--sf-color-text-primary);
+  overflow: hidden;
+}
+
+.themeCard:hover {
+  border-color: var(--sf-color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--sf-shadow-md);
+}
+
+.themeCard:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-focus-ring);
+}
+
+.themeCardActive {
+  border-color: var(--sf-color-primary) !important;
+  background: var(--sf-color-surface);
+  box-shadow: 0 0 0 1px var(--sf-color-primary), var(--sf-shadow-md);
+}
+
+/* Card Header */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sf-space-2);
+}
+
+.identityRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-2);
+}
+
+.icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.title {
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-semibold);
+  color: var(--sf-color-text-primary);
+}
+
+.badge {
+  font-family: var(--sf-font-mono);
+  font-size: 0.65rem;
+  font-weight: var(--sf-font-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: var(--sf-radius-sm);
+  background: var(--sf-color-primary-light);
+  color: var(--sf-color-primary);
+  border: 1px solid var(--sf-color-primary-border);
+}
+
+.activeCheck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--sf-radius-full);
+  background: var(--sf-color-primary);
+  color: var(--sf-color-text-on-primary, #ffffff);
+  font-size: 0.75rem;
+  font-weight: var(--sf-font-bold);
+}
+
+.inactiveRadio {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--sf-radius-full);
+  border: 1.5px solid var(--sf-color-border);
+}
+
+.tagline {
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-medium);
+  color: var(--sf-color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--sf-space-2);
+}
+
+.description {
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-secondary);
+  line-height: var(--sf-leading-normal);
+  margin-bottom: var(--sf-space-3);
+  flex-grow: 1;
+}
+
+/* Visual Miniature Previews */
+.previewBox {
+  position: relative;
+  height: 70px;
+  border-radius: var(--sf-radius-md);
+  border: 1px solid var(--sf-color-border);
+  padding: var(--sf-space-2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+/* Light Theme Preview */
+.previewLight,
+.previewDefault {
+  background: #F7FAF9;
+  border-color: #D2DFDC;
+}
+.previewLight .previewBar,
+.previewDefault .previewBar {
+  height: 8px;
+  width: 60%;
+  background: #0F766E;
+  border-radius: 4px;
+}
+.previewLight .previewSurface,
+.previewDefault .previewSurface {
+  height: 32px;
+  background: #FFFFFF;
+  border: 1px solid #D2DFDC;
+  border-radius: 4px;
+}
+
+/* Dark Theme Preview */
+.previewDark {
+  background: #111B1B;
+  border-color: #344743;
+}
+.previewDark .previewBar {
+  height: 8px;
+  width: 60%;
+  background: #5EEAD4;
+  border-radius: 4px;
+}
+.previewDark .previewSurface {
+  height: 32px;
+  background: #1D2B2A;
+  border: 1px solid #344743;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .themeCard,
+  .themeCard:hover {
+    transform: none !important;
+    transition: none !important;
+  }
+}

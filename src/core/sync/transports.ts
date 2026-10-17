@@ -18,6 +18,7 @@ export class MockSyncTransport implements ISyncTransport {
   private conflictNextCount = 0;
   private latencyMs = 0;
   private simulateAuthFailure = false;
+  private failForEntityId: string | null = null;
   private serverStore = new Map<string, { version: number; payload: Record<string, unknown>; updatedAt: string }>();
 
   public setOnline(online: boolean): void {
@@ -42,6 +43,10 @@ export class MockSyncTransport implements ISyncTransport {
 
   public injectFailures(count: number): void {
     this.failNextCount = count;
+  }
+
+  public setFailForEntityId(id: string | null): void {
+    this.failForEntityId = id;
   }
 
   public injectConflict(count: number): void {
@@ -99,6 +104,47 @@ export class MockSyncTransport implements ISyncTransport {
       };
     }
 
+    // Guest profile records must NEVER upload without consent & account linking
+    if (!mutation.cloudUserId) {
+      return {
+        success: false,
+        acknowledged: false,
+        error: {
+          category: 'validation',
+          message: 'Guest profile mutation cannot be uploaded without account linking and user consent.',
+          isRetryable: false,
+          statusCode: 403
+        }
+      };
+    }
+
+    // Require user token when cloud sync is linked
+    if (!authToken) {
+      return {
+        success: false,
+        acknowledged: false,
+        error: {
+          category: 'auth',
+          message: 'Missing authenticated user token for cloud synchronization.',
+          isRetryable: false,
+          statusCode: 401
+        }
+      };
+    }
+
+    if (this.failForEntityId && mutation.entityId === this.failForEntityId) {
+      return {
+        success: false,
+        acknowledged: false,
+        error: {
+          category: 'server',
+          message: 'Simulated 503 Service Unavailable for target entity.',
+          isRetryable: true,
+          statusCode: 503
+        }
+      };
+    }
+
     if (this.failNextCount > 0) {
       this.failNextCount--;
       return {
@@ -109,20 +155,6 @@ export class MockSyncTransport implements ISyncTransport {
           message: 'Simulated 503 Service Unavailable.',
           isRetryable: true,
           statusCode: 503
-        }
-      };
-    }
-
-    // Require user token when cloud sync is linked
-    if (mutation.cloudUserId && !authToken) {
-      return {
-        success: false,
-        acknowledged: false,
-        error: {
-          category: 'auth',
-          message: 'Missing authenticated user token for cloud synchronization.',
-          isRetryable: false,
-          statusCode: 401
         }
       };
     }
@@ -185,6 +217,75 @@ export class MockSyncTransport implements ISyncTransport {
 }
 
 /**
+ * Transforms local desktop SQLite domain payloads to match exact Supabase PostgreSQL schemas.
+ */
+export function transformPayloadForSupabase(
+  entityType: string,
+  rawPayload: Record<string, unknown>,
+  cloudUserId: string
+): Record<string, unknown> {
+  const now = new Date().toISOString();
+
+  switch (entityType) {
+    case 'note': {
+      return {
+        id: rawPayload.id,
+        user_id: cloudUserId,
+        learning_item_id: rawPayload.learningItemId || rawPayload.learning_item_id,
+        youtube_video_id: rawPayload.youtubeVideoId || rawPayload.youtube_video_id,
+        content: rawPayload.content ?? '',
+        created_at: rawPayload.createdAt || rawPayload.created_at || now,
+        updated_at: rawPayload.updatedAt || rawPayload.updated_at || now
+      };
+    }
+    case 'progress': {
+      const pos = Number(rawPayload.positionSeconds ?? rawPayload.position_seconds ?? 0);
+      const dur = rawPayload.durationSeconds ?? rawPayload.duration_seconds;
+      return {
+        user_id: cloudUserId,
+        youtube_video_id: rawPayload.youtubeVideoId || rawPayload.youtube_video_id,
+        position_seconds: Math.round(pos),
+        duration_seconds: dur != null ? Math.round(Number(dur)) : null,
+        is_completed: Boolean(rawPayload.isCompleted ?? rawPayload.is_completed ?? false),
+        updated_at: rawPayload.updatedAt || rawPayload.updated_at || now
+      };
+    }
+    case 'bookmark': {
+      const pos = Number(rawPayload.positionSeconds ?? rawPayload.position_seconds ?? 0);
+      return {
+        id: rawPayload.id,
+        user_id: cloudUserId,
+        learning_item_id: rawPayload.learningItemId || rawPayload.learning_item_id,
+        youtube_video_id: rawPayload.youtubeVideoId || rawPayload.youtube_video_id,
+        position_seconds: Math.round(pos),
+        label: rawPayload.label ?? '',
+        created_at: rawPayload.createdAt || rawPayload.created_at || now
+      };
+    }
+    case 'learning_item': {
+      const isPlaylist = rawPayload.sourceType === 'playlist' || rawPayload.type === 'playlist';
+      const sourceId = String(rawPayload.sourceId || rawPayload.youtube_video_id || rawPayload.youtube_playlist_id || '');
+      return {
+        id: rawPayload.id,
+        user_id: cloudUserId,
+        type: isPlaylist ? 'playlist' : 'video',
+        youtube_video_id: isPlaylist ? null : sourceId,
+        youtube_playlist_id: isPlaylist ? sourceId : null,
+        source_url: rawPayload.source_url || (isPlaylist ? `https://www.youtube.com/playlist?list=${sourceId}` : `https://www.youtube.com/watch?v=${sourceId}`),
+        normalized_source_key: rawPayload.normalized_source_key || `youtube:${sourceId}`,
+        title: rawPayload.title ?? 'Untitled Course',
+        thumbnail_url: rawPayload.thumbnailUrl || rawPayload.thumbnail_url || null,
+        status: rawPayload.status || 'ready',
+        created_at: rawPayload.createdAt || rawPayload.created_at || now,
+        updated_at: rawPayload.updatedAt || rawPayload.updated_at || now
+      };
+    }
+    default:
+      return { ...rawPayload, user_id: cloudUserId };
+  }
+}
+
+/**
  * SupabaseSyncTransport communicating with Supabase PostgREST endpoints.
  * Requires user JWT authorization (strictly rejects service-role keys).
  */
@@ -228,6 +329,19 @@ export class SupabaseSyncTransport implements ISyncTransport {
       };
     }
 
+    if (!mutation.cloudUserId) {
+      return {
+        success: false,
+        acknowledged: false,
+        error: {
+          category: 'validation',
+          message: 'Mutation is missing cloud user ID. Account linking required.',
+          isRetryable: false,
+          statusCode: 403
+        }
+      };
+    }
+
     // Map local entity type to Supabase table
     let table = '';
     switch (mutation.entityType) {
@@ -265,7 +379,14 @@ export class SupabaseSyncTransport implements ISyncTransport {
 
     try {
       if (mutation.operation === 'DELETE') {
-        const res = await fetch(`${endpoint}?id=eq.${mutation.entityId}`, {
+        let deleteQuery = '';
+        if (mutation.entityType === 'progress') {
+          deleteQuery = `youtube_video_id=eq.${encodeURIComponent(mutation.entityId)}&user_id=eq.${encodeURIComponent(mutation.cloudUserId)}`;
+        } else {
+          deleteQuery = `id=eq.${encodeURIComponent(mutation.entityId)}&user_id=eq.${encodeURIComponent(mutation.cloudUserId)}`;
+        }
+
+        const res = await fetch(`${endpoint}?${deleteQuery}`, {
           method: 'DELETE',
           headers
         });
@@ -275,7 +396,7 @@ export class SupabaseSyncTransport implements ISyncTransport {
             success: false,
             acknowledged: false,
             error: {
-              category: res.status >= 500 ? 'server' : 'unknown',
+              category: res.status >= 500 ? 'server' : res.status === 401 || res.status === 403 ? 'auth' : 'unknown',
               message: `Supabase delete failed (${res.status}): ${body}`,
               isRetryable: res.status >= 500 || res.status === 429,
               statusCode: res.status
@@ -285,12 +406,18 @@ export class SupabaseSyncTransport implements ISyncTransport {
         return { success: true, acknowledged: true };
       }
 
-      // Upsert
+      // Upsert — transform desktop SQLite schema into PostgreSQL Supabase schema
+      const transformedPayload = transformPayloadForSupabase(
+        mutation.entityType,
+        mutation.payload,
+        mutation.cloudUserId
+      );
+
       headers['Prefer'] = 'resolution=merge-duplicates,return=representation';
       const res = await fetch(endpoint, {
         method: 'POST',
         headers,
-        body: JSON.stringify(mutation.payload)
+        body: JSON.stringify(transformedPayload)
       });
 
       if (!res.ok) {

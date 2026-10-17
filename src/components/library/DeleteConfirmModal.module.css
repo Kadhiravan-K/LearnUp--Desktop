@@ -1,0 +1,19 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-4);
+}
+
+.message {
+  margin: 0;
+  color: var(--sf-color-text-secondary);
+  line-height: var(--sf-leading-relaxed);
+  font-size: var(--sf-text-sm);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--sf-space-4);
+  margin-top: var(--sf-space-4);
+}

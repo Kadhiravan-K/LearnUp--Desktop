@@ -1,0 +1,111 @@
+.card {
+  background-color: var(--sf-color-surface);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-xl);
+  padding: var(--sf-space-5);
+  box-shadow: var(--sf-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-4);
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-tertiary);
+  margin: 0;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  color: var(--sf-color-text-tertiary);
+  padding: 4px;
+}
+
+.stackedBar {
+  display: flex;
+  height: 8px;
+  width: 100%;
+  border-radius: var(--sf-radius-full);
+  overflow: hidden;
+  gap: 2px;
+}
+
+.seg1 { background-color: #6366F1; width: 38%; }
+.seg2 { background-color: #10B981; width: 26%; }
+.seg3 { background-color: #F59E0B; width: 18%; }
+.seg4 { background-color: #06B6D4; width: 12%; }
+.seg5 { background-color: #3B82F6; width: 6%; }
+
+.domainList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-2);
+}
+
+.domainItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--sf-text-xs);
+}
+
+.domainLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot1 { background-color: #6366F1; }
+.dot2 { background-color: #10B981; }
+.dot3 { background-color: #F59E0B; }
+.dot4 { background-color: #06B6D4; }
+.dot5 { background-color: #3B82F6; }
+
+.domainName {
+  font-weight: var(--sf-font-medium);
+  color: var(--sf-color-text-primary);
+}
+
+.domainRight {
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-3);
+}
+
+.hours {
+  color: var(--sf-color-text-secondary);
+}
+
+.percent {
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+  width: 28px;
+  text-align: right;
+}

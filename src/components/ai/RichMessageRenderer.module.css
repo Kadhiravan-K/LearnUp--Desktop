@@ -1,0 +1,509 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.fallbackContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--sf-color-text-primary);
+}
+
+.fallbackText {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.fallbackCode {
+  background: var(--sf-color-bg-elevated);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  padding: 12px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8125rem;
+  overflow-x: auto;
+}
+
+.textBlock {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--sf-color-text-primary);
+  white-space: pre-wrap;
+}
+
+/* Tool execution status pill */
+.toolPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: var(--sf-radius-full);
+  background: var(--sf-color-bg-elevated);
+  border: 1px solid var(--sf-color-border);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--sf-color-text-secondary);
+  align-self: flex-start;
+}
+
+.toolStatusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+}
+
+.toolName {
+  font-weight: 700;
+  color: var(--sf-color-text-primary);
+}
+
+.toolSummary {
+  color: var(--sf-color-text-secondary);
+}
+
+/* Rich Table */
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  background: var(--sf-color-surface);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.table th {
+  background: var(--sf-color-bg-elevated);
+  padding: 10px 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--sf-color-border);
+  color: var(--sf-color-text-primary);
+}
+
+.table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--sf-color-border);
+  color: var(--sf-color-text-secondary);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Rich Quiz Card */
+.quizCard {
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.quizBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--sf-color-primary);
+  background: var(--sf-color-bg-elevated);
+  padding: 3px 8px;
+  border-radius: 4px;
+  align-self: flex-start;
+  border: 1px solid var(--sf-color-border);
+}
+
+.quizQuestion {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sf-color-text-primary);
+}
+
+.quizOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quizOptionBtn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  background: var(--sf-color-bg-elevated);
+  color: var(--sf-color-text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.quizOptionBtn:hover:not(:disabled) {
+  border-color: var(--sf-color-primary);
+  background: var(--sf-color-surface-hover);
+}
+
+.optionLetter {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.quizOptionCorrect {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: #10B981;
+  color: #065F46;
+}
+
+.quizOptionWrong {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: #EF4444;
+  color: #991B1B;
+}
+
+.quizExplanation {
+  padding: 10px 14px;
+  background: var(--sf-color-bg-elevated);
+  border-left: 3px solid var(--sf-color-primary);
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-secondary);
+  line-height: 1.4;
+}
+
+/* Flashcard */
+.flashcardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flashcardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flashcardBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--sf-color-primary);
+}
+
+.hintBtn {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.hintBox {
+  padding: 8px 12px;
+  background: var(--sf-color-bg-elevated);
+  border: 1px dashed var(--sf-color-border);
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-secondary);
+}
+
+.flashcardBox {
+  background: var(--sf-color-surface);
+  border: 1.5px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-lg);
+  padding: 24px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.flashcardBox:hover {
+  border-color: var(--sf-color-primary);
+  transform: translateY(-2px);
+}
+
+.flashcardFlipped {
+  background: var(--sf-color-bg-elevated);
+  border-color: var(--sf-color-primary);
+}
+
+.sideLabel {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--sf-color-text-secondary);
+}
+
+.cardContent {
+  margin: 12px 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--sf-color-text-primary);
+  line-height: 1.5;
+}
+
+.flipPrompt {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary);
+  align-self: flex-end;
+}
+
+/* Timeline */
+.timelineCard {
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.timelineTitle {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--sf-color-text-primary);
+}
+
+.timelineList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  padding-left: 8px;
+}
+
+.timelineItem {
+  display: flex;
+  gap: 14px;
+  position: relative;
+}
+
+.timelineMarker {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--sf-color-primary);
+  margin-top: 4px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px var(--sf-color-bg-elevated);
+}
+
+.timelineBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.timelineTime {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--sf-color-primary);
+}
+
+.timelineEventTitle {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--sf-color-text-primary);
+}
+
+.timelineDesc {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-secondary);
+  line-height: 1.4;
+}
+
+/* Mermaid Diagram Container */
+.diagramContainer {
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.diagramHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--sf-color-bg-elevated);
+  border-bottom: 1px solid var(--sf-color-border);
+}
+
+.diagramTypePill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--sf-color-text-primary);
+}
+
+.diagramActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tabsToggle {
+  display: flex;
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.tabBtn {
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--sf-color-text-secondary);
+  cursor: pointer;
+}
+
+.tabBtnActive {
+  background: var(--sf-color-bg-elevated);
+  color: var(--sf-color-text-primary);
+}
+
+.actionBtn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  border-radius: 6px;
+  color: var(--sf-color-text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.actionBtn:hover {
+  background: var(--sf-color-surface-hover);
+  border-color: var(--sf-color-primary);
+}
+
+.diagramPreviewArea {
+  padding: 16px;
+  background: var(--sf-color-surface);
+}
+
+.diagramBox {
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  background: var(--sf-color-bg-elevated);
+  padding: 14px;
+}
+
+.diagramGraphHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.diagramGraphDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sf-color-border);
+}
+
+.diagramGraphLabel {
+  margin-left: 6px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--sf-color-text-secondary);
+}
+
+.diagramFormattedCode {
+  margin: 0;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-primary);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.diagramSourceArea {
+  padding: 14px;
+  background: var(--sf-color-bg-elevated);
+}
+
+.diagramCodeBlock {
+  margin: 0;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-primary);
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.a11yFooter {
+  padding: 10px 14px;
+  background: var(--sf-color-bg-elevated);
+  border-top: 1px solid var(--sf-color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.a11yToggleBtn {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+}
+
+.a11yToggleBtn:hover {
+  color: var(--sf-color-text-primary);
+}
+
+.a11yText {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-secondary);
+  line-height: 1.4;
+}

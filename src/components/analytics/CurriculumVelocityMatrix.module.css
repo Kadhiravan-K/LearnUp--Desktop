@@ -1,0 +1,125 @@
+.card {
+  background-color: var(--sf-color-surface);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-xl);
+  padding: var(--sf-space-5);
+  box-shadow: var(--sf-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-4);
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-tertiary);
+  margin: 0;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  color: var(--sf-color-text-tertiary);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.courseList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-4);
+}
+
+.courseItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.courseTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.courseTitle {
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+}
+
+.badgeAhead {
+  font-size: 10px;
+  font-weight: var(--sf-font-semibold);
+  color: #16A34A;
+  background-color: #DCFCE7;
+  padding: 1px 6px;
+  border-radius: var(--sf-radius-sm);
+}
+
+.badgeTrack {
+  font-size: 10px;
+  font-weight: var(--sf-font-semibold);
+  color: #2563EB;
+  background-color: #DBEAFE;
+  padding: 1px 6px;
+  border-radius: var(--sf-radius-sm);
+}
+
+.badgeDelayed {
+  font-size: 10px;
+  font-weight: var(--sf-font-semibold);
+  color: #DC2626;
+  background-color: #FEE2E2;
+  padding: 1px 6px;
+  border-radius: var(--sf-radius-sm);
+}
+
+.badgeNearDone {
+  font-size: 10px;
+  font-weight: var(--sf-font-semibold);
+  color: #D97706;
+  background-color: #FEF3C7;
+  padding: 1px 6px;
+  border-radius: var(--sf-radius-sm);
+}
+
+.progressContainer {
+  height: 6px;
+  width: 100%;
+  background-color: var(--sf-color-bg);
+  border-radius: var(--sf-radius-full);
+  overflow: hidden;
+}
+
+.progressAhead { height: 100%; background-color: #10B981; border-radius: var(--sf-radius-full); }
+.progressTrack { height: 100%; background-color: #3B82F6; border-radius: var(--sf-radius-full); }
+.progressDelayed { height: 100%; background-color: #EF4444; border-radius: var(--sf-radius-full); }
+.progressNearDone { height: 100%; background-color: #F59E0B; border-radius: var(--sf-radius-full); }
+
+.courseBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--sf-color-text-tertiary);
+}

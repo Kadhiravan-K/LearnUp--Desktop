@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--sf-color-bg);
+  position: relative;
+}
+
+.mainWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Prevents flex children from overflowing */
+  overflow-x: hidden;
+  background-color: var(--sf-color-bg);
+}
+
+.content {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--sf-space-6) var(--sf-space-4);
+  background-color: var(--sf-color-bg);
+}
+
+.backdrop {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .backdrop {
+    display: none;
+  }
+
+  .backdropActive {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: calc(var(--sf-z-modal) - 1);
+    pointer-events: auto;
+    animation: backdropFadeIn var(--sf-transition-normal) ease-out;
+  }
+
+  .content {
+    padding: var(--sf-space-4) var(--sf-space-3);
+  }
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

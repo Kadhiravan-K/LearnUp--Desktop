@@ -1,0 +1,798 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 32px;
+}
+
+/* State Inspector Bar */
+.stateInspectorBar {
+  background: var(--sf-color-bg);
+  border: 1px solid #E2E8F0;
+  border-radius: var(--sf-radius-md, 8px);
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stateInspectorLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stateInspectorLabel {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stateInspectorDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4F46E5;
+}
+
+.stateBtn {
+  background: var(--sf-color-surface);
+  border: 1px solid #CBD5E1;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.stateBtn:hover {
+  background: var(--sf-color-surface-hover);
+}
+
+.stateBtnActive {
+  background: #4F46E5;
+  color: #FFFFFF;
+  border-color: #4F46E5;
+}
+
+/* Mode Switcher Buttons */
+.modesGroup {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.modeBtn {
+  background: var(--sf-color-surface);
+  border: 1px solid #CBD5E1;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.modeBtn:hover {
+  background: var(--sf-color-surface-hover);
+}
+
+.modeBtnActive {
+  background: #4F46E5;
+  color: #FFFFFF;
+  border-color: #4F46E5;
+}
+
+.customSettingsBtn {
+  background: var(--sf-color-surface);
+  border: 1px solid #CBD5E1;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.customSettingsBtn:hover {
+  background: var(--sf-color-surface-hover);
+  color: #1E293B;
+}
+
+/* Context Breadcrumb Strip */
+.contextStrip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  font-size: 0.8125rem;
+}
+
+.courseBadge {
+  background: #4F46E5;
+  color: #FFFFFF;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.courseContextTitle {
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.contextSeparator {
+  color: #94A3B8;
+}
+
+.videoContextTitle {
+  color: #475569;
+}
+
+.shortcutKey {
+  font-size: 0.6875rem;
+  font-family: monospace;
+  background: var(--sf-color-surface-hover);
+  border: 1px solid #CBD5E1;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #64748B;
+}
+
+/* Focus Sanctuary Hero Section */
+.heroCard {
+  background: var(--sf-color-surface);
+  border: 1px solid #E2E8F0;
+  border-radius: var(--sf-radius-lg, 12px);
+  padding: 40px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+}
+
+.dialContainer {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.dialSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.dialTrack {
+  fill: none;
+  stroke: #EEF2FF;
+  stroke-width: 12;
+}
+
+.dialFill {
+  fill: none;
+  stroke: url(#focusGradient);
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.dialCenterContent {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.intervalSubLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #6366F1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.intervalSubDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4F46E5;
+}
+
+.digitalTime {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #0F172A;
+  font-family: var(--font-geist-mono, monospace);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.targetSubLabel {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Control Buttons Row */
+.controlsRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.primaryControlBtn {
+  background: #4F46E5;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 32px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+  transition: all 0.2s ease;
+}
+
+.primaryControlBtn:hover {
+  background: #4338CA;
+  transform: translateY(-1px);
+}
+
+.secondaryControlBtn {
+  background: var(--sf-color-surface);
+  color: #334155;
+  border: 1px solid #CBD5E1;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+
+.secondaryControlBtn:hover {
+  background: var(--sf-color-bg);
+  border-color: #94A3B8;
+}
+
+/* Soundscape & Audio Controls */
+.soundscapeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.soundscapeBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--sf-color-bg);
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  padding: 6px 16px;
+  font-size: 0.8125rem;
+  color: #475569;
+}
+
+.soundscapeIcon {
+  font-size: 1rem;
+}
+
+.soundscapeLabel {
+  font-weight: 600;
+  color: #334155;
+}
+
+.soundscapeSelect {
+  background: var(--sf-color-surface);
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #1E293B;
+  outline: none;
+  cursor: pointer;
+}
+
+.soundscapeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+}
+
+.audioControlGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 6px;
+  border-left: 1px solid #E2E8F0;
+}
+
+.audioIconBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 2px 4px;
+  line-height: 1;
+}
+
+.volumeSlider {
+  width: 70px;
+  height: 4px;
+  accent-color: #4F46E5;
+  cursor: pointer;
+}
+
+.volumeLabel {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #64748B;
+  min-width: 28px;
+}
+
+.loopBtn {
+  background: transparent;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.loopBtnActive {
+  background: #EEF2FF;
+  border-color: #6366F1;
+  color: #4F46E5;
+}
+
+.customAudioSubBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--sf-color-surface);
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 100%;
+  max-width: 540px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.customAudioLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.customAudioRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.deleteTrackBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+}
+
+.deleteTrackBtn:hover {
+  background: #FEE2E2;
+}
+
+.uploadAudioBtn {
+  background: #4F46E5;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.uploadAudioBtn:hover {
+  background: #4338CA;
+}
+
+.uploadAudioBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.audioErrorMessage {
+  font-size: 0.75rem;
+  color: #DC2626;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+
+/* Telemetry Grid */
+.telemetryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .telemetryGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.telemetryCard {
+  background: var(--sf-color-surface);
+  border: 1px solid #E2E8F0;
+  border-radius: var(--sf-radius-lg, 12px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cardHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardHeaderTitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cardBadge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.badgeGreen {
+  background: #ECFDF5;
+  color: #059669;
+}
+
+.badgeOrange {
+  background: #FFF7ED;
+  color: #EA580C;
+}
+
+.badgeMuted {
+  background: var(--sf-color-surface-hover);
+  color: #475569;
+}
+
+.metricMainRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.bigMetric {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: #0F172A;
+  font-family: var(--font-geist-mono, monospace);
+}
+
+.bigMetricSub {
+  font-size: 0.875rem;
+  color: #94A3B8;
+  font-weight: 500;
+}
+
+.metricDelta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #10B981;
+}
+
+/* Progress Segment Bar */
+.segmentedProgressBar {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #E2E8F0;
+}
+
+.progressSegMorning {
+  background: #6366F1;
+  height: 100%;
+}
+
+.progressSegCurrent {
+  background: #10B981;
+  height: 100%;
+}
+
+.progressSegRemain {
+  background: #E2E8F0;
+  height: 100%;
+}
+
+.progressBreakdown {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6875rem;
+  color: #64748B;
+  font-family: monospace;
+}
+
+/* Cadence Pills */
+.cadencePillsRow {
+  display: flex;
+  gap: 6px;
+}
+
+.cadencePill {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: #E2E8F0;
+}
+
+.cadencePillComplete {
+  background: #10B981;
+}
+
+.cadencePillActive {
+  background: #6366F1;
+}
+
+.cadenceTimes {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6875rem;
+  color: #94A3B8;
+  font-family: monospace;
+}
+
+/* Heatmap Strip */
+.heatmapStrip {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.heatmapDay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.heatmapBlock {
+  width: 100%;
+  height: 20px;
+  border-radius: 4px;
+  background: #E2E8F0;
+}
+
+.heatmapBlockActive {
+  background: #10B981;
+}
+
+.heatmapDayLabel {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.streakSubStats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #64748B;
+  padding-top: 6px;
+  border-top: 1px solid #F1F5F9;
+}
+
+.streakSubValue {
+  font-weight: 700;
+  color: #0F172A;
+}
+
+/* Keyboard Shortcuts HUD Footer */
+.hudFooter {
+  background: var(--sf-color-bg);
+  border: 1px solid #E2E8F0;
+  border-radius: var(--sf-radius-md, 8px);
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.75rem;
+  color: #64748B;
+}
+
+.hudShortcuts {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hudItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hudKey {
+  background: var(--sf-color-surface);
+  border: 1px solid #CBD5E1;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #1E293B;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.hudSyncStatus {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: #059669;
+}
+
+.hudSyncDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+}
+
+/* Customize Pomodoro Cycle Modal */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.cycleModal {
+  background: var(--sf-color-bg-elevated, #FFFFFF);
+  border: 1px solid var(--sf-color-border, #E2E8F0);
+  border-radius: var(--sf-radius-xl, 16px);
+  width: 100%;
+  max-width: 460px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: var(--sf-shadow-xl);
+}
+
+.cycleModalHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cycleModalIcon {
+  font-size: 1.75rem;
+}
+
+.cycleModalTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--sf-color-text-primary);
+  margin: 0 0 2px 0;
+}
+
+.cycleModalSubtitle {
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-secondary);
+  margin: 0;
+}
+
+.cycleForm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cycleInputRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cycleLabel {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--sf-color-text-primary);
+}
+
+.cycleInput {
+  width: 90px;
+  padding: 6px 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: var(--sf-color-input-bg, #FFFFFF);
+  border: 1px solid var(--sf-color-input-border, #CBD5E1);
+  border-radius: var(--sf-radius-md, 6px);
+  color: var(--sf-color-text-primary);
+}
+
+.cycleActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}

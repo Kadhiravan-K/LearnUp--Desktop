@@ -1,0 +1,271 @@
+.section {
+  background: var(--sf-color-surface);
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.titleArea {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  font-size: 1.125rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sf-color-text);
+}
+
+.privilegeBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #FEE2E2;
+  color: #991B1B;
+  letter-spacing: 0.05em;
+}
+
+/* Actions Grid */
+.actionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .actionsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.actionCard {
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.actionDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.actionTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--sf-color-text);
+}
+
+.actionDesc {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary);
+  line-height: 1.4;
+}
+
+.exportBtnGroup {
+  display: flex;
+  gap: 6px;
+}
+
+.exportBtn {
+  flex: 1;
+  background: var(--sf-color-surface);
+  border: 1px solid #D1D5DB;
+  border-radius: var(--sf-radius-sm);
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  text-align: center;
+}
+
+.exportBtn:hover {
+  background: #F3F4F6;
+}
+
+.exportBtnAlt {
+  background: var(--sf-color-surface);
+  border: 1px solid #D1D5DB;
+  border-radius: var(--sf-radius-sm);
+  padding: 8px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+}
+
+.exportBtnAlt:hover {
+  background: #F3F4F6;
+}
+
+/* Danger Zone */
+.dangerZone {
+  border: 1px solid #FCA5A5;
+  background: #FEF2F2;
+  border-radius: var(--sf-radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dangerHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dangerIcon {
+  font-size: 0.875rem;
+}
+
+.dangerTitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #B91C1C;
+}
+
+.dangerList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dangerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #FEE2E2;
+}
+
+.dangerRow:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.dangerText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dangerItemTitle {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #991B1B;
+}
+
+.dangerItemDesc {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #B91C1C;
+}
+
+.clearCacheBtn {
+  background: var(--sf-color-surface);
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-sm);
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.clearCacheBtn:hover {
+  background: #F9FAFB;
+}
+
+.resetHistoryBtn {
+  background: var(--sf-color-surface);
+  border: 1px solid #FCA5A5;
+  border-radius: var(--sf-radius-sm);
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #DC2626;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.resetHistoryBtn:hover {
+  background: #FEE2E2;
+}
+
+.deleteAccountBtn {
+  background: #DC2626;
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--sf-radius-sm);
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.deleteAccountBtn:hover {
+  background: #B91C1C;
+}
+
+.confirmRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.confirmPrompt {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #991B1B;
+}
+
+.confirmBtn {
+  background: #DC2626;
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--sf-radius-sm);
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancelConfirmBtn {
+  background: #E5E7EB;
+  border: none;
+  border-radius: var(--sf-radius-sm);
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  color: #374151;
+  cursor: pointer;
+}

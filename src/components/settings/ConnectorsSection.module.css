@@ -1,0 +1,341 @@
+.section {
+  background: var(--sf-color-surface);
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.titleArea {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  font-size: 1.125rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sf-color-text);
+}
+
+.localFirstBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #EFF6FF;
+  color: #1D4ED8;
+  letter-spacing: 0.05em;
+}
+
+.banner {
+  background: var(--sf-color-bg);
+  border: 1px solid #E2E8F0;
+  border-radius: var(--sf-radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bannerTitle {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.bannerDesc {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #64748B;
+  line-height: 1.4;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.connectorCard {
+  background: var(--sf-color-surface);
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: border-color 0.2s;
+}
+
+.connectorCard:hover {
+  border-color: #D1D5DB;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cardLeft {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.connectorIcon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.cardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.connectorName {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.categoryPill {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #F3F4F6;
+  color: #4B5563;
+}
+
+.connectorDesc {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #6B7280;
+  line-height: 1.4;
+}
+
+.cardRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.statusPill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.statusConnected {
+  background: #ECFDF5;
+  color: #059669;
+}
+
+.statusDisconnected {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+.statusSyncing {
+  background: #EFF6FF;
+  color: #2563EB;
+}
+
+.statusError {
+  background: #FEF2F2;
+  color: #DC2626;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #E5E7EB;
+  transition: 0.2s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.2s;
+  border-radius: 50%;
+}
+
+.switch input:checked + .slider {
+  background-color: var(--sf-color-primary, #4F46E5);
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(16px);
+}
+
+/* Config Section */
+.configArea {
+  background: #F9FAFB;
+  border: 1px solid #F3F4F6;
+  border-radius: var(--sf-radius-sm);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fieldsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 640px) {
+  .fieldsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fieldLabel {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #4B5563;
+}
+
+.fieldInput {
+  padding: 6px 10px;
+  border-radius: var(--sf-radius-sm);
+  border: 1px solid #D1D5DB;
+  font-size: 0.75rem;
+  background: var(--sf-color-surface);
+}
+
+.fieldInput:focus {
+  outline: none;
+  border-color: var(--sf-color-primary, #4F46E5);
+}
+
+.actionsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px solid #E5E7EB;
+}
+
+.syncTime {
+  font-size: 0.7rem;
+  color: #6B7280;
+}
+
+.actionsButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.syncBtn {
+  background: var(--sf-color-surface);
+  border: 1px solid #D1D5DB;
+  border-radius: var(--sf-radius-sm);
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.syncBtn:hover:not(:disabled) {
+  background: #F3F4F6;
+  border-color: #9CA3AF;
+}
+
+.syncBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.saveConfigBtn {
+  background: var(--sf-color-primary, #4F46E5);
+  border: none;
+  border-radius: var(--sf-radius-sm);
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.saveConfigBtn:hover {
+  filter: brightness(0.95);
+}
+
+.errorBanner {
+  background: #FEF2F2;
+  border: 1px solid #FEE2E2;
+  border-radius: var(--sf-radius-sm);
+  padding: 8px 10px;
+  font-size: 0.75rem;
+  color: #991B1B;
+}

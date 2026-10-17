@@ -1,0 +1,21 @@
+.spinnerWrapper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--sf-color-primary);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+.sm { width: 16px; height: 16px; }
+.md { width: 24px; height: 24px; }
+.lg { width: 48px; height: 48px; }
+
+.track { opacity: 0.2; }
+.head { opacity: 0.8; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

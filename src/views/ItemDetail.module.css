@@ -1,0 +1,201 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-6);
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--sf-space-4);
+  flex-wrap: wrap;
+}
+
+.headerLeading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-2);
+  flex: 1;
+  min-width: 0;
+}
+
+.breadcrumbBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.breadcrumbDivider {
+  color: var(--sf-color-text-tertiary, #94a3b8);
+  font-size: var(--sf-text-sm);
+}
+
+.playlistName {
+  font-size: var(--sf-text-sm);
+  color: var(--sf-color-text-secondary, #64748b);
+  font-weight: var(--sf-font-medium);
+}
+
+.playlistSubtitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-secondary, #64748b);
+  margin-top: -2px;
+}
+
+.lectureBadge {
+  background: var(--sf-color-bg);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  color: var(--sf-color-text-primary, #0f172a);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.backButton {
+  text-decoration: none;
+  color: var(--sf-color-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sf-space-1);
+  font-size: var(--sf-text-sm);
+  font-weight: var(--sf-font-medium);
+  transition: color var(--sf-transition-fast);
+  width: fit-content;
+}
+
+.backButton:hover {
+  color: var(--sf-color-text-primary);
+}
+
+.backIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.title {
+  font-size: var(--sf-text-2xl);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: var(--sf-leading-tight);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  margin-top: var(--sf-space-1);
+  flex-shrink: 0;
+}
+
+.playerLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sf-space-6);
+  align-items: flex-start;
+}
+
+.mainContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-6);
+}
+
+.toolsContainer {
+  width: 100%;
+}
+
+.tabBar {
+  display: flex;
+  gap: var(--sf-space-2);
+  border-bottom: var(--sf-border-width) solid var(--sf-color-border);
+  padding-bottom: var(--sf-space-2);
+  margin-bottom: var(--sf-space-4);
+}
+
+.tabButton {
+  background: none;
+  border: none;
+  padding: var(--sf-space-2) var(--sf-space-4);
+  font-size: var(--sf-text-sm);
+  font-weight: var(--sf-font-semibold);
+  color: var(--sf-color-text-secondary);
+  border-radius: var(--sf-radius-md);
+  cursor: pointer;
+  transition: color var(--sf-duration-fast), background-color var(--sf-duration-fast);
+}
+
+.tabButton:hover {
+  color: var(--sf-color-text-primary);
+  background-color: var(--sf-color-surface-hover);
+}
+
+.tabButtonActive {
+  color: var(--sf-color-primary);
+  background-color: var(--sf-color-primary-subtle);
+}
+
+.tabButton:focus-visible {
+  outline: 2px solid var(--sf-color-primary);
+  outline-offset: 2px;
+}
+
+.sidebarContent {
+  width: 100%;
+  height: 400px; 
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: var(--sf-text-xl);
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .headerActions {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .playerLayout {
+    grid-template-columns: 1fr 380px;
+  }
+  
+  .sidebarContent {
+    height: 60vh;
+    min-height: 450px;
+    max-height: 700px;
+  }
+}
+
+.placeholder {
+  padding: var(--sf-space-8);
+  background: var(--sf-color-surface);
+  border: var(--sf-border-width) dashed var(--sf-color-border);
+  border-radius: var(--sf-radius-lg);
+  text-align: center;
+  color: var(--sf-color-text-secondary);
+}

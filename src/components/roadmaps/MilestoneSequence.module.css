@@ -1,0 +1,478 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-4, 1rem);
+  width: 100%;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sectionIcon {
+  font-size: 16px;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sf-color-text-primary, #0f172a);
+  margin: 0;
+}
+
+.countBadge {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary, #64748b);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.timelineRow {
+  display: flex;
+  gap: 16px;
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.indicatorCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.nodeIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.iconDone {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.iconActive {
+  background: var(--sf-color-primary, #0F766E);
+  color: var(--sf-color-text-on-primary, #ffffff);
+}
+
+.iconInProgress {
+  background: #f59e0b;
+  color: #ffffff;
+}
+
+.iconLocked {
+  background: #cbd5e1;
+  color: #64748b;
+}
+
+.iconCapstone {
+  background: #eab308;
+  color: #ffffff;
+}
+
+.timelineLine {
+  position: absolute;
+  top: 28px;
+  bottom: 0;
+  width: 2px;
+  background: var(--sf-color-border, #e2e8f0);
+  z-index: 1;
+}
+
+.nodeCard {
+  flex: 1;
+  background: var(--sf-color-surface, #ffffff);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  border-radius: var(--sf-radius-md, 12px);
+  padding: var(--sf-space-4, 1rem) var(--sf-space-5, 1.25rem);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.nodeCard:hover {
+  border-color: var(--sf-color-border-hover);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.nodeCardSelected {
+  border-color: var(--sf-color-primary);
+  box-shadow: 0 0 0 1px var(--sf-color-primary), 0 4px 14px var(--sf-color-primary-light);
+}
+
+.nodeCardActiveHighlight {
+  border: 2px solid var(--sf-color-primary);
+  background: var(--sf-color-surface, #ffffff);
+  box-shadow: 0 8px 24px var(--sf-color-primary-light);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cardHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nodeNum {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--sf-color-text-tertiary, #94a3b8);
+  font-family: monospace;
+}
+
+.nodeTitle {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--sf-color-text-primary, #0f172a);
+  margin: 0;
+}
+
+.cardHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badgeCompleted {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.badgeActive {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--sf-color-primary-light);
+  color: var(--sf-color-primary);
+  border: 1px solid var(--sf-color-primary);
+}
+
+.badgeInProgress {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.badgeCapstone {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(234, 179, 8, 0.15);
+  color: #ca8a04;
+  border: 1px solid rgba(234, 179, 8, 0.3);
+}
+
+.badgePrereq {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--sf-color-bg);
+  color: var(--sf-color-text-secondary, #64748b);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+}
+
+.hoursTag {
+  font-size: 10px;
+  color: var(--sf-color-text-tertiary, #94a3b8);
+}
+
+.dragHandle {
+  font-size: 12px;
+  color: var(--sf-color-text-tertiary, #94a3b8);
+  cursor: grab;
+}
+
+.nodeDesc {
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-secondary, #64748b);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Active Node Focus Area */
+.activeNodeFocusArea {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.progressRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+}
+
+.progressLabel {
+  color: var(--sf-color-text-secondary, #64748b);
+}
+
+.progressPct {
+  color: var(--sf-color-primary);
+  font-weight: 700;
+}
+
+.progressBarTrack {
+  width: 100%;
+  height: 6px;
+  background: var(--sf-color-bg);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: var(--sf-color-primary);
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+.currentSyllabusCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--sf-color-bg);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  border-radius: 8px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.syllabusIcon {
+  font-size: 18px;
+}
+
+.syllabusContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.syllabusPre {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--sf-color-primary);
+  letter-spacing: 0.04em;
+}
+
+.syllabusCourseTitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--sf-color-text-primary, #0f172a);
+}
+
+.syllabusNext {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary, #64748b);
+}
+
+.continueLectureBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: var(--sf-color-primary);
+  color: var(--sf-color-text-on-primary, #ffffff);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 6px var(--sf-color-primary-light);
+  transition: all 0.15s ease;
+}
+
+.continueLectureBtn:hover {
+  background: var(--sf-color-primary-hover);
+}
+
+/* Attached Course Strip */
+.attachedCourseStrip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: var(--sf-color-bg);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  border-radius: 6px;
+  gap: 8px;
+}
+
+.playIconSmall {
+  font-size: 10px;
+  color: #10b981;
+}
+
+.attachedInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+}
+
+.attachedTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--sf-color-text-primary, #0f172a);
+}
+
+.attachedMeta {
+  font-size: 10px;
+  color: var(--sf-color-text-tertiary, #94a3b8);
+}
+
+.watchedBadge {
+  font-size: 10px;
+  font-weight: 700;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Empty / Suggested Attachment Box */
+.emptyAttachmentBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: var(--sf-color-bg);
+  border: 1px dashed var(--sf-color-border, #cbd5e1);
+  border-radius: 6px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.suggestedCourseRow,
+.noCourseText {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary, #64748b);
+}
+
+.attachBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: var(--sf-color-surface, #ffffff);
+  border: 1px solid var(--sf-color-border, #cbd5e1);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sf-color-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.attachBtn:hover {
+  background: var(--sf-color-primary-light);
+  border-color: var(--sf-color-primary);
+}
+
+/* Card Footer */
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.tagList {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.tagChip {
+  font-size: 10px;
+  font-family: monospace;
+  color: var(--sf-color-text-tertiary, #64748b);
+  background: var(--sf-color-bg);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.manageCourseLink {
+  background: none;
+  border: none;
+  font-size: 11px;
+  color: var(--sf-color-primary);
+  cursor: pointer;
+  padding: 0;
+}
+
+.manageCourseLink:hover {
+  text-decoration: underline;
+}
+
+/* Append Node Button */
+.appendNodeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px dashed var(--sf-color-border, #cbd5e1);
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--sf-color-text-secondary, #64748b);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.appendNodeBtn:hover {
+  background: var(--sf-color-surface, #ffffff);
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
+}

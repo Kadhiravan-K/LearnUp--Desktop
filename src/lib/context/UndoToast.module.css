@@ -1,0 +1,132 @@
+.toastContainer {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.toastCard {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-width: 380px;
+  max-width: 540px;
+  padding: 12px 18px 16px;
+  background-color: #1E293B;
+  color: #F8FAFC;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--sf-radius-xl, 12px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+}
+
+[data-theme="light"] .toastCard {
+  background-color: var(--sf-color-surface);
+  color: #F8FAFC;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.restoredCard {
+  background-color: #064E3B;
+  color: #ECFDF5;
+  border-color: #059669;
+  justify-content: flex-start;
+  gap: 12px;
+  min-width: auto;
+  padding: 12px 20px;
+}
+
+.toastLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.875rem;
+}
+
+.binIcon {
+  font-size: 1.1rem;
+}
+
+.checkIcon {
+  color: #34D399;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.toastText {
+  line-height: 1.4;
+  color: #E2E8F0;
+}
+
+.toastText strong {
+  color: #FFFFFF;
+}
+
+.toastRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.undoButton {
+  background-color: var(--sf-color-primary, #0F766E);
+  color: var(--sf-color-text-on-primary, #FFFFFF);
+  border: none;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--sf-radius-md, 6px);
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.undoButton:hover {
+  background-color: var(--sf-color-primary-hover, #0D9488);
+  transform: scale(1.03);
+}
+
+.undoButton:active {
+  transform: scale(0.97);
+}
+
+.dismissButton {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  font-size: 0.875rem;
+  padding: 6px 8px;
+  cursor: pointer;
+  border-radius: var(--sf-radius-sm, 4px);
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.dismissButton:hover {
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--sf-color-primary, #0F766E), #2DD4BF);
+  border-radius: 0 0 0 var(--sf-radius-xl, 12px);
+  transition: width 0.05s linear;
+}

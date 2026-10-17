@@ -1,0 +1,135 @@
+.card {
+  background-color: var(--sf-color-surface);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-xl);
+  padding: var(--sf-space-5);
+  box-shadow: var(--sf-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-4);
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-semibold);
+  color: var(--sf-color-text-primary);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-tertiary);
+  margin: 0;
+}
+
+.statArea {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.totalValue {
+  font-size: var(--sf-text-lg);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+}
+
+.trendBadge {
+  font-size: 11px;
+  font-weight: var(--sf-font-semibold);
+  color: #16A34A;
+}
+
+.legendRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--sf-color-text-tertiary);
+  padding-bottom: var(--sf-space-2);
+  border-bottom: var(--sf-border-width) dashed var(--sf-color-border);
+}
+
+.chartContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 140px;
+  padding: var(--sf-space-2) 0;
+  gap: var(--sf-space-2);
+}
+
+.barCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.barValue {
+  font-size: 10px;
+  font-weight: var(--sf-font-semibold);
+  color: var(--sf-color-text-secondary);
+}
+
+.bar {
+  width: 24px;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.3s ease;
+}
+
+.barMon { background-color: var(--sf-color-primary, #0F766E); opacity: 0.8; }
+.barTue { background-color: var(--sf-color-primary, #0F766E); }
+.barWed { background-color: var(--sf-color-primary, #0F766E); opacity: 0.6; }
+.barThu { background-color: #10B981; }
+.barFri { background-color: var(--sf-color-primary, #0F766E); }
+.barSat { background-color: var(--sf-color-primary-hover, #0D9488); }
+.barSun { background-color: #F59E0B; }
+
+.barLabel {
+  font-size: 11px;
+  font-weight: var(--sf-font-medium);
+  color: var(--sf-color-text-secondary);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-secondary);
+  border-top: var(--sf-border-width) solid var(--sf-color-border);
+  padding-top: var(--sf-space-3);
+}
+
+.goalStatus {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: var(--sf-font-medium);
+  color: #16A34A;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--sf-radius-full);
+  background-color: #16A34A;
+}

@@ -1,0 +1,190 @@
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--sf-color-surface, #ffffff);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  border-radius: var(--sf-radius-lg, 16px);
+  padding: var(--sf-space-6, 1.5rem);
+  box-shadow: var(--sf-shadow-sm, 0 1px 4px rgba(0, 0, 0, 0.04));
+  gap: var(--sf-space-5, 1.25rem);
+  flex-wrap: wrap;
+}
+
+.leftSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 2;
+  min-width: 320px;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary, #64748b);
+  flex-wrap: wrap;
+}
+
+.productionBadge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.authorText,
+.timeText {
+  color: var(--sf-color-text-secondary, #64748b);
+}
+
+.bulletDot {
+  color: var(--sf-color-text-tertiary, #94a3b8);
+}
+
+.title {
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: var(--sf-color-text-primary, #0f172a);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.description {
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-secondary, #64748b);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.statsRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.statChip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary, #475569);
+  background: var(--sf-color-bg);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+}
+
+.statIcon {
+  font-size: 12px;
+}
+
+/* Middle Circular Ring */
+.middleSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px;
+  border-left: 1px solid var(--sf-color-border, #e2e8f0);
+  border-right: 1px solid var(--sf-color-border, #e2e8f0);
+  flex-shrink: 0;
+}
+
+.masteryRingContainer {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ringSvg {
+  transform: rotate(-90deg);
+}
+
+.ringBackground {
+  fill: none;
+  stroke: var(--sf-color-bg);
+}
+
+.ringProgress {
+  fill: none;
+  stroke: #10b981;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.ringText {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ringPercent {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--sf-color-text-primary, #0f172a);
+}
+
+.ringLabel {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #10b981;
+}
+
+.pipelineInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pipelineState {
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-primary, #0f172a);
+}
+
+.pipelineUpcoming {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-tertiary, #64748b);
+}
+
+/* Right Action Buttons */
+.rightActions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--sf-color-surface, #ffffff);
+  border: 1px solid var(--sf-color-border, #cbd5e1);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--sf-color-text-primary, #0f172a);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.actionBtn:hover {
+  background: var(--sf-color-bg);
+  border-color: #6366f1;
+  color: #6366f1;
+}

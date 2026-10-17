@@ -1,0 +1,173 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--sf-space-3);
+  padding: var(--sf-space-4) var(--sf-space-5);
+  background-color: var(--sf-color-surface);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-xl);
+  box-shadow: var(--sf-shadow-sm);
+  transition: transform var(--sf-duration-fast), box-shadow var(--sf-duration-fast), background-color var(--sf-transition-fast), border-color var(--sf-transition-fast);
+  min-height: 120px;
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--sf-shadow-md);
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-tertiary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--sf-radius-full);
+}
+
+.iconWrapperPrimary {
+  background-color: var(--sf-color-primary-light);
+  color: var(--sf-color-primary);
+}
+
+.iconWrapperWarning {
+  background-color: #FEF3C7;
+  color: #D97706;
+}
+
+.iconWrapperSuccess {
+  background-color: #DCFCE7;
+  color: #16A34A;
+}
+
+.iconWrapperStreak {
+  background-color: #FFF7ED;
+  color: #EA580C;
+}
+
+:global([data-theme="dark"]) .iconWrapperPrimary {
+  background-color: var(--sf-color-primary-light);
+  color: var(--sf-color-primary);
+}
+
+:global([data-theme="dark"]) .iconWrapperWarning {
+  background-color: #451A03;
+  color: #FBBF24;
+}
+
+:global([data-theme="dark"]) .iconWrapperSuccess {
+  background-color: #052E16;
+  color: #4ADE80;
+}
+
+:global([data-theme="dark"]) .iconWrapperStreak {
+  background-color: #431407;
+  color: #FB923C;
+}
+
+.valueRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.value {
+  font-size: var(--sf-text-2xl);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.bottomMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-2);
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-secondary);
+  flex-wrap: wrap;
+}
+
+.trendGreen {
+  color: #16A34A;
+  font-weight: var(--sf-font-semibold);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+:global([data-theme="dark"]) .trendGreen {
+  color: #4ADE80;
+}
+
+.badgeReview {
+  background-color: #FEF3C7;
+  color: #D97706;
+  padding: 1px 6px;
+  border-radius: var(--sf-radius-sm);
+  font-size: 10px;
+  font-weight: var(--sf-font-semibold);
+}
+
+:global([data-theme="dark"]) .badgeReview {
+  background-color: #451A03;
+  color: #FDE68A;
+}
+
+.dayPillsRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.miniPill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.miniPillBox {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background-color: #FEF3C7;
+  color: #D97706;
+  font-size: 9px;
+  font-weight: var(--sf-font-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:global([data-theme="dark"]) .miniPillBox {
+  background-color: #451A03;
+  color: #FDE68A;
+}
+
+.miniPillDot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: #16A34A;
+}
+
+:global([data-theme="dark"]) .miniPillDot {
+  background-color: #4ADE80;
+}

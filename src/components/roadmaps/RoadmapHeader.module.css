@@ -1,0 +1,124 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-3, 0.75rem);
+  width: 100%;
+}
+
+.breadcrumbBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--sf-text-xs, 0.75rem);
+  color: var(--sf-color-text-secondary, #64748b);
+}
+
+.crumbMuted {
+  color: var(--sf-color-text-secondary, #64748b);
+}
+
+.crumbDivider {
+  color: var(--sf-color-text-tertiary, #94a3b8);
+}
+
+.crumbActive {
+  color: var(--sf-color-primary, #0F766E);
+  font-weight: 600;
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--sf-space-4, 1rem);
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 680px;
+}
+
+.titleWithBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-3, 0.75rem);
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: var(--sf-color-text-primary, #0f172a);
+  letter-spacing: -0.025em;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.activeBadge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--sf-color-primary-light);
+  color: var(--sf-color-primary);
+  border: 1px solid var(--sf-color-primary);
+}
+
+.subtitle {
+  font-size: 0.8125rem;
+  color: var(--sf-color-text-secondary, #64748b);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background: var(--sf-color-surface, #ffffff);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--sf-color-text-primary, #0f172a);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.secondaryBtn:hover {
+  background: var(--sf-color-bg);
+  border-color: var(--sf-color-border-hover, #cbd5e1);
+}
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: var(--sf-color-primary);
+  border: 1px solid var(--sf-color-primary);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--sf-color-text-on-primary, #ffffff);
+  cursor: pointer;
+  box-shadow: 0 2px 8px var(--sf-color-primary-light);
+  transition: all 0.15s ease;
+}
+
+.primaryBtn:hover {
+  background: var(--sf-color-primary-hover);
+  box-shadow: 0 4px 12px var(--sf-color-primary-light);
+}

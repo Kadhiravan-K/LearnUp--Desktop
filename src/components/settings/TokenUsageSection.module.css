@@ -1,0 +1,272 @@
+.section {
+  background: var(--sf-color-surface);
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.titleArea {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  font-size: 1.125rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sf-color-text);
+}
+
+.costPill {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #ECFDF5;
+  color: #059669;
+  letter-spacing: 0.05em;
+}
+
+/* Stat Cards */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.statCard {
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statLabel {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #6B7280;
+  letter-spacing: 0.05em;
+}
+
+.statValue {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #111827;
+  font-family: monospace;
+}
+
+.statSub {
+  font-size: 0.6875rem;
+  color: #9CA3AF;
+}
+
+/* Budget Card */
+.budgetCard {
+  background: var(--sf-color-surface);
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.budgetHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.budgetTitle {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.budgetRatio {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #4B5563;
+  font-family: monospace;
+}
+
+.budgetBar {
+  width: 100%;
+  height: 8px;
+  background: #E5E7EB;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.budgetFill {
+  height: 100%;
+  background: var(--sf-color-primary, #0F766E);
+  transition: width 0.3s ease;
+}
+
+.budgetFillWarning {
+  background: #F59E0B;
+}
+
+.budgetFillExceeded {
+  background: #EF4444;
+}
+
+/* Providers Breakdown */
+.providerSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.providerSectionTitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4B5563;
+  letter-spacing: 0.05em;
+}
+
+.providerList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.providerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-sm);
+  padding: 8px 12px;
+}
+
+.providerName {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.freePill {
+  font-size: 0.625rem;
+  font-weight: 700;
+  background: #DEF7EC;
+  color: #03543F;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.providerMetrics {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #4B5563;
+}
+
+/* MCP Box */
+.mcpBox {
+  background: #FAF5FF;
+  border: 1px solid #F3E8FF;
+  border-radius: var(--sf-radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mcpHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mcpTitle {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #6B21A8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mcpEndpoint {
+  font-size: 0.75rem;
+  font-family: monospace;
+  background: var(--sf-color-surface);
+  border: 1px solid #E9D5FF;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #7E22CE;
+}
+
+.mcpDesc {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #7E22CE;
+  line-height: 1.4;
+}
+
+/* Table */
+.tableContainer {
+  overflow-x: auto;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-md);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  text-align: left;
+}
+
+.table th {
+  background: #F9FAFB;
+  color: #4B5563;
+  padding: 8px 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #F3F4F6;
+  color: #374151;
+  font-family: monospace;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}

@@ -1,0 +1,108 @@
+.card {
+  background-color: var(--sf-color-surface);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-xl);
+  padding: var(--sf-space-5);
+  box-shadow: var(--sf-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-4);
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-tertiary);
+  margin: 0;
+}
+
+.quotaBadge {
+  font-size: 11px;
+  font-weight: var(--sf-font-semibold);
+  color: #047857;
+  background-color: #D1FAE5;
+  border: var(--sf-border-width) solid #A7F3D0;
+  padding: 2px 8px;
+  border-radius: var(--sf-radius-md);
+}
+
+.weeksGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sf-space-3);
+}
+
+@media (max-width: 640px) {
+  .weeksGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.weekBox {
+  background-color: var(--sf-color-bg);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-lg);
+  padding: var(--sf-space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.weekBoxCurrent {
+  background-color: #EEF2FF;
+  border-color: #A5B4FC;
+}
+
+.weekLabel {
+  font-size: 10px;
+  font-weight: var(--sf-font-semibold);
+  color: var(--sf-color-text-tertiary);
+}
+
+.weekLabelCurrent {
+  color: var(--sf-color-primary);
+}
+
+.hoursValue {
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text-primary);
+}
+
+.hoursValueCurrent {
+  color: var(--sf-color-primary);
+}
+
+.bar {
+  height: 4px;
+  border-radius: var(--sf-radius-full);
+  margin: 4px 0 2px;
+}
+
+.barGreen { background-color: #10B981; }
+.barOrange { background-color: #F59E0B; }
+.barPurple { background-color: #6366F1; }
+
+.sprintsText {
+  font-size: 10px;
+  color: var(--sf-color-text-tertiary);
+}

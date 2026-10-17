@@ -1,0 +1,494 @@
+.errorCard {
+  background: var(--sf-color-surface, #ffffff);
+  border: 1px solid #fecaca;
+  border-left: 4px solid #ef4444;
+  border-radius: var(--sf-radius-md, 8px);
+  padding: 16px 18px;
+  margin: 14px 0;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.08);
+  animation: slideDown 0.2s ease-out;
+}
+
+[data-theme='dark'] .errorCard {
+  background: #181215;
+  border-color: #451a20;
+  border-left-color: #f87171;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.categoryBadge {
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+[data-theme='dark'] .categoryBadge {
+  background: #450a0a;
+  color: #fca5a5;
+}
+
+.errorTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #991b1b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+[data-theme='dark'] .errorTitle {
+  color: #fca5a5;
+}
+
+.icon {
+  font-size: 15px;
+}
+
+.errorMessage {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+[data-theme='dark'] .errorMessage {
+  color: #cbd5e1;
+}
+
+/* Action Buttons */
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.primaryActionButton {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.primaryActionButton:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.secondaryActionButton {
+  background: rgba(37, 99, 235, 0.1);
+  color: #2563eb;
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+[data-theme='dark'] .secondaryActionButton {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.secondaryActionButton:hover {
+  background: rgba(37, 99, 235, 0.2);
+}
+
+.howToFixButton {
+  background: transparent;
+  color: #4b5563;
+  border: 1px dashed #d1d5db;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+[data-theme='dark'] .howToFixButton {
+  color: #94a3b8;
+  border-color: #334155;
+}
+
+.howToFixButton:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #111827;
+}
+
+[data-theme='dark'] .howToFixButton:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   Step-by-Step Diagnostic Blog Modal
+   ========================================================================== */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.modalContent {
+  background: #ffffff;
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme='dark'] .modalContent {
+  background: var(--sf-color-surface);
+  border-color: #1e293b;
+  color: #f8fafc;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--sf-color-border, #e2e8f0);
+  background: var(--sf-color-bg-elevated);
+}
+
+[data-theme='dark'] .modalHeader {
+  background: #111827;
+  border-color: #1e293b;
+}
+
+.modalTitleWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modalIcon {
+  font-size: 28px;
+}
+
+.modalCategory {
+  font-size: 10px;
+  font-weight: 800;
+  color: #2563eb;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+[data-theme='dark'] .modalCategory {
+  color: #60a5fa;
+}
+
+.modalHeading {
+  margin: 2px 0 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+}
+
+[data-theme='dark'] .modalHeading {
+  color: #ffffff;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.closeBtn:hover {
+  color: #111827;
+}
+
+[data-theme='dark'] .closeBtn:hover {
+  color: #ffffff;
+}
+
+/* Modal Body */
+.modalBody {
+  padding: 20px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sectionCard {
+  background: var(--sf-color-bg-elevated);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+[data-theme='dark'] .sectionCard {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.sectionTitle {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+[data-theme='dark'] .sectionTitle {
+  color: #f8fafc;
+}
+
+.sectionText {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+[data-theme='dark'] .sectionText {
+  color: #cbd5e1;
+}
+
+.whyBox {
+  background: #fee2e2;
+  border-left: 3px solid #ef4444;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #991b1b;
+}
+
+[data-theme='dark'] .whyBox {
+  background: #450a0a;
+  border-left-color: #f87171;
+  color: #fca5a5;
+}
+
+/* Steps */
+.stepsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stepCard {
+  background: var(--sf-color-bg-elevated);
+  border: 1px solid var(--sf-color-border, #e2e8f0);
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme='dark'] .stepCard {
+  background: var(--sf-color-bg-elevated);
+  border-color: var(--sf-color-border);
+}
+
+.stepHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.stepNumberBadge {
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 9999px;
+}
+
+.stepHeading {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+}
+
+[data-theme='dark'] .stepHeading {
+  color: #f8fafc;
+}
+
+.stepDescription {
+  margin: 0 0 10px 0;
+  font-size: 12px;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+[data-theme='dark'] .stepDescription {
+  color: #94a3b8;
+}
+
+.snippetWrap {
+  background: var(--sf-color-surface);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.snippetCode {
+  margin: 0;
+  font-family: monospace;
+  font-size: 11px;
+  color: #38bdf8;
+  white-space: pre-wrap;
+}
+
+.copyBtn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.copyBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.stepActionBtn {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.stepActionBtn:hover {
+  background: #1d4ed8;
+}
+
+/* Pro Tip */
+.proTipBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #166534;
+}
+
+[data-theme='dark'] .proTipBox {
+  background: #052e16;
+  border-color: #14532d;
+  color: #86efac;
+}
+
+.proTipIcon {
+  font-size: 16px;
+}
+
+/* Modal Footer */
+.modalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 14px 24px;
+  border-top: 1px solid var(--sf-color-border, #e2e8f0);
+  background: var(--sf-color-bg-elevated);
+}
+
+[data-theme='dark'] .modalFooter {
+  background: var(--sf-color-bg-elevated);
+  border-color: var(--sf-color-border);
+}
+
+.footerDismissBtn {
+  background: transparent;
+  border: 1px solid #d1d5db;
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+[data-theme='dark'] .footerDismissBtn {
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+.footerPrimaryBtn {
+  background: #2563eb;
+  border: none;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.footerPrimaryBtn:hover {
+  background: #1d4ed8;
+}

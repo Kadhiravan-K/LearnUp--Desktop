@@ -1,0 +1,322 @@
+.section {
+  background: var(--sf-color-surface);
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.titleArea {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  font-size: 1.125rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sf-color-text);
+}
+
+.zeroLoggingBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #F3F4F6;
+  color: #4B5563;
+  letter-spacing: 0.05em;
+}
+
+/* Security Box */
+.securityBox {
+  background: #F0FDF4;
+  border: 1px solid #DCFCE7;
+  border-radius: var(--sf-radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.securityTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shieldIcon {
+  font-size: 1rem;
+}
+
+.securityTitle {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #166534;
+}
+
+.securityDesc {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #15803D;
+  line-height: 1.4;
+}
+
+/* Form Grid */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #4B5563;
+}
+
+.select, .input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: var(--sf-radius-md);
+  border: 1px solid #E5E7EB;
+  background: #F9FAFB;
+  font-size: 0.875rem;
+  color: var(--sf-color-text);
+  outline: none;
+}
+
+.select:focus, .input:focus {
+  border-color: var(--sf-color-primary);
+  background: var(--sf-color-surface);
+}
+
+/* Key Card */
+.keyCard {
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.keyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.keyTitleArea {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lockIcon {
+  font-size: 0.875rem;
+}
+
+.keyTitle {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #4B5563;
+}
+
+.statusPill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #059669;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+}
+
+.keyDisplayBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--sf-color-surface);
+  border: 1px solid #E5E7EB;
+  border-radius: var(--sf-radius-sm);
+  padding: 8px 12px;
+}
+
+.maskedKey {
+  font-family: monospace;
+  font-size: 0.8125rem;
+  color: #374151;
+  letter-spacing: 0.05em;
+}
+
+.keyActionsMini {
+  display: flex;
+  gap: 6px;
+}
+
+.miniBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+.miniBtn:hover {
+  color: #111827;
+}
+
+.editKeyRow {
+  display: flex;
+  gap: 8px;
+}
+
+.keyInput {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: var(--sf-radius-sm);
+  border: 1px solid #D1D5DB;
+  font-size: 0.8125rem;
+  font-family: monospace;
+}
+
+.saveKeyBtn {
+  background: var(--sf-color-primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--sf-radius-sm);
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancelKeyBtn {
+  background: #E5E7EB;
+  color: #374151;
+  border: none;
+  border-radius: var(--sf-radius-sm);
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+/* Key Actions Row */
+.keyActionsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.keyActionsLeft {
+  display: flex;
+  gap: 8px;
+}
+
+.testBtn, .replaceBtn {
+  background: var(--sf-color-surface);
+  border: 1px solid #D1D5DB;
+  border-radius: var(--sf-radius-sm);
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+}
+
+.testBtn:hover, .replaceBtn:hover {
+  background: #F3F4F6;
+}
+
+.removeKeyBtn {
+  background: transparent;
+  border: none;
+  color: #DC2626;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.removeKeyBtn:hover {
+  text-decoration: underline;
+}
+
+/* Telemetry Strip */
+.telemetryStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #E5E7EB;
+}
+
+@media (max-width: 640px) {
+  .telemetryStrip {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.telemetryItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.telemetryLabel {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #6B7280;
+}
+
+.telemetryVal {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--sf-color-text);
+  font-family: monospace;
+}
+
+.telemetryValHighlight {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--sf-color-primary, #0F766E);
+  font-family: monospace;
+}

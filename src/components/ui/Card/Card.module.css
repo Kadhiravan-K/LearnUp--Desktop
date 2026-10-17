@@ -1,0 +1,15 @@
+.card {
+  background-color: var(--sf-color-surface);
+  border: var(--sf-border-width) solid var(--sf-color-border);
+  border-radius: var(--sf-radius-lg);
+  overflow: hidden;
+}
+
+.hoverable {
+  transition: transform var(--sf-transition-fast), box-shadow var(--sf-transition-fast);
+}
+
+.hoverable:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sf-shadow-md);
+}

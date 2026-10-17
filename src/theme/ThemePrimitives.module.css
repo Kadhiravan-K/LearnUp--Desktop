@@ -1,0 +1,165 @@
+/* ==========================================================================
+   Theme Primitives — HUDPanel, MysticPanel, Telemetry, Glow
+   ========================================================================== */
+
+/* ── HUD Panel (JARVIS-inspired technical glass) ── */
+.hudPanel {
+  position: relative;
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-lg);
+  padding: var(--sf-space-4);
+  transition: all var(--sf-transition-normal);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+
+/* Technical Corner Accents */
+.hudPanel::before,
+.hudPanel::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  transition: border-color var(--sf-transition-fast);
+}
+
+[data-theme="jarvis"] .hudPanel::before {
+  top: 0;
+  left: 0;
+  border-top: 2px solid var(--sf-color-primary);
+  border-left: 2px solid var(--sf-color-primary);
+}
+
+[data-theme="jarvis"] .hudPanel::after {
+  bottom: 0;
+  right: 0;
+  border-bottom: 2px solid var(--sf-color-primary);
+  border-right: 2px solid var(--sf-color-primary);
+}
+
+.hudHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sf-space-3);
+  padding-bottom: var(--sf-space-2);
+  border-bottom: 1px solid var(--sf-color-border);
+}
+
+.hudTitle {
+  font-family: var(--sf-font-mono);
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sf-color-text-secondary);
+}
+
+/* ── Mystic Panel (Arcane Dimensional Glass) ── */
+.mysticPanel {
+  position: relative;
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-xl);
+  padding: var(--sf-space-5);
+  transition: all var(--sf-transition-normal);
+  overflow: hidden;
+}
+
+[data-theme="mystic"] .mysticPanel {
+  background: radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
+              radial-gradient(circle at 15% 85%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
+              var(--sf-color-surface);
+  box-shadow: 0 4px 24px rgba(11, 6, 22, 0.6), inset 0 0 16px rgba(168, 85, 247, 0.08);
+}
+
+.mysticHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-2);
+  margin-bottom: var(--sf-space-3);
+}
+
+.mysticGlyph {
+  font-size: var(--sf-text-sm);
+  color: var(--sf-color-primary);
+  filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.4));
+}
+
+.mysticTitle {
+  font-size: var(--sf-text-sm);
+  font-weight: var(--sf-font-semibold);
+  letter-spacing: 0.05em;
+  color: var(--sf-color-text-primary);
+}
+
+/* ── Telemetry Label ── */
+.telemetryContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sf-space-2);
+  font-family: var(--sf-font-mono);
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-secondary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+[data-theme="jarvis"] .telemetryContainer {
+  color: var(--sf-color-text-secondary);
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.25);
+}
+
+[data-theme="mystic"] .telemetryContainer {
+  color: var(--sf-color-text-secondary);
+  letter-spacing: 0.08em;
+}
+
+/* ── Glow Status Indicator ── */
+.statusWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sf-space-2);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--sf-radius-full);
+  background-color: var(--sf-color-primary);
+  box-shadow: 0 0 8px var(--sf-color-primary);
+  transition: all var(--sf-transition-fast);
+}
+
+.statusPulse {
+  animation: pulseAnimation 2s infinite ease-in-out;
+}
+
+@keyframes pulseAnimation {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 6px rgba(0, 229, 255, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 229, 255, 0);
+  }
+}
+
+/* ── Reduced Motion Accessibility ── */
+@media (prefers-reduced-motion: reduce) {
+  .statusPulse {
+    animation: none !important;
+  }
+  .hudPanel,
+  .mysticPanel {
+    transition: none !important;
+  }
+}
