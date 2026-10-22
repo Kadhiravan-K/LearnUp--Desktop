@@ -19,6 +19,8 @@ export interface LearningItem {
   status: LearningItemStatus;
   created_at: string;
   updated_at: string;
+  itemCount?: number;
+  videosJson?: string;
 }
 
 export interface LearningItemVideo {
@@ -66,6 +68,8 @@ export interface CoursePreviewData {
   skillDomain: string;
   tags: string[];
   videos: CoursePreviewVideo[];
+  isTruncatedRss?: boolean;
+  warningNotice?: string;
 }
 
 export interface ImportCourseInput {
@@ -105,6 +109,8 @@ export interface YouTubePlaylistMetadata {
   title: string;
   thumbnailUrl: string | null;
   items: YouTubePlaylistItem[];
+  isTruncatedRss?: boolean;
+  warningNotice?: string;
 }
 
 export interface AuthenticatedUser {

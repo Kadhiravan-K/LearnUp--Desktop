@@ -81,7 +81,7 @@ export async function getWebViewTarget(maxRetries = 10) {
     try {
       const res = await fetch('http://localhost:9222/json');
       const targets = await res.json();
-      const pageTarget = targets.find((t) => t.type === 'page' && (t.url.includes('1420') || t.url.includes('tauri.localhost') || t.title.includes('LearnUp') || t.webSocketDebuggerUrl));
+      const pageTarget = targets.find((t) => t.type === 'page' && (t.url.includes('tauri.localhost') || t.url.includes('1420') || t.title.includes('LearnUp')) && t.url !== 'about:blank');
       if (pageTarget) return pageTarget;
     } catch {
       // Retry

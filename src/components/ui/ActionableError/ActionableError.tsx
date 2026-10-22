@@ -117,7 +117,7 @@ function resolveDiagnosticGuide(rawError: string, errorCode?: string): Diagnosti
     err.includes('format') ||
     err.includes('youtube url')
   ) {
-    const SAMPLE_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+    const SAMPLE_URL = 'https://www.youtube.com/watch?v=zQnBQ4tB3ZA';
     return {
       category: 'URL Validation',
       icon: '🔗',

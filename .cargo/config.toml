@@ -1,5 +1,5 @@
 [build]
-target-dir = "src-tauri/target-desktop"
+target-dir = "src-tauri/target"
 jobs = 2
 
 [env]

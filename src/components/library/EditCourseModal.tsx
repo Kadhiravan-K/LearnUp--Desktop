@@ -6,7 +6,7 @@ import { Modal } from '@/components/ui/Modal/Modal';
 import { Button } from '@/components/ui/Button/Button';
 import { Alert } from '@/components/ui/Alert/Alert';
 import { Spinner } from '@/components/ui/Spinner/Spinner';
-import { getAuthHeaders } from '@/lib/api/client';
+import { getPlatform } from '@/adapters/platform';
 import type { LearningItem, LearningItemVideo, LearningItemWithVideos } from '@/lib/types';
 import styles from './EditCourseModal.module.css';
 
@@ -45,35 +45,31 @@ export function EditCourseModal({ isOpen, onClose, onSuccess, item }: EditCourse
     setDescription(item.description || '');
     setError(null);
 
-    if (item.type === 'playlist') {
+    const isPlaylist = item.type === 'playlist' || (item as any).sourceType === 'playlist';
+    if (isPlaylist) {
       setIsLoadingVideos(true);
-      getAuthHeaders().then((headers) => {
-        fetch(`/api/learning-items/${item.id}`, { headers })
-          .then((res) => res.json())
-          .then((json) => {
-            if (json.data?.videos) {
-              const sorted = [...(json.data.videos as LearningItemVideo[])].sort(
-                (a, b) => a.source_position - b.source_position
-              );
-              setVideos(
-                sorted.map((v, idx) => ({
-                  id: v.id,
-                  youtube_video_id: v.youtube_video_id,
-                  title: v.title,
-                  thumbnail_url: v.thumbnail_url,
-                  source_position: idx,
-                  duration_seconds: v.duration_seconds
-                }))
-              );
-            }
-          })
-          .catch((err) => {
-            setError(err.message || 'Failed to load playlist videos');
-          })
-          .finally(() => {
-            setIsLoadingVideos(false);
-          });
-      });
+      try {
+        const rawJson = (item as any).videosJson;
+        if (rawJson) {
+          const parsed = JSON.parse(rawJson);
+          setVideos(
+            parsed.map((v: any, idx: number) => ({
+              id: v.id || `v-${idx}`,
+              youtube_video_id: v.videoId || v.youtube_video_id,
+              title: v.title,
+              thumbnail_url: v.thumbnailUrl || v.thumbnail_url,
+              source_position: idx,
+              duration_seconds: v.durationSeconds || v.duration_seconds || 0
+            }))
+          );
+        } else if ((item as any).videos) {
+          setVideos((item as any).videos);
+        }
+      } catch (err: any) {
+        setError('Failed to load course videos');
+      } finally {
+        setIsLoadingVideos(false);
+      }
     }
   }, [isOpen, item]);
 
@@ -148,32 +144,21 @@ export function EditCourseModal({ isOpen, onClose, onSuccess, item }: EditCourse
     setError(null);
 
     try {
-      const headers = await getAuthHeaders();
-
-      const payload: Record<string, any> = {
+      const platform = getPlatform();
+      const updatedItem: any = {
+        ...item,
         title: title.trim(),
-        description: description.trim() || null
+        description: description.trim() || null,
+        videosJson: JSON.stringify(videos),
+        itemCount: videos.length > 0 ? videos.length : item.itemCount,
+        updatedAt: new Date().toISOString()
       };
 
-      if (item.type === 'playlist') {
-        payload.videos = videos;
-      }
-
-      const res = await fetch(`/api/learning-items/${item.id}`, {
-        method: 'PATCH',
-        headers,
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) {
-        const json = await res.json();
-        throw new Error(json.error?.message || 'Failed to update course');
-      }
-
+      await platform.storage.saveLearningItem(updatedItem);
       onSuccess();
       onClose();
     } catch (err: any) {
-      setError(err.message || 'An error occurred while saving changes');
+      setError(err?.message || 'An error occurred while saving changes');
     } finally {
       setIsSaving(false);
     }

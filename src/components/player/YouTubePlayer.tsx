@@ -21,6 +21,8 @@ export interface YouTubePlayerProps {
   videoId: string;
   title?: string;
   onCompleted?: () => void;
+  initialPositionSeconds?: number;
+  onProgressChange?: (pos: number, dur: number, completed: boolean) => void;
 }
 
 export type DeviceMode = 'phone' | 'tablet' | 'laptop' | 'vr';
@@ -63,7 +65,7 @@ function formatTime(seconds: number): string {
 }
 
 export const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(function YouTubePlayer(
-  { videoId, title = 'LearnUp Player', onCompleted },
+  { videoId, title = 'LearnUp Player', onCompleted, initialPositionSeconds, onProgressChange },
   ref
 ) {
   const cleanVideoId = sanitizeVideoId(videoId);
@@ -199,32 +201,39 @@ export const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(fu
   // Fetch initial user progress for resume
   useEffect(() => {
     setIsReady(false);
-    setStartSeconds(0);
     lastSyncedPositionRef.current = -1;
 
+    if (initialPositionSeconds && initialPositionSeconds > 0) {
+      setStartSeconds(initialPositionSeconds);
+      return;
+    }
+
+    setStartSeconds(0);
     if (!cleanVideoId) return;
 
     const abortController = new AbortController();
 
     fetch(`/api/progress/${cleanVideoId}`, { signal: abortController.signal })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) return null;
+        return res.json();
+      })
       .then((resJson) => {
+        if (!resJson) return;
         const data = resJson.data || resJson;
         if (!data.is_completed && data.position_seconds) {
           setStartSeconds(data.position_seconds);
         }
       })
-      .catch((err) => {
-        if (err.name !== 'AbortError') {
-          console.error(err);
-        }
+      .catch(() => {
+        // Safe desktop fallback
       });
 
     return () => {
       stopPolling();
       abortController.abort();
     };
-  }, [cleanVideoId]);
+  }, [cleanVideoId, initialPositionSeconds]);
 
   // Background progress sync
   const syncProgress = useCallback(
@@ -239,7 +248,11 @@ export const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(fu
 
         const completed = isVideoCompleted(pos, dur);
 
-        await fetch('/api/progress', {
+        if (onProgressChange) {
+          onProgressChange(pos, dur, completed);
+        }
+
+        fetch('/api/progress', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -248,12 +261,14 @@ export const YouTubePlayer = forwardRef<YouTubePlayerRef, YouTubePlayerProps>(fu
             durationSeconds: dur,
             isCompleted: completed
           })
+        }).catch(() => {
+          // Ignore desktop 404
         });
       } catch (error) {
         console.error('Failed to sync progress:', error);
       }
     },
-    [cleanVideoId]
+    [cleanVideoId, onProgressChange]
   );
 
   const startPolling = useCallback(

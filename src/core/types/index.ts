@@ -112,6 +112,7 @@ export interface LearningItem {
   description?: string | null;
   skillDomain?: string | null;
   tags?: string[];
+  videosJson?: string;
   totalDurationSeconds?: number;
   status?: LearningItemStatus;
   createdAt: string;

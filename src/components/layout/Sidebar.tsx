@@ -9,11 +9,14 @@ import { useWorkspaces } from '@/lib/hooks/useWorkspaces';
 import { useModuleManager } from '@/lib/hooks/useModuleManager';
 import { Workspace } from '@/lib/types';
 import { clearGuestSession } from '@/lib/auth/guest-session';
+import { UserProfile } from '@/core';
 import styles from './Sidebar.module.css';
 
 export interface SidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
+  activeProfile?: UserProfile | null;
+  onSignOut?: () => void;
 }
 
 export interface NavItem {
@@ -176,7 +179,7 @@ export const ADDITIONAL_NAV_ITEMS: NavItem[] = [
   }
 ];
 
-export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
+export function Sidebar({ isOpen = false, onClose, activeProfile, onSignOut }: SidebarProps) {
   const pathname = usePathname() || '';
   const router = useRouter();
   const supabase = createClient();
@@ -269,7 +272,11 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
     } catch (e) {
       console.warn('Sign out cleanup caught:', e);
     } finally {
-      window.location.href = '/login';
+      if (onSignOut) {
+        onSignOut();
+      } else {
+        router.push('/login');
+      }
     }
   };
 
@@ -336,8 +343,9 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
     }
   };
 
-  const userName = userEmail ? userEmail.split('@')[0] : 'Learner';
-  const userInitial = userName.charAt(0).toUpperCase();
+  const userName = activeProfile?.name || (userEmail ? userEmail.split('@')[0] : 'Learner');
+  const userDisplayEmail = activeProfile?.email || activeProfile?.cloudUserEmail || userEmail || 'guest@learnup.local';
+  const userInitial = activeProfile?.initials || userName.charAt(0).toUpperCase();
 
   const activeName = activeWorkspace ? activeWorkspace.name : 'Personal Study Vault';
   const activeIcon = activeWorkspace ? activeWorkspace.icon : '📚';
@@ -662,16 +670,16 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             <Link
               href="/settings"
               className={styles.userLeft}
-              title={isCollapsed ? `${userName} (${userEmail || ''}) - Settings` : 'Account Settings'}
+              title={isCollapsed ? `${userName} (${userDisplayEmail}) - Settings` : 'Account Settings'}
               style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
             >
-              <div className={styles.userAvatar}>
+              <div className={styles.userAvatar} style={activeProfile?.color ? { background: activeProfile.color } : undefined}>
                 {userInitial}
               </div>
               {!isCollapsed && (
                 <div className={styles.userInfo}>
                   <span className={styles.userName}>{userName}</span>
-                  <span className={styles.userEmail}>{userEmail || 'learner@LearnUp.local'}</span>
+                  <span className={styles.userEmail}>{userDisplayEmail}</span>
                 </div>
               )}
             </Link>
@@ -680,8 +688,8 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                 type="button"
                 className={styles.signOutBtn}
                 onClick={handleSignOut}
-                aria-label={userEmail ? "Sign out" : "Exit Guest Workspace"}
-                title={userEmail ? "Sign out" : "Exit Guest Workspace"}
+                aria-label={activeProfile?.email ? "Sign out" : "Exit Guest Workspace"}
+                title={activeProfile?.email ? "Sign out" : "Exit Guest Workspace"}
               >
                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -782,6 +790,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       <BrowseTemplatesModal
         isOpen={isTemplatesModalOpen}
         onClose={() => setIsTemplatesModalOpen(false)}
+        activeProfileId={activeProfile?.id}
       />
 
       {/* Upgrade Plan Modal */}

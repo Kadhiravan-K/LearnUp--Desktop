@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { CoursePreviewData } from '@/lib/types';
+import { CoursePreviewData, ImportCourseInput } from '@/lib/types';
 import { isValidYouTubeUrl, extractMultipleYouTubeUrls } from '@/lib/utils/url';
-import { getAuthHeaders } from '@/lib/api/client';
+import { desktopImportService } from '@/lib/services/import-service';
 import { ActionableError } from '@/components/ui/ActionableError/ActionableError';
 import { YouTubeImportLoader } from '@/components/ui/LoadingAnimation/YouTubeImportLoader';
 import styles from './AddCourseModal.module.css';
@@ -12,9 +12,11 @@ export interface AddCourseModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: (courseId?: string) => void;
+  activeProfileId?: string;
+  cloudUserId?: string | null;
 }
 
-export function AddCourseModal({ isOpen, onClose, onSuccess }: AddCourseModalProps) {
+export function AddCourseModal({ isOpen, onClose, onSuccess, activeProfileId, cloudUserId }: AddCourseModalProps) {
   // Source type & step state
   const [sourceType, setSourceType] = useState<'video' | 'playlist'>('playlist');
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -83,38 +85,21 @@ export function AddCourseModal({ isOpen, onClose, onSuccess }: AddCourseModalPro
 
     setIsPreviewLoading(true);
     try {
-      const headers = await getAuthHeaders();
+      const data = validUrls.length > 1
+        ? await desktopImportService.previewMultipleUrls(validUrls)
+        : await desktopImportService.previewUrl(validUrls[0] || trimmedInput);
 
-      const payload = validUrls.length > 1
-        ? { urls: validUrls }
-        : { url: validUrls[0] || trimmedInput };
-
-      const res = await fetch('/api/learning-items/preview', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(payload)
-      });
-
-      if (res.ok) {
-        const json = await res.json();
-        if (json.data) {
-          setPreviewData(json.data);
-          setCourseName(json.data.title);
-          setDescription(json.data.description || '');
-          setSkillDomain(json.data.skillDomain || 'Systems Architecture');
-          setTags(json.data.tags || []);
-          setSelectedVideoIds(json.data.videos.map((v: { videoId: string }) => v.videoId));
-          setIsConfirmed(true);
-          setCurrentStep(3);
-        }
-      } else {
-        const errJson = await res.json().catch(() => ({}));
-        setError(errJson.error?.message || 'Could not fetch preview for the provided URL(s). Please check the link and try again.');
-        setErrorCode(errJson.error?.code || 'FETCH_ERROR');
-      }
-    } catch {
-      setError('Network error while fetching preview. Please verify your connection.');
-      setErrorCode('NETWORK_ERROR');
+      setPreviewData(data);
+      setCourseName(data.title);
+      setDescription(data.description || '');
+      setSkillDomain(data.skillDomain || 'Systems Architecture');
+      setTags(data.tags || []);
+      setSelectedVideoIds(data.videos.map((v) => v.videoId));
+      setIsConfirmed(true);
+      setCurrentStep(3);
+    } catch (err: any) {
+      setError(err?.message || 'Could not fetch preview for the provided URL(s). Please check the link and try again.');
+      setErrorCode(err?.code || 'FETCH_ERROR');
     } finally {
       setIsPreviewLoading(false);
     }
@@ -200,12 +185,9 @@ export function AddCourseModal({ isOpen, onClose, onSuccess }: AddCourseModalPro
     setError(null);
     setErrorCode(null);
     setIsImporting(true);
-
     try {
-      const headers = await getAuthHeaders();
-
       const extracted = extractMultipleYouTubeUrls(url.trim());
-      const payload = {
+      const payload: ImportCourseInput = {
         url: url.trim(),
         urls: extracted.length > 1 ? extracted : undefined,
         title: courseName.trim() || previewData?.title || undefined,
@@ -216,27 +198,20 @@ export function AddCourseModal({ isOpen, onClose, onSuccess }: AddCourseModalPro
         selectedVideoIds: selectedVideoIds.length > 0 ? selectedVideoIds : undefined
       };
 
-      const res = await fetch('/api/learning-items', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(payload)
-      });
+      const { item } = await desktopImportService.importCourse(
+        activeProfileId || 'guest_local_default',
+        cloudUserId,
+        payload
+      );
 
-      if (res.ok) {
-        const json = await res.json();
-        setCurrentStep(4);
-        setTimeout(() => {
-          onSuccess(json.data?.id);
-          onClose();
-        }, 800);
-      } else {
-        const errJson = await res.json().catch(() => ({}));
-        setError(errJson.error?.message || 'Failed to import curriculum.');
-        setErrorCode(errJson.error?.code || 'IMPORT_ERROR');
-      }
-    } catch {
-      setError('An error occurred during curriculum ingestion. Please try again.');
-      setErrorCode('NETWORK_ERROR');
+      setCurrentStep(4);
+      setTimeout(() => {
+        onSuccess(item.id);
+        onClose();
+      }, 800);
+    } catch (err: any) {
+      setError(err?.message || 'Failed to import curriculum.');
+      setErrorCode(err?.code || 'IMPORT_ERROR');
     } finally {
       setIsImporting(false);
     }
@@ -427,6 +402,26 @@ export function AddCourseModal({ isOpen, onClose, onSuccess }: AddCourseModalPro
           {/* Section 2: Playlist Import Preview */}
           {previewData && (
             <section className={styles.section}>
+              {previewData.warningNotice && (
+                <div
+                  style={{
+                    background: 'rgba(245, 158, 11, 0.1)',
+                    border: '1px solid rgba(245, 158, 11, 0.4)',
+                    color: '#b45309',
+                    borderRadius: '8px',
+                    padding: '10px 14px',
+                    fontSize: '0.8125rem',
+                    marginBottom: '1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  <span style={{ fontSize: '1rem' }}>ℹ️</span>
+                  <span>{previewData.warningNotice}</span>
+                </div>
+              )}
+
               <div className={styles.sectionHeader}>
                 <div className={styles.sectionTitleArea}>
                   <span className={styles.blueBullet}>●</span>

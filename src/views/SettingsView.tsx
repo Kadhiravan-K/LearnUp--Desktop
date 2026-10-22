@@ -48,6 +48,7 @@ export interface SettingsViewProps {
   onTogglePauseSync: () => void;
   onLinkAccount: (email: string) => void;
   onUnlinkAccount: () => void;
+  onSignOut?: () => void;
   showToast: (msg: string, type?: 'info' | 'success' | 'warning' | 'error') => void;
 }
 
@@ -69,6 +70,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   onTogglePauseSync,
   onLinkAccount,
   onUnlinkAccount,
+  onSignOut,
   showToast,
 }) => {
   const [activeTab, setActiveTab] = useState<string>('cloud-sync');
@@ -132,6 +134,26 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       updated_at: new Date().toISOString(),
     });
   }, [activeProfile?.id, activeProfile?.name]);
+
+  // Keep settings.theme_mode in sync when header or ThemeProvider switches themes
+  useEffect(() => {
+    const handleThemeChange = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail) {
+        const mode: ThemeMode = customEvent.detail === 'dark' ? 'dark' : 'light';
+        setSettings((prev) => {
+          if (prev.theme_mode === mode) return prev;
+          const updated = { ...prev, theme_mode: mode };
+          try {
+            localStorage.setItem(settingsStorageKey, JSON.stringify(updated));
+          } catch {}
+          return updated;
+        });
+      }
+    };
+    window.addEventListener('LearnUp_theme_changed', handleThemeChange);
+    return () => window.removeEventListener('LearnUp_theme_changed', handleThemeChange);
+  }, [settingsStorageKey]);
 
   // Persist field change
   const handleFieldChange = useCallback(
@@ -298,6 +320,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             userEmail={userEmailDisplay}
             userName={userNameDisplay}
             userAvatar={settings.avatar_url}
+            onSignOut={onSignOut}
           />
         </aside>
 
@@ -477,7 +500,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 avatarUrl={settings.avatar_url}
                 onChange={(field, val) => handleFieldChange(field as keyof UserSettings, val)}
                 onSignOutAll={() => {
-                  showToast('Signed out of all simulated cloud sessions', 'info');
+                  if (onSignOut) {
+                    onSignOut();
+                  } else {
+                    showToast('Signed out of all simulated cloud sessions', 'info');
+                  }
                 }}
               />
 

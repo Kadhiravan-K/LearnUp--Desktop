@@ -7,13 +7,16 @@ import { Header } from './Header';
 import { UndoProvider } from '@/lib/context/UndoContext';
 import { FocusTimerProvider } from '@/lib/context/FocusTimerContext';
 import { FirstLaunchWizard } from '@/components/setup/FirstLaunchWizard';
+import { UserProfile } from '@/core';
 import styles from './AppShell.module.css';
 
 export interface AppShellProps {
   children: React.ReactNode;
+  activeProfile?: UserProfile | null;
+  onSignOut?: () => void;
 }
 
-export function AppShell({ children }: AppShellProps) {
+export function AppShell({ children, activeProfile, onSignOut }: AppShellProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isFirstLaunchOpen, setIsFirstLaunchOpen] = useState(false);
   const pathname = usePathname();
@@ -79,7 +82,7 @@ export function AppShell({ children }: AppShellProps) {
           )}
 
           {/* Responsive Sidebar */}
-          <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
+          <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} activeProfile={activeProfile} onSignOut={onSignOut} />
 
           {/* Main Content Area */}
           <div className={styles.mainWrapper}>

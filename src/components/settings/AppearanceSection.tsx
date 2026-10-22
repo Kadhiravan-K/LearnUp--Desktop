@@ -31,8 +31,19 @@ export function AppearanceSection({
   onChangeAccent
 }: AppearanceSectionProps) {
   const { theme, setTheme, resolvedTheme } = useLearnUpTheme();
+  const [selectedAccent, setSelectedAccent] = useState<AccentColor>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('LearnUp_accent') as AccentColor | null;
+      if (saved) return saved;
+    }
+    return accentColor || 'emerald';
+  });
   const [fontScale, setFontScale] = useState<'compact' | 'standard' | 'large'>('standard');
   const [density, setDensity] = useState<'compact' | 'comfortable' | 'spacious'>('comfortable');
+
+  useEffect(() => {
+    if (accentColor) setSelectedAccent(accentColor);
+  }, [accentColor]);
 
   // Sync initial client state for font scale and density from localStorage
   useEffect(() => {
@@ -56,6 +67,7 @@ export function AppearanceSection({
   };
 
   const handleSelectAccent = (accent: AccentColor) => {
+    setSelectedAccent(accent);
     onChangeAccent(accent);
     applyAccentToDOM(accent);
     try {
@@ -82,7 +94,7 @@ export function AppearanceSection({
     } catch {}
   };
 
-  const activeAccentObj = ACCENT_SPECTRUM.find((a) => a.id === accentColor) || ACCENT_SPECTRUM[0];
+  const activeAccentObj = ACCENT_SPECTRUM.find((a) => a.id === selectedAccent) || ACCENT_SPECTRUM[0];
 
   return (
     <section id="appearance" className={styles.section} aria-labelledby="appearance-heading">
@@ -184,14 +196,14 @@ export function AppearanceSection({
               <button
                 key={acc.id}
                 type="button"
-                className={`${styles.colorDot} ${accentColor === acc.id ? styles.dotActive : ''}`}
+                className={`${styles.colorDot} ${selectedAccent === acc.id ? styles.dotActive : ''}`}
                 style={{ backgroundColor: acc.hex }}
                 onClick={() => handleSelectAccent(acc.id)}
                 aria-label={`${acc.name} accent`}
-                aria-checked={accentColor === acc.id}
+                aria-checked={selectedAccent === acc.id}
                 role="radio"
               >
-                {accentColor === acc.id && <span className={styles.checkMark}>✓</span>}
+                {selectedAccent === acc.id && <span className={styles.checkMark}>✓</span>}
               </button>
             ))}
           </div>

@@ -70,6 +70,18 @@ pub struct LearningItem {
     pub channel_title: Option<String>,
     #[serde(rename = "itemCount")]
     pub item_count: Option<i64>,
+    #[serde(default)]
+    pub description: Option<String>,
+    #[serde(rename = "skillDomain", default)]
+    pub skill_domain: Option<String>,
+    #[serde(default)]
+    pub tags: Option<serde_json::Value>,
+    #[serde(rename = "videosJson", default)]
+    pub videos_json: Option<String>,
+    #[serde(rename = "totalDurationSeconds", default)]
+    pub total_duration_seconds: Option<i64>,
+    #[serde(default)]
+    pub status: Option<String>,
     #[serde(rename = "createdAt")]
     pub created_at: String,
     #[serde(rename = "updatedAt")]
@@ -317,6 +329,12 @@ impl DatabaseManager {
         let _ = conn.execute("ALTER TABLE user_profiles ADD COLUMN cloud_user_email TEXT;", []);
         let _ = conn.execute("ALTER TABLE user_profiles ADD COLUMN cloud_sync_enabled INTEGER NOT NULL DEFAULT 0;", []);
         let _ = conn.execute("ALTER TABLE durable_notes ADD COLUMN title TEXT;", []);
+        let _ = conn.execute("ALTER TABLE learning_items ADD COLUMN description TEXT;", []);
+        let _ = conn.execute("ALTER TABLE learning_items ADD COLUMN skill_domain TEXT;", []);
+        let _ = conn.execute("ALTER TABLE learning_items ADD COLUMN tags TEXT;", []);
+        let _ = conn.execute("ALTER TABLE learning_items ADD COLUMN videos_json TEXT;", []);
+        let _ = conn.execute("ALTER TABLE learning_items ADD COLUMN total_duration_seconds INTEGER;", []);
+        let _ = conn.execute("ALTER TABLE learning_items ADD COLUMN status TEXT;", []);
         let _ = conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_learning_items_user_source ON learning_items (user_id, source_id);", []);
 
         Ok(())
@@ -437,8 +455,24 @@ impl DatabaseManager {
     // Learning Items
     pub fn list_learning_items(&self, user_id: &str) -> Result<Vec<LearningItem>> {
         let conn = self.conn.lock().unwrap();
-        let mut stmt = conn.prepare("SELECT id, user_id, title, source_type, source_id, thumbnail_url, channel_title, item_count, created_at, updated_at FROM learning_items WHERE user_id = ?1 ORDER BY created_at DESC")?;
+        let mut stmt = conn.prepare("SELECT id, user_id, title, source_type, source_id, thumbnail_url, channel_title, item_count, description, skill_domain, tags, videos_json, total_duration_seconds, status, created_at, updated_at FROM learning_items WHERE user_id = ?1 ORDER BY created_at DESC")?;
         let rows = stmt.query_map([user_id], |row| {
+            let tags_str: Option<String> = row.get(10)?;
+            let tags_val = tags_str.and_then(|s| {
+                if let Ok(val) = serde_json::from_str::<serde_json::Value>(&s) {
+                    Some(val)
+                } else if !s.trim().is_empty() {
+                    Some(serde_json::Value::Array(
+                        s.split(',')
+                            .map(|t| serde_json::Value::String(t.trim().to_string()))
+                            .filter(|t| !t.as_str().unwrap_or("").is_empty())
+                            .collect(),
+                    ))
+                } else {
+                    None
+                }
+            });
+
             Ok(LearningItem {
                 id: row.get(0)?,
                 user_id: row.get(1)?,
@@ -448,8 +482,14 @@ impl DatabaseManager {
                 thumbnail_url: row.get(5)?,
                 channel_title: row.get(6)?,
                 item_count: row.get(7)?,
-                created_at: row.get(8)?,
-                updated_at: row.get(9)?,
+                description: row.get(8)?,
+                skill_domain: row.get(9)?,
+                tags: tags_val,
+                videos_json: row.get(11)?,
+                total_duration_seconds: row.get(12)?,
+                status: row.get(13)?,
+                created_at: row.get(14)?,
+                updated_at: row.get(15)?,
             })
         })?;
         let mut list = Vec::new();
@@ -461,9 +501,22 @@ impl DatabaseManager {
 
     pub fn save_learning_item(&self, item: &LearningItem) -> Result<()> {
         let conn = self.conn.lock().unwrap();
+        let tags_db_str = match &item.tags {
+            Some(serde_json::Value::String(s)) => {
+                if s.trim().starts_with('[') {
+                    Some(s.clone())
+                } else {
+                    let arr: Vec<&str> = s.split(',').map(|t| t.trim()).filter(|t| !t.is_empty()).collect();
+                    serde_json::to_string(&arr).ok()
+                }
+            }
+            Some(val) => serde_json::to_string(val).ok(),
+            None => None,
+        };
+
         conn.execute(
-            "INSERT INTO learning_items (id, user_id, title, source_type, source_id, thumbnail_url, channel_title, item_count, created_at, updated_at)
-             VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)
+            "INSERT INTO learning_items (id, user_id, title, source_type, source_id, thumbnail_url, channel_title, item_count, description, skill_domain, tags, videos_json, total_duration_seconds, status, created_at, updated_at)
+             VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16)
              ON CONFLICT(id) DO UPDATE SET
                 title = excluded.title,
                 source_type = excluded.source_type,
@@ -471,6 +524,12 @@ impl DatabaseManager {
                 thumbnail_url = excluded.thumbnail_url,
                 channel_title = excluded.channel_title,
                 item_count = excluded.item_count,
+                description = excluded.description,
+                skill_domain = excluded.skill_domain,
+                tags = excluded.tags,
+                videos_json = excluded.videos_json,
+                total_duration_seconds = excluded.total_duration_seconds,
+                status = excluded.status,
                 updated_at = excluded.updated_at",
             params![
                 item.id,
@@ -481,6 +540,12 @@ impl DatabaseManager {
                 item.thumbnail_url,
                 item.channel_title,
                 item.item_count,
+                item.description,
+                item.skill_domain,
+                tags_db_str,
+                item.videos_json,
+                item.total_duration_seconds,
+                item.status,
                 item.created_at,
                 item.updated_at
             ],

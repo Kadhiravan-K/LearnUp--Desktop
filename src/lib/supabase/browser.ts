@@ -28,6 +28,34 @@ export function createClient() {
       signOut: async () => {
         return { error: null };
       },
+      signInWithPassword: async ({ email, password }: { email: string; password?: string }) => {
+        return {
+          data: {
+            user: { id: `user_${Date.now()}`, email },
+            session: { user: { id: `user_${Date.now()}`, email }, access_token: 'local_token' },
+          },
+          error: null,
+        };
+      },
+      signUp: async ({ email, password }: { email: string; password?: string }) => {
+        return {
+          data: {
+            user: { id: `user_${Date.now()}`, email },
+            session: { user: { id: `user_${Date.now()}`, email }, access_token: 'local_token' },
+          },
+          error: null,
+        };
+      },
+      mfa: {
+        getAuthenticatorAssuranceLevel: async () => ({
+          data: { currentLevel: 'aal1', nextLevel: 'aal1', currentAuthenticationMethods: [] },
+          error: null,
+        }),
+        listFactors: async () => ({ data: { totp: [] as any[] }, error: null }),
+        challenge: async (_args: any) => ({ data: { id: 'mock_challenge' }, error: null }),
+        verify: async (_args: any) => ({ data: null, error: null }),
+        challengeAndVerify: async (_args: any) => ({ data: null, error: null }),
+      },
       onAuthStateChange: (_callback: (event: string, session: Session | null) => void) => {
         return { data: { subscription: { unsubscribe: () => {} } } };
       },

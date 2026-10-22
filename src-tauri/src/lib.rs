@@ -1,7 +1,7 @@
 mod db;
 
 use db::{DatabaseManager, DurableBookmark, DurableNote, DurableProgress, FocusSessionRecord, LearningItem, MutationJournalEntry, UserProfile};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 use std::sync::Mutex;
 use tauri::{Manager, State};
@@ -16,12 +16,16 @@ struct IntegrityResult {
     issues: Vec<String>,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize, Clone)]
 struct YouTubeMetadata {
     title: String,
     author: String,
     #[serde(rename = "thumbnailUrl")]
     thumbnail_url: String,
+    #[serde(rename = "isPlaylist")]
+    is_playlist: bool,
+    #[serde(rename = "sourceId")]
+    source_id: String,
 }
 
 #[tauri::command]
@@ -253,20 +257,138 @@ fn check_online_status() -> bool {
 }
 
 #[tauri::command]
+fn fetch_remote_text(url: String) -> Result<String, String> {
+    if !url.starts_with("https://") && !url.starts_with("http://") {
+        return Err("Only HTTP/HTTPS URLs are allowed".to_string());
+    }
+    let output = std::process::Command::new("curl.exe")
+        .args(["-s", "-L", "--max-time", "15", &url])
+        .output()
+        .map_err(|e| format!("Failed to execute curl: {}", e))?;
+    if !output.status.success() {
+        return Err(format!("Network request exited with code: {:?}", output.status.code()));
+    }
+    String::from_utf8(output.stdout).map_err(|e| format!("Invalid response encoding: {}", e))
+}
+
+#[tauri::command]
 fn fetch_youtube_metadata(url: String) -> Result<YouTubeMetadata, String> {
-    // Parse video ID from url
-    let video_id = if let Some(pos) = url.find("v=") {
-        &url[pos + 2..pos + 2 + 11.min(url.len() - pos - 2)]
-    } else if let Some(pos) = url.find("youtu.be/") {
-        &url[pos + 9..pos + 9 + 11.min(url.len() - pos - 9)]
+    let trimmed = url.trim();
+    if trimmed.is_empty() {
+        return Err("URL cannot be empty".to_string());
+    }
+
+    // 1. Check for playlist: list=...
+    if let Some(list_pos) = trimmed.find("list=") {
+        let after_list = &trimmed[list_pos + 5..];
+        let playlist_id = after_list
+            .split(&['&', '#', ' '][..])
+            .next()
+            .unwrap_or("")
+            .trim();
+
+        if playlist_id.is_empty() {
+            return Err("Invalid or empty playlist ID in YouTube URL".to_string());
+        }
+
+        let oembed_url = format!(
+            "https://www.youtube.com/oembed?url=https://www.youtube.com/playlist?list={}&format=json",
+            playlist_id
+        );
+
+        let oembed_res = std::process::Command::new("curl.exe")
+            .args(["-s", "-L", "--max-time", "10", &oembed_url])
+            .output();
+
+        let mut title = format!("Playlist ({})", playlist_id);
+        let mut author = "YouTube Creator".to_string();
+        let mut thumbnail_url = String::new();
+
+        if let Ok(out) = oembed_res {
+            if out.status.success() {
+                if let Ok(json_str) = String::from_utf8(out.stdout) {
+                    if let Ok(v) = serde_json::from_str::<serde_json::Value>(&json_str) {
+                        if let Some(t) = v.get("title").and_then(|s| s.as_str()) {
+                            title = t.to_string();
+                        }
+                        if let Some(a) = v.get("author_name").and_then(|s| s.as_str()) {
+                            author = a.to_string();
+                        }
+                        if let Some(thumb) = v.get("thumbnail_url").and_then(|s| s.as_str()) {
+                            thumbnail_url = thumb.to_string();
+                        }
+                    }
+                }
+            }
+        }
+
+        return Ok(YouTubeMetadata {
+            title,
+            author,
+            thumbnail_url,
+            is_playlist: true,
+            source_id: playlist_id.to_string(),
+        });
+    }
+
+    // 2. Video URL: watch?v=, youtu.be/, /shorts/, /embed/
+    let video_id = if let Some(pos) = trimmed.find("v=") {
+        let after_v = &trimmed[pos + 2..];
+        after_v.split(&['&', '#', ' '][..]).next().unwrap_or("")
+    } else if let Some(pos) = trimmed.find("youtu.be/") {
+        let after_be = &trimmed[pos + 9..];
+        after_be.split(&['?', '/', '#', ' '][..]).next().unwrap_or("")
+    } else if let Some(pos) = trimmed.find("/shorts/") {
+        let after_shorts = &trimmed[pos + 8..];
+        after_shorts.split(&['?', '/', '#', ' '][..]).next().unwrap_or("")
+    } else if let Some(pos) = trimmed.find("/embed/") {
+        let after_embed = &trimmed[pos + 7..];
+        after_embed.split(&['?', '/', '#', ' '][..]).next().unwrap_or("")
     } else {
-        "dQw4w9WgXcQ"
+        ""
     };
 
+    if video_id.len() < 5 {
+        return Err("Invalid YouTube URL: could not detect a valid video or playlist ID".to_string());
+    }
+
+    let oembed_url = format!(
+        "https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={}&format=json",
+        video_id
+    );
+
+    let oembed_res = std::process::Command::new("curl.exe")
+        .args(["-s", "-L", "--max-time", "10", &oembed_url])
+        .output();
+
+    let mut title = format!("Video ({})", video_id);
+    let mut author = "YouTube Creator".to_string();
+    let mut thumbnail_url = format!("https://i.ytimg.com/vi/{}/hqdefault.jpg", video_id);
+
+    if let Ok(out) = oembed_res {
+        if out.status.success() {
+            if let Ok(json_str) = String::from_utf8(out.stdout) {
+                if let Ok(v) = serde_json::from_str::<serde_json::Value>(&json_str) {
+                    if let Some(t) = v.get("title").and_then(|s| s.as_str()) {
+                        title = t.to_string();
+                    }
+                    if let Some(a) = v.get("author_name").and_then(|s| s.as_str()) {
+                        author = a.to_string();
+                    }
+                    if let Some(thumb) = v.get("thumbnail_url").and_then(|s| s.as_str()) {
+                        thumbnail_url = thumb.to_string();
+                    }
+                }
+            }
+        }
+    }
+
     Ok(YouTubeMetadata {
-        title: format!("Imported Video ({})", video_id),
-        author: "YouTube Creator".to_string(),
-        thumbnail_url: format!("https://i.ytimg.com/vi/{}/hqdefault.jpg", video_id),
+        title,
+        author,
+        thumbnail_url,
+        is_playlist: false,
+        source_id: video_id.to_string(),
     })
 }
 
@@ -413,7 +535,8 @@ pub fn run() {
             db_get_roadmap_progress,
             db_integrity_check,
             check_online_status,
-            fetch_youtube_metadata
+            fetch_youtube_metadata,
+            fetch_remote_text
         ])
         .run(tauri::generate_context!())
         .expect("error while running learnup desktop application");

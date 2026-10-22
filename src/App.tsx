@@ -24,6 +24,10 @@ import { NotesView } from './views/NotesView';
 import { FocusView } from './views/FocusView';
 import { RoadmapsView } from './views/RoadmapsView';
 import { SettingsView } from './views/SettingsView';
+import { AddCourseModal } from './components/course/AddCourseModal';
+import { AuthLoginClient } from './components/auth/AuthLoginClient';
+import { clearGuestSession } from './lib/auth/guest-session';
+import { createClient } from './lib/supabase/browser';
 
 export interface ToastNotification {
   id: string;
@@ -634,6 +638,26 @@ export function App() {
     setActiveProfile(newGuest);
   };
 
+  // Sign out / Exit profile
+  const handleSignOut = useCallback(async () => {
+    try {
+      clearGuestSession();
+      const supabase = createClient();
+      await supabase.auth.signOut().catch(() => {});
+    } catch (e) {
+      console.warn('Sign out cleanup caught:', e);
+    }
+    await platform.storage.setActiveProfile('');
+    setActiveProfile(null);
+    setLearningItems([]);
+    setNotes([]);
+    setProgressList([]);
+    setFocusSessions([]);
+    setRoadmapCompleted({});
+    router.push('/login');
+    showToast('Signed out successfully', 'info');
+  }, [platform.storage, router, showToast]);
+
   // Module manager helpers
   const handleToggleModule = (id: string) => {
     setModules((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -766,6 +790,7 @@ export function App() {
           onTogglePauseSync={handleTogglePauseSync}
           onLinkAccount={handleLinkAccount}
           onUnlinkAccount={handleUnlinkAccount}
+          onSignOut={handleSignOut}
           showToast={showToast}
         />
       );
@@ -808,111 +833,69 @@ export function App() {
     );
   }
 
+  if (!activeProfile || pathname === '/login') {
+    return (
+      <div style={{ minHeight: '100vh', background: 'var(--sf-bg-surface, #ffffff)' }}>
+        <AuthLoginClient
+          onSelectProfile={async (profileId) => {
+            const profs = await platform.storage.listProfiles();
+            const target = profs.find((p) => p.id === profileId);
+            if (target) {
+              await platform.storage.setActiveProfile(target.id);
+              setActiveProfile(target);
+              router.push('/dashboard');
+              showToast(`Logged in as ${target.name}`, 'success');
+            }
+          }}
+          onSelectGuest={async () => {
+            let profs = await platform.storage.listProfiles();
+            let guest = profs.find((p) => p.isGuest);
+            if (!guest) {
+              guest = {
+                id: `guest_${Date.now()}`,
+                name: 'Desktop Guest',
+                email: null,
+                color: 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)',
+                initials: 'DG',
+                lockType: 'none',
+                updatedAt: new Date().toISOString(),
+                isGuest: true,
+              };
+              await platform.storage.saveProfile(guest);
+              setProfiles((prev) => [...prev, guest!]);
+            }
+            await platform.storage.setActiveProfile(guest.id);
+            setActiveProfile(guest);
+            router.push('/dashboard');
+            showToast('Entered guest study workspace', 'info');
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
-    <AppShell>
+    <AppShell activeProfile={activeProfile} onSignOut={handleSignOut}>
       {renderView()}
 
-      {/* Global Add YouTube Course Modal */}
-      {isAddModalOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="add-course-modal-title"
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(0, 0, 0, 0.65)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 1000,
-            padding: '16px',
-          }}
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setIsAddModalOpen(false);
-          }}
-        >
-          <div
-            style={{
-              background: 'var(--sf-bg-surface, #ffffff)',
-              border: '1px solid var(--sf-border-subtle, #e2e8f0)',
-              borderRadius: '16px',
-              padding: '2rem',
-              width: '480px',
-              maxWidth: '92vw',
-              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.2)',
-            }}
-          >
-            <h2
-              id="add-course-modal-title"
-              style={{ fontSize: '1.35rem', fontWeight: 700, margin: '0 0 0.5rem', color: 'var(--sf-text-primary, #0f172a)' }}
-            >
-              Add YouTube Video to Library
-            </h2>
-            <p style={{ color: 'var(--sf-text-muted, #64748b)', fontSize: '0.875rem', margin: '0 0 1.5rem', lineHeight: 1.5 }}>
-              Paste any standard YouTube lecture URL or video ID to track your learning offline with SQLite persistence.
-            </p>
-
-            <form onSubmit={handleAddVideo}>
-              <div style={{ marginBottom: '1.5rem' }}>
-                <input
-                  type="text"
-                  placeholder="https://www.youtube.com/watch?v=..."
-                  value={videoUrlInput}
-                  onChange={(e) => setVideoUrlInput(e.target.value)}
-                  autoFocus
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem 1rem',
-                    background: 'var(--sf-bg-subtle, #f8fafc)',
-                    border: '1px solid var(--sf-border-subtle, #e2e8f0)',
-                    borderRadius: '8px',
-                    color: 'var(--sf-text-primary, #0f172a)',
-                    fontSize: '0.875rem',
-                    boxSizing: 'border-box',
-                  }}
-                />
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
-                <button
-                  type="button"
-                  onClick={() => setIsAddModalOpen(false)}
-                  style={{
-                    background: 'transparent',
-                    border: '1px solid var(--sf-border-default, #cbd5e1)',
-                    color: 'var(--sf-text-primary, #0f172a)',
-                    borderRadius: '6px',
-                    padding: '0.6rem 1.2rem',
-                    fontSize: '0.875rem',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={!videoUrlInput.trim()}
-                  style={{
-                    background: 'var(--sf-accent-primary, #0d9488)',
-                    color: '#ffffff',
-                    border: 'none',
-                    borderRadius: '6px',
-                    padding: '0.6rem 1.35rem',
-                    fontWeight: 600,
-                    fontSize: '0.875rem',
-                    cursor: videoUrlInput.trim() ? 'pointer' : 'not-allowed',
-                    opacity: videoUrlInput.trim() ? 1 : 0.5,
-                  }}
-                >
-                  + Add Course
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      {/* Global Add YouTube Course Modal (Full LearnUp-Web UI & Feature Parity) */}
+      <AddCourseModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        activeProfileId={activeProfile?.id}
+        cloudUserId={activeProfile?.cloudUserId}
+        onSuccess={async (courseId) => {
+          setIsAddModalOpen(false);
+          if (activeProfile) {
+            const items = await platform.storage.listLearningItems(activeProfile.id);
+            setLearningItems(items);
+          }
+          if (courseId) {
+            router.push(`/library/${courseId}`);
+          }
+          showToast('Curriculum imported into your private library', 'success');
+        }}
+      />
 
       {/* Keyboard Shortcuts Help Modal (F1) */}
       {isShortcutsModalOpen && (

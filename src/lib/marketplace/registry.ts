@@ -422,10 +422,12 @@ export const UNIFIED_MARKETPLACE_ITEMS: MarketplaceItem[] = [
       title: tpl.title,
       description: tpl.description,
       domain:
-        tpl.category === 'roadmap'
+        tpl.tags.some((t) => ['Harvard', 'C', 'Web Development', 'React', 'Rust', 'TypeScript', 'System Design'].includes(t))
           ? 'Software Engineering'
-          : tpl.category === 'playlist'
+          : tpl.tags.some((t) => ['Deep Learning', 'PyTorch', 'Machine Learning'].includes(t))
           ? 'Data Science'
+          : tpl.category === 'roadmap'
+          ? 'Software Engineering'
           : 'Education',
       version: tpl.version || '1.0.0',
       publisher: tpl.author,

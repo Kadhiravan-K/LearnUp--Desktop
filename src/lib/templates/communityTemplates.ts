@@ -28,15 +28,239 @@ export const contributedTemplateSchema = z.object({
 
 export const CURATED_TEMPLATES: CommunityTemplate[] = [
   {
+    id: 'template_karpathy_neural_networks',
+    title: 'Andrej Karpathy: Neural Networks Zero to Hero',
+    description: 'Complete hands-on deep learning series from Andrej Karpathy building Micrograd autograd, Bigram language models, MLP, BatchNorm, and GPT from scratch.',
+    category: 'playlist',
+    author: 'Andrej Karpathy',
+    tags: ['PyTorch', 'Transformers', 'LLMs', 'GPT', 'Deep Learning'],
+    downloadsCount: 14250,
+    rating: 5.0,
+    previewItemsCount: 8,
+    estimatedDuration: '28 Hours',
+    difficulty: 'intermediate',
+    isCurated: true,
+    verifiedSource: 'Andrej Karpathy (YouTube Official)',
+    prerequisites: ['Python 3.10+', 'Basic Calculus & Linear Algebra'],
+    learningOutcomes: [
+      'Build autograd backpropagation engine (Micrograd) from scratch',
+      'Train multi-layer perceptrons with batch normalization & residual connections',
+      'Implement decoder-only transformer GPT architecture in pure PyTorch'
+    ],
+    version: '1.2.0',
+    data: {
+      type: 'playlist',
+      title: 'Neural Networks: Zero to Hero',
+      description: 'Build GPT from scratch with Andrej Karpathy.',
+      sampleVideoUrl: 'https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ'
+    }
+  },
+  {
+    id: 'template_cs50_harvard',
+    title: 'Harvard CS50: Introduction to Computer Science',
+    description: 'Harvard University\'s celebrated introduction to the intellectual enterprises of computer science and the art of programming, taught by David J. Malan.',
+    category: 'playlist',
+    author: 'Harvard University (David J. Malan)',
+    tags: ['Computer Science', 'C', 'Python', 'SQL', 'Algorithms', 'Harvard'],
+    downloadsCount: 28400,
+    rating: 5.0,
+    previewItemsCount: 11,
+    estimatedDuration: '60 Hours',
+    difficulty: 'beginner',
+    isCurated: true,
+    verifiedSource: 'Harvard CS50 (YouTube Official)',
+    prerequisites: ['No prior programming experience required'],
+    learningOutcomes: [
+      'Master fundamental computational thinking and problem-solving',
+      'Understand low-level memory allocation, pointers, and data structures in C',
+      'Develop full-stack web applications with Python and SQLite'
+    ],
+    version: '2024.1.0',
+    data: {
+      type: 'playlist',
+      title: 'Harvard CS50: Introduction to Computer Science',
+      description: 'The world-famous introductory course from Harvard University.',
+      sampleVideoUrl: 'https://www.youtube.com/playlist?list=PLhQjrBD2T381L3iJ5hpZuLKHYS73Z54Ox'
+    }
+  },
+  {
+    id: 'template_3blue1brown_linear_algebra',
+    title: '3Blue1Brown: Essence of Linear Algebra & Geometry',
+    description: 'Grant Sanderson\'s legendary geometric intuition of vectors, linear transformations, matrix multiplication, determinants, and eigenvalues.',
+    category: 'playlist',
+    author: '3Blue1Brown (Grant Sanderson)',
+    tags: ['Math', 'Linear Algebra', 'Geometry', '3Blue1Brown', 'Visual Math'],
+    downloadsCount: 19800,
+    rating: 5.0,
+    previewItemsCount: 16,
+    estimatedDuration: '14 Hours',
+    difficulty: 'beginner',
+    isCurated: true,
+    verifiedSource: '3Blue1Brown (YouTube Official)',
+    prerequisites: ['High School Geometry & Basic Algebra'],
+    learningOutcomes: [
+      'Understand linear transformations as coordinate space movements',
+      'Geometrically visualize matrix multiplication, determinants, and dot products',
+      'Intuitive geometric grasp of eigenvectors and eigenvalues'
+    ],
+    version: '1.1.0',
+    data: {
+      type: 'playlist',
+      title: 'Essence of Linear Algebra',
+      description: 'Geometric intuitions underlying linear algebra.',
+      sampleVideoUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab'
+    }
+  },
+  {
+    id: 'template_mit_algorithms',
+    title: 'MIT 6.006: Introduction to Algorithms & Complexity',
+    description: 'Official MIT OpenCourseWare lecture series covering divide-and-conquer, sorting algorithms, balanced BSTs, graph traversals, and dynamic programming.',
+    category: 'playlist',
+    author: 'MIT OpenCourseWare',
+    tags: ['Algorithms', 'Data Structures', 'MIT', 'Computer Science'],
+    downloadsCount: 11500,
+    rating: 4.95,
+    previewItemsCount: 24,
+    estimatedDuration: '48 Hours',
+    difficulty: 'intermediate',
+    isCurated: true,
+    verifiedSource: 'MIT OpenCourseWare (Course 6.006)',
+    prerequisites: ['Python Programming', 'Discrete Mathematics Basics'],
+    learningOutcomes: [
+      'Analyze algorithmic asymptotic complexity (Big-O, Omega, Theta)',
+      'Implement balanced binary search trees, hash tables, and priority queues',
+      'Solve optimization problems using memoization and bottom-up dynamic programming'
+    ],
+    version: '1.0.0',
+    data: {
+      type: 'playlist',
+      title: 'MIT 6.006 Introduction to Algorithms',
+      description: 'Design and analysis of efficient algorithms with MIT faculty.',
+      sampleVideoUrl: 'https://www.youtube.com/playlist?list=PLUl4u3cNGP63EdVPNLG3ToM6LaEUuStEY'
+    }
+  },
+  {
+    id: 'template_stanford_cs229_ml',
+    title: 'Stanford CS229: Machine Learning (Andrew Ng)',
+    description: 'The definitive Stanford university graduate course on machine learning algorithms, statistical learning theory, regularization, SVMs, and EM algorithm.',
+    category: 'playlist',
+    author: 'Stanford Online (Andrew Ng)',
+    tags: ['Machine Learning', 'Stanford', 'Math', 'AI', 'Optimization'],
+    downloadsCount: 15600,
+    rating: 4.98,
+    previewItemsCount: 20,
+    estimatedDuration: '55 Hours',
+    difficulty: 'advanced',
+    isCurated: true,
+    verifiedSource: 'Stanford Online (YouTube Official)',
+    prerequisites: ['Multivariable Calculus', 'Linear Algebra', 'Python/NumPy'],
+    learningOutcomes: [
+      'Derive gradient descent, normal equations, and logistic regression loss',
+      'Understand maximum margin classifiers, Mercer kernels, and Support Vector Machines',
+      'Implement unsupervised learning, PCA, and Gaussian Mixture Models'
+    ],
+    version: '1.0.0',
+    data: {
+      type: 'playlist',
+      title: 'Stanford CS229 Machine Learning',
+      description: 'Complete Stanford CS229 lecture series taught by Andrew Ng.',
+      sampleVideoUrl: 'https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU'
+    }
+  },
+  {
+    id: 'template_neetcode_dsa',
+    title: 'NeetCode: Algorithms & Data Structures Core Patterns',
+    description: 'Systematic pattern-based mastery of data structures and algorithms: two pointers, sliding window, binary search trees, graphs, and dynamic programming.',
+    category: 'playlist',
+    author: 'NeetCode',
+    tags: ['LeetCode', 'Algorithms', 'Data Structures', 'Coding Interview', 'Python'],
+    downloadsCount: 22100,
+    rating: 4.96,
+    previewItemsCount: 18,
+    estimatedDuration: '30 Hours',
+    difficulty: 'intermediate',
+    isCurated: true,
+    verifiedSource: 'NeetCode (YouTube Official)',
+    prerequisites: ['Basic Python or Java or C++'],
+    learningOutcomes: [
+      'Recognize and apply 14 fundamental algorithmic coding patterns',
+      'Master graph BFS/DFS traversals and topological sorting',
+      'Confidently solve LeetCode medium and hard problem categories'
+    ],
+    version: '1.0.0',
+    data: {
+      type: 'playlist',
+      title: 'NeetCode Core DSA Patterns',
+      description: 'Pattern-driven coding interview problem solving.',
+      sampleVideoUrl: 'https://www.youtube.com/playlist?list=PLot-Xpze53ldg4pN6PfzoJY7KsKcxVC1G'
+    }
+  },
+  {
+    id: 'template_system_design_gaurav',
+    title: 'Gaurav Sen: System Design & Distributed Scalability',
+    description: 'Deconstruct massive scalable systems: rate limiting, distributed caching with Redis, consistent hashing, message queues, and load balancing.',
+    category: 'playlist',
+    author: 'Gaurav Sen',
+    tags: ['System Design', 'Distributed Systems', 'Scalability', 'Microservices', 'Databases'],
+    downloadsCount: 16700,
+    rating: 4.92,
+    previewItemsCount: 15,
+    estimatedDuration: '22 Hours',
+    difficulty: 'advanced',
+    isCurated: true,
+    verifiedSource: 'Gaurav Sen (YouTube Official)',
+    prerequisites: ['Basic Web Architecture', 'Relational Databases'],
+    learningOutcomes: [
+      'Architect systems for horizontal scalability and high availability',
+      'Implement consistent hashing and distributed sharding strategies',
+      'Evaluate latency tradeoffs between REST, gRPC, and asynchronous queues'
+    ],
+    version: '1.0.0',
+    data: {
+      type: 'playlist',
+      title: 'System Design & Distributed Scalability',
+      description: 'Industry-standard system design patterns for engineering interviews.',
+      sampleVideoUrl: 'https://www.youtube.com/playlist?list=PLMCXHnjXnTnvo6alSjVkgxV-VH6EPyvoX'
+    }
+  },
+  {
+    id: 'template_fcc_fullstack',
+    title: 'freeCodeCamp: Full-Stack Web Development Bootcamp',
+    description: 'Comprehensive modern full-stack web curriculum covering HTML5, CSS3, modern JavaScript, React, Node.js, Express, and database engineering.',
+    category: 'playlist',
+    author: 'freeCodeCamp.org',
+    tags: ['Web Development', 'Full-Stack', 'JavaScript', 'React', 'Node.js'],
+    downloadsCount: 31200,
+    rating: 4.94,
+    previewItemsCount: 1,
+    estimatedDuration: '8 Hours',
+    difficulty: 'beginner',
+    isCurated: true,
+    verifiedSource: 'freeCodeCamp.org (YouTube Official)',
+    prerequisites: ['Basic computer literacy'],
+    learningOutcomes: [
+      'Build responsive, accessible frontend interfaces with React',
+      'Create robust RESTful APIs with Node.js and Express',
+      'Deploy full-stack applications with production databases'
+    ],
+    version: '1.0.0',
+    data: {
+      type: 'playlist',
+      title: 'freeCodeCamp Full-Stack Web Development',
+      description: 'Modern full-stack web development course.',
+      sampleVideoUrl: 'https://www.youtube.com/watch?v=nu_pCVPKzTk'
+    }
+  },
+  {
     id: 'template_fullstack_devops',
     title: 'Full-Stack Cloud & Distributed Systems Blueprint',
     description: 'Master modern engineering from Next.js server components and WebAssembly to Rust microservices, Kubernetes clusters, and Raft consensus.',
     category: 'roadmap',
     author: 'CloudMasters Collective',
     tags: ['Next.js', 'Rust', 'Kubernetes', 'Distributed Systems'],
-    downloadsCount: 2420,
+    downloadsCount: 4420,
     rating: 4.9,
-    previewItemsCount: 12,
+    previewItemsCount: 5,
     estimatedDuration: '45 Hours',
     difficulty: 'advanced',
     isCurated: true,
@@ -62,90 +286,6 @@ export const CURATED_TEMPLATES: CommunityTemplate[] = [
     }
   },
   {
-    id: 'template_karpathy_neural_networks',
-    title: 'Andrej Karpathy: Neural Networks Zero to Hero',
-    description: 'Complete hands-on deep learning series from Andrej Karpathy building Micrograd, Bigram language models, MLP, BatchNorm, and GPT from scratch.',
-    category: 'playlist',
-    author: 'Andrej Karpathy',
-    tags: ['PyTorch', 'Transformers', 'LLMs', 'GPT', 'Deep Learning'],
-    downloadsCount: 8940,
-    rating: 5.0,
-    previewItemsCount: 8,
-    estimatedDuration: '28 Hours',
-    difficulty: 'intermediate',
-    isCurated: true,
-    verifiedSource: 'Andrej Karpathy (YouTube Deep Learning Series)',
-    prerequisites: ['Python 3.10+', 'Basic Calculus & Linear Algebra'],
-    learningOutcomes: [
-      'Build autograd backpropagation engine (Micrograd) from scratch',
-      'Train multi-layer perceptrons with batch normalization & residual connections',
-      'Implement decoder-only transformer GPT architecture in pure PyTorch'
-    ],
-    version: '1.0.0',
-    data: {
-      type: 'playlist',
-      title: 'Neural Networks: Zero to Hero',
-      description: 'Build GPT from scratch with Andrej Karpathy.',
-      sampleVideoUrl: 'https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ'
-    }
-  },
-  {
-    id: 'template_3blue1brown_linear_algebra',
-    title: '3Blue1Brown: Essence of Linear Algebra & Geometry',
-    description: 'Grant Sanderson\'s legendary geometric intuition of vectors, linear transformations, matrix multiplication, determinants, and eigenvalues.',
-    category: 'playlist',
-    author: '3Blue1Brown (Grant Sanderson)',
-    tags: ['Math', 'Linear Algebra', 'Geometry', '3Blue1Brown', 'Visual Math'],
-    downloadsCount: 12450,
-    rating: 5.0,
-    previewItemsCount: 16,
-    estimatedDuration: '14 Hours',
-    difficulty: 'beginner',
-    isCurated: true,
-    verifiedSource: '3Blue1Brown (Grant Sanderson)',
-    prerequisites: ['High School Geometry & Basic Algebra'],
-    learningOutcomes: [
-      'Understand linear transformations as coordinate space movements',
-      'Geometrically visualize matrix multiplication, determinants, and dot products',
-      'Intuitive geometric grasp of eigenvectors and eigenvalues'
-    ],
-    version: '1.0.0',
-    data: {
-      type: 'playlist',
-      title: 'Essence of Linear Algebra',
-      description: 'Geometric intuitions underlying linear algebra.',
-      sampleVideoUrl: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab'
-    }
-  },
-  {
-    id: 'template_mit_algorithms',
-    title: 'MIT 6.006: Introduction to Algorithms & Complexity',
-    description: 'Official MIT OpenCourseWare lecture series covering divide-and-conquer, sorting algorithms, balanced BSTs, graph traversals, and dynamic programming.',
-    category: 'playlist',
-    author: 'MIT OpenCourseWare',
-    tags: ['Algorithms', 'Data Structures', 'MIT', 'Computer Science'],
-    downloadsCount: 7120,
-    rating: 4.95,
-    previewItemsCount: 24,
-    estimatedDuration: '48 Hours',
-    difficulty: 'intermediate',
-    isCurated: true,
-    verifiedSource: 'MIT OpenCourseWare (Course 6.006)',
-    prerequisites: ['Python Programming', 'Discrete Mathematics Basics'],
-    learningOutcomes: [
-      'Analyze algorithmic asymptotic complexity (Big-O, Omega, Theta)',
-      'Implement balanced binary search trees, hash tables, and priority queues',
-      'Solve optimization problems using memoization and bottom-up dynamic programming'
-    ],
-    version: '1.0.0',
-    data: {
-      type: 'playlist',
-      title: 'MIT 6.006 Introduction to Algorithms',
-      description: 'Design and analysis of efficient algorithms with MIT faculty.',
-      sampleVideoUrl: 'https://www.youtube.com/playlist?list=PLUl4u3cNGP63EdVPNLG3ToM6LaEUuStEY'
-    }
-  },
-  {
     id: 'template_systems_programming',
     title: 'Systems Programming & Embedded Firmware Mastery',
     description: 'Low-level memory management, FreeRTOS kernel scheduling, DMA ring buffers, and ARM Cortex-M hardware peripherals.',
@@ -154,7 +294,7 @@ export const CURATED_TEMPLATES: CommunityTemplate[] = [
     tags: ['Rust', 'C', 'FreeRTOS', 'ARM Cortex', 'Kernel'],
     downloadsCount: 3850,
     rating: 4.95,
-    previewItemsCount: 9,
+    previewItemsCount: 5,
     estimatedDuration: '60 Hours',
     difficulty: 'advanced',
     isCurated: true,
@@ -186,7 +326,7 @@ export const CURATED_TEMPLATES: CommunityTemplate[] = [
     category: 'focus',
     author: 'NeuroScience Lab',
     tags: ['Flow State', 'Ultradian', '40Hz Binaural', 'Circadian'],
-    downloadsCount: 3120,
+    downloadsCount: 5120,
     rating: 4.9,
     previewItemsCount: 3,
     estimatedDuration: 'Daily Workstation Preset',
@@ -216,7 +356,7 @@ export const CURATED_TEMPLATES: CommunityTemplate[] = [
     category: 'focus',
     author: 'LearnUp Ergonomics',
     tags: ['Pomodoro', '25min Sprint', 'Productivity', 'Rain Soundscape'],
-    downloadsCount: 5490,
+    downloadsCount: 7490,
     rating: 4.85,
     previewItemsCount: 4,
     estimatedDuration: 'Standard Cadence',
@@ -236,39 +376,6 @@ export const CURATED_TEMPLATES: CommunityTemplate[] = [
       shortBreakMinutes: 5,
       longBreakMinutes: 15,
       soundscape: 'rain'
-    }
-  },
-  {
-    id: 'template_medical_pathology',
-    title: 'Medical Biochemistry & Cellular Pathology Pathways',
-    description: 'Interactive concept map and lecture series on metabolic regulation, enzymatic kinetics, and clinical pharmacology.',
-    category: 'roadmap',
-    author: 'Global Health Academy',
-    tags: ['Medicine', 'Biochemistry', 'Pathology', 'Pharmacology'],
-    downloadsCount: 1950,
-    rating: 4.8,
-    previewItemsCount: 8,
-    estimatedDuration: '50 Hours',
-    difficulty: 'intermediate',
-    isCurated: true,
-    verifiedSource: 'Global Health & Medical Education Academy',
-    prerequisites: ['Introductory Biology & Organic Chemistry'],
-    learningOutcomes: [
-      'Map central metabolic pathways (Glycolysis, TCA cycle, Oxidative Phosphorylation)',
-      'Analyze lipid transport lipoproteins and clinical dyslipidemias',
-      'Understand cytochrome P450 hepatic drug biotransformation kinetics'
-    ],
-    version: '1.0.0',
-    data: {
-      type: 'roadmap',
-      title: 'Medical Biochemistry & Cellular Pathways',
-      description: 'Metabolism, enzyme kinetics, and pharmacology.',
-      nodes: [
-        { node_number: '01', title: 'Glycolysis & Krebs Citric Acid Cycle', description: 'ATP generation and allosteric phosphofructokinase regulation.', tags: ['Biochem', 'Glycolysis'] },
-        { node_number: '02', title: 'Oxidative Phosphorylation & ATP Synthase', description: 'Electron transport chain complexes I through IV.', tags: ['Mitochondria', 'ATP'] },
-        { node_number: '03', title: 'Lipid Metabolism & Lipoprotein Transport', description: 'Chylomicrons, VLDL, LDL, and HDL cholesterol pathways.', tags: ['Lipids', 'Metabolism'] },
-        { node_number: '04', title: 'Pharmacokinetics & Cytochrome P450 Enzymes', description: 'Phase I functionalization and Phase II conjugation.', tags: ['Pharmacology', 'CYP450'] }
-      ]
     }
   }
 ];

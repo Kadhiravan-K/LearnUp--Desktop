@@ -1,0 +1,207 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--sf-z-modal, 50);
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background-color: var(--sf-color-surface, #FFFFFF);
+  border: 1px solid var(--sf-color-border, #E2E8F0);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--sf-shadow-xl, 0 20px 25px -5px rgba(0, 0, 0, 0.15));
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(12px) scale(0.98); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--sf-color-text-primary, #0F172A);
+  margin: 0;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: var(--sf-color-text-tertiary, #94A3B8);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: color 0.15s ease;
+}
+
+.closeBtn:hover {
+  color: var(--sf-color-text-primary, #0F172A);
+}
+
+.errorBanner {
+  background-color: var(--sf-color-error-bg, #FEF2F2);
+  border: 1px solid var(--sf-color-error-border, #FCA5A5);
+  color: var(--sf-color-error-text, #B91C1C);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 1.25rem;
+}
+
+.label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--sf-color-text-primary, #0F172A);
+}
+
+.lockTypeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+
+.typeCard {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1.5px solid var(--sf-color-border, #E2E8F0);
+  background-color: var(--sf-color-bg, #F8FAFC);
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: all 0.15s ease;
+}
+
+.typeCard:hover {
+  border-color: var(--sf-color-primary, #6366F1);
+  background-color: var(--sf-color-surface, #FFFFFF);
+}
+
+.typeCardActive {
+  border-color: var(--sf-color-primary, #6366F1);
+  background-color: var(--sf-color-primary-light, #EEF2FF);
+}
+
+.typeName {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--sf-color-text-primary, #0F172A);
+}
+
+.typeDesc {
+  font-size: 0.75rem;
+  color: var(--sf-color-text-secondary, #64748B);
+}
+
+.lengthSliderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 0.75rem;
+}
+
+.slider {
+  flex: 1;
+}
+
+.lengthBadge {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  background-color: var(--sf-color-primary-light, #EEF2FF);
+  color: var(--sf-color-primary, #4F46E5);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--sf-color-border, #CBD5E1);
+  background-color: var(--sf-color-bg, #F8FAFC);
+  color: var(--sf-color-text-primary, #0F172A);
+  font-size: 0.9375rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.input:focus {
+  border-color: var(--sf-color-primary, #6366F1);
+  background-color: var(--sf-color-surface, #FFFFFF);
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 0.75rem;
+}
+
+.saveBtn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: var(--sf-color-primary, #4F46E5);
+  color: #FFFFFF;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.saveBtn:hover {
+  background-color: var(--sf-color-primary-hover, #4338CA);
+}
+
+.cancelBtn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background-color: var(--sf-color-surface-hover, #F1F5F9);
+  color: var(--sf-color-text-secondary, #475569);
+  border: 1px solid var(--sf-color-border, #CBD5E1);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.cancelBtn:hover {
+  background-color: var(--sf-color-surface-active, #E2E8F0);
+}

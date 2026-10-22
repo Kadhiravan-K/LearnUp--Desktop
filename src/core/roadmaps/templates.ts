@@ -78,7 +78,7 @@ export const CURATED_OFFLINE_ROADMAPS: CuratedRoadmap[] = [
                 id: 'res-sqlite-video',
                 type: 'video',
                 title: 'Why SQLite is Taking Over Local Applications',
-                canonicalUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                canonicalUrl: 'https://www.youtube.com/watch?v=cz3wD_wL13U',
                 provider: 'YouTube',
                 description: 'In-depth exploration of embedded SQLite in desktop and mobile environments.',
                 relevantSkill: 'Databases',
